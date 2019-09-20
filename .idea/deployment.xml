@@ -2,7 +2,7 @@
 <project version="4">
   <component name="PublishConfigData">
     <serverData>
-      <paths name="Test">
+      <paths name="1&amp;1">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/https://github.com/BirkhoferAntoine/OCBlog" />
