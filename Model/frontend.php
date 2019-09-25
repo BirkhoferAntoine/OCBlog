@@ -15,50 +15,11 @@ catch (PDOException $e) {
     die();
 };
 
-?>
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta charset="utf-8"/>
-        <meta name="author" content="Antoine Birkhofer"/>
-
-        <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-        <title>"Password"</title>
-
-    </head>
-
-    <style>
-        form {
-            text-align: center;
-        }
-    </style>
-
-<body>
-
-<?php
-
 if(isset($dbh)) {
-    $reponse = $dbh->query('SELECT id, content, title, date_creation FROM `Posts`') or die(print_r($dbh->errorInfo()));
 
-    ?>
-    <pre>
-        <?php
-        print_r($reponse);
-        ?>
-        </pre>
-    <?php
-    if (isset($reponse)) {
-        print_r($reponse);
-    }
-    while ($data = $reponse->fetch()) {
-        print_r($data);
-        echo $data;
-    };
+    $dataListPosts = $dbh->query('SELECT id, content, title, date_creation FROM `Posts` ORDER BY id DESC') or die(print_r($dbh->errorInfo()));
+            if (isset($dataListPosts)) {
+                $listPosts = $dataListPosts->fetch();
+            }
+
 }
-
-
-
-
-?>

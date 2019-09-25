@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Password Protected Area"
+AuthUserFile /kunden/homepages/11/d764386720/htdocs/OCBlog/.htpasswd
+require valid-user
