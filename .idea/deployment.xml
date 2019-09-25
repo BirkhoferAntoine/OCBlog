@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" uploadOnCheckin="a542377a-b1cb-4fcc-8c15-2b9292b6db95">
+  <component name="PublishConfigData" promptOnRemoteOverwrite="CHECK_TIMESTAMP" serverName="1&amp;1" createEmptyFolders="true" uploadOnCheckin="a542377a-b1cb-4fcc-8c15-2b9292b6db95" notifyRemoteChanges="true">
     <serverData>
       <paths name="1&amp;1">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/https://github.com/BirkhoferAntoine/OCBlog" />
+            <mapping deploy="/OCBlog" local="$PROJECT_DIR$" web="/https://github.com/BirkhoferAntoine/OCBlog" />
           </mappings>
         </serverdata>
       </paths>
