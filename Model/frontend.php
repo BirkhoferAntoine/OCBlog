@@ -19,7 +19,11 @@ if(isset($dbh)) {
 
     $dataListPosts = $dbh->query('SELECT id, content, title, date_creation FROM `Posts` ORDER BY id DESC') or die(print_r($dbh->errorInfo()));
             if (isset($dataListPosts)) {
-                $listPosts = $dataListPosts->fetch();
+                while($listPosts = $dataListPosts->fetch()) {
+                    print_r($listPosts);
+                };
             }
 
 }
+
+$postTitle = $listPosts['title'];

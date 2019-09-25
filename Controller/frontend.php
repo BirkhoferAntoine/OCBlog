@@ -5,6 +5,7 @@ require_once('../View/listPostsView.php');
 
 require_once('../Model/frontend.php');
 
+
 print_r($headerTemplate);
 print_r($navbarTemplate);
 print_r($homeHeroContent);
