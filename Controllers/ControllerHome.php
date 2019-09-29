@@ -7,27 +7,33 @@ class ControllerHome
 
     public function __construct($url)
     {
+        $this->posts();
         if (isset($url) && count($url) > 1) {
-            throw new InvalidArgumentException('404 Page introuvable');
+            throw new Exception('404 Page introuvable');
         }
-        else {
-            $this->_posts();
-        }
+
+
     }
 
-    private function _posts() {
+    private function posts() {
+        require_once($_SERVER['DOCUMENT_ROOT'].'/Models/Post.php');
         $this->_postsManager = new PostsManager();
         $posts = $this->_postsManager->getPosts();
+        echo 'check';
+        echo $posts;
 
-        require_once('../Models/MainModel.php');
+        require_once($_SERVER['DOCUMENT_ROOT'].'/Models/MainModel.php');
 
-        require_once('../View/template.php');
-        require_once('../View/homeView.php');
-        require_once('../View/listPostsView.php');
+
+        require_once($_SERVER['DOCUMENT_ROOT'].'/View/template.php');
+        require_once($_SERVER['DOCUMENT_ROOT'].'/View/homeView.php');
+        require_once($_SERVER['DOCUMENT_ROOT'].'/View/listPostsView.php');
+        echo 'tada';
     }
 
-    public static function _printer() {
+    public function printer() {
         //impression de la page
+        echo 'ahah';
         print_r($headerTemplate);
         print_r($navbarTemplate);
         print_r($homeHeroContent);
@@ -38,15 +44,14 @@ class ControllerHome
         echo 'f2';
     }
 
-    public static function hBuild() {
+    public function hBuild() {
 
-        self::_printer();
+        $this->posts();
+        $this->printer();
         echo 'f3';
 
     }
 
 }
-
-ControllerHome::hBuild();
 
 

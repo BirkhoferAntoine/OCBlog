@@ -11,8 +11,14 @@ abstract class MainModel {
     private static function setDbConnection()
     {
         try {
-            self::$_dbConnection = new PDO("mysql:host=" . self::HOST_NAME . "; dbname=" . self::DATABASE . ";", self::USER_NAME, self::PASSWORD,
+            echo 'try';
+            $host_name = 'db5000177647.hosting-data.io';
+            $database = 'dbs172441';
+            $user_name = 'dbu35984';
+            $password = '$2y$10$e.cqZR4c2/uL6nQ3HEAgg.nO8yy/loeDef/';
+            self::$_dbConnection = new PDO("mysql:host=$host_name; dbname=$database;", $user_name, $password,
                 array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+            echo 'try';
         }
         catch (PDOException $e) {
             echo "Erreur!: " . $e->getMessage() . "<br/>";
@@ -29,16 +35,18 @@ abstract class MainModel {
 
     protected function getAll($table, $object) {
             $tableContent = [];
+            self::setDbConnection();
             $tableQuery = self::$_dbConnection->prepare('SELECT * FROM ' . $table . ' ORDER BY id DESC');
             $tableQuery->execute();
             while ($tableQueryData = $tableQuery->fetch(PDO::FETCH_ASSOC)){
                 $tableContent[] = new $object($tableQueryData);
+                echo $tableContent;
             }
-            return $tableContent;
             $tableQuery->closeCursor();
+            echo 'lala';
+            return $tableContent;
 
     }
-
 
 };
 /*
@@ -53,4 +61,4 @@ if(isset($_dbConnection)) {
 
 }
 
-$postTitle = $listPosts['title'];
+$postTitle = $listPosts['title']; */

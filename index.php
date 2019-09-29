@@ -1,5 +1,3 @@
-// COMMENTER!
-
 <?php
 
 class Router {
@@ -12,6 +10,11 @@ class Router {
             // chargement auto des classes
             spl_autoload_register(function($class){
                 require_once('Models/' . $class . '.php');
+                echo 'succesn2';
+                if (file_exists('Models/' . $class . '.php')){
+                    echo 'Models/' . $class . '.php';
+                }
+
             });
 
             $url = '';
@@ -22,15 +25,15 @@ class Router {
 
                 // Recherche les fichiers controlleurs
                 $controller = ucfirst(strtolower($url[0]));
-                $controllerClass = 'Controller' . $controller;
-                $controllerFile = 'Controllers/' . $controllerClass . '.php';
+                $controllerClass = "Controller" . $controller;
+                $controllerFile = "Controllers/" . $controllerClass . ".php";
 
                 // Execute la classe controlleur inclue dans le fichier si il existe
                 if (file_exists($controllerFile)) {
                     require_once($controllerFile);
                     $this->_controller = new $controllerClass($url);
                 } else {
-                    throw new InvalidArgumentException('404 Page introuvable');
+                    throw new Exception('404 Page introuvable');
                 }
             } else {
                 require_once('Controllers/ControllerHome.php');
@@ -43,3 +46,6 @@ class Router {
         }
     }
 }
+
+$homeRouter = new Router();
+$homeRouter->routeReq();

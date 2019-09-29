@@ -13,10 +13,13 @@ class Post {
 
     public function hydrate(array $tableQueryDate) {
         foreach ($tableQueryDate as $key => $value) {
+            echo 'hydrate1';
             $method = 'set' . ucfirst($key);
+            echo 'hydrate2';
 
             if (method_exists($this, $method)) {
                 $this->$method($value);
+                echo 'hydrate3';
             }
         }
     }

@@ -1,8 +1,4 @@
 
-G
-Controller/frontend.php,d\8\d85af2257a581008b7e1c54759adba986b544cc3
-B
-Model/frontend.php,f\9\f969388d331432b131ac42c03feb5814da9d4949
 A
 Vendor/index.html,b\d\bdc8076fb2c55af398795ea3b75f9e534e43b223
 A
@@ -13,8 +9,6 @@ S
 	index.php,b\b\bb6499b8e938f92a3695fff1afe57edea4b9efb7
 F
 View/listPostsView.php,4\c\4cccbea378030357a7f4dbd8176b0259f31c8730
-E
-View/cardTemplate.php,e\d\ed849a25a83830896be7af6f549ca5296c13f729
 F
 Vendor/goldenbook.html,c\3\c3889dc7478cea5729533e9ae5815a1f51ba144d
 @
@@ -33,3 +27,23 @@ A
 Private/.htpasswd,8\3\83f7465ba76e4c42e52d44c9d4500de72e95d998
 M
 View/listPostsViewFailure.php,5\5\551d171c17ccd11c05c2d7708ca2a25c5220cf47
+Q
+!View/Templates/footerTemplate.php,f\8\f855b82b3d8952cccd0166b4151cb388c417eed0
+Q
+!View/Templates/headerTemplate.php,a\7\a7243e2d24a4bf4a8c8f43e64d797b8147df5442
+Q
+!View/Templates/navbarTemplate.php,5\8\581d039efec30f4167f876d2c3e106e423aa8d0e
+D
+Models/MainModel.php,3\0\30d0bb064cc99519a278194f28a4ed3bcbc0cb63
+A
+View/homeView.php,1\1\1165f0733f67c145716af1e5d6c74e352721a482
+O
+View/Templates/cardTemplate.php,4\d\4df328d8b7743d5c7cd924a6f9809ddc43c9ab35
+G
+Models/PostsManager.php,3\f\3f53e4d2bab65cdeeb660583471328d16b9b26bf
+?
+Models/Post.php,b\a\ba45793078b8dd8b5f2405b2b12f98251e7accd1
+N
+Controllers/ControllerHome.php,0\5\0513fa9699c08d13afd07f08b16ff551117c18ab
+B
+View/viewError.php,a\b\ab78031669bf68672181838fb4f317503949e5e2
