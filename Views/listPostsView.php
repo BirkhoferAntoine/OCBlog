@@ -24,7 +24,7 @@
 
 
     $cardTextContent = "A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.";
-    require_once('cardTemplate.php');
+    require_once('Templates/CardTemplate.php');
 
     ob_start()
 ?>
@@ -34,7 +34,7 @@
         <div class="container-fluid">
             <div class="row px-2">
                 <div class="col mx-2 bg-dark pt-5 px-5 mb-3">
-                    <h2 class="mt-3"><b><?= $listPosts[0] ?></b></h2>
+                    <h2 class="mt-3"><b><?= $postTitle ?></b></h2>
                     <p class="lead mb-5">And an even wittier subheading.</p>
                     <img class="img-fluid d-block" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" width="">
                 </div>
@@ -96,69 +96,6 @@
     </div>
 
 <?php
-    $listPostsContent= ob_get_clean();
+    $listPostsContent = ob_get_clean();
 
-    ob_start();
-?>
-
-    <div class="row px-2">
-
-        <div class="col mx-2 bg-<?php $postColor ?> pt-5 px-5 mb-3">
-            <h2 class="mt-3"><b><?= $post['title'] ?></b></h2>
-            <p class="lead mb-5"><?= $post['content'] ?></p>
-            <img class="img-fluid d-block" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" width="">
-        </div>
-
-
-<?php
-    $listTemplateOdd = ob_get_clean();
-
-    ob_start();
-?>
-
-
-        <div class="col mx-2 bg-<?php $postColor ?> pt-5 px-5 mb-3">
-            <h2 class="mt-3"><b><?= $post['title'] ?></b></h2>
-            <p class="lead mb-5"><?= $post['content'] ?></p>
-            <img class="img-fluid d-block" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" width="">
-        </div>
-
-    </div>
-
-<?php
-    $listTemplateEven = ob_get_clean();
-
-    ob_start();
-
-$postNumber = 0;foreach($listPosts as $post) {
-    $postNumber++;
-    $postColor = '';
-    switch ($postColor) {
-        case ($postNumber % 5 === 0):
-            return 'info';
-            break;
-        case ($postNumber % 4 === 0):
-            return 'secondary';
-            break;
-        case ($postNumber % 3 === 0):
-            return 'light';
-            break;
-        case ($postNumber % 2 === 0):
-            return 'primary';
-            break;
-        case ($postNumber % 1 === 0):
-            return 'dark';
-            break;
-
-        default:
-            return 'primary';
-    }
-
-
-}
-if($postNumber % 2 === 0) {
-    print_r($listTemplateEven);
-} else {
-    print_r($listTemplateOdd);
-}
 ?>

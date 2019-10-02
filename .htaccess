@@ -1,0 +1,9 @@
+# Activation de l'édition du moteur
+RewriteEngine On
+
+# N'accèpte ni fichier, ni dossier
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirection url/action
+RewriteRule ^(.*)$ index.php?url=$1 [L]

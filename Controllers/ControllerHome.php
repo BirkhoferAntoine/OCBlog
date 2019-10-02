@@ -1,56 +1,41 @@
 <?php
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/Views/View.php');
+
 class ControllerHome
 {
     private $_postsManager;
     private $_view;
+    private $_headerContent;
+    private $_card;
 
     public function __construct($url)
     {
-        $this->posts();
         if (isset($url) && count($url) > 1) {
             throw new Exception('404 Page introuvable');
         }
-
-
+        else {
+            $this->_posts();
+            $this->_card();
+        }
     }
 
-    private function posts() {
-        require_once($_SERVER['DOCUMENT_ROOT'].'/Models/Post.php');
+    // Récupère les Posts du Postmanager, intègre les éléments de la page d'accueil
+    private function _posts() {
         $this->_postsManager = new PostsManager();
         $posts = $this->_postsManager->getPosts();
-        echo 'check';
-        echo $posts;
 
-        require_once($_SERVER['DOCUMENT_ROOT'].'/Models/MainModel.php');
-
-
-        require_once($_SERVER['DOCUMENT_ROOT'].'/View/template.php');
-        require_once($_SERVER['DOCUMENT_ROOT'].'/View/homeView.php');
-        require_once($_SERVER['DOCUMENT_ROOT'].'/View/listPostsView.php');
-        echo 'tada';
+        $this->_view = new View('Home');
+        $this->_view->generate(array('posts' => $posts));
     }
 
-    public function printer() {
-        //impression de la page
-        echo 'ahah';
-        print_r($headerTemplate);
-        print_r($navbarTemplate);
-        print_r($homeHeroContent);
-        print_r($cardTemplate);
-        print_r($listPostsContent);
-        print_r($footerTemplate);
-
-        echo 'f2';
+    // TODO: Assembler la carte depuis le controleur (viewHome -> controlleur + CardTemplate -> controlleur = HomeCard)
+    private function _card() {
+        $cardTextContent = getCardTextContent();
+        $this->_card = new CardTemplate($cardTextContent);
+        $this->_view->generate(array('card' => $this->_card));
     }
 
-    public function hBuild() {
-
-        $this->posts();
-        $this->printer();
-        echo 'f3';
-
-    }
 
 }
 

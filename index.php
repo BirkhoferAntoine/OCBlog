@@ -5,16 +5,11 @@ class Router {
     private $_controller;
     private $_view;
 
-    public function routeReq() {
+    public function routerQuery() {
         try {
-            // chargement auto des classes
+            // Chargement automatique des models/classes
             spl_autoload_register(function($class){
                 require_once('Models/' . $class . '.php');
-                echo 'succesn2';
-                if (file_exists('Models/' . $class . '.php')){
-                    echo 'Models/' . $class . '.php';
-                }
-
             });
 
             $url = '';
@@ -42,10 +37,10 @@ class Router {
         }
         catch (Exception $e) {
             $errorMsg = $e -> getMessage();
-            require_once('View/viewError.php');
+            require_once('Views/viewError.php');
         }
     }
 }
 
 $homeRouter = new Router();
-$homeRouter->routeReq();
+$homeRouter->routerQuery();

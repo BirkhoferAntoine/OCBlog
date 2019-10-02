@@ -2,8 +2,9 @@
 
 class PostsManager extends MainModel {
 
+    // Lien entre la BDD (MainModel) et le controller pour instancier les Posts
     public function getPosts() {
-        $this->getAll('Posts', 'Post');
+        return $this->getTableContent('Posts', 'Post');
     }
 
 }

@@ -11,15 +11,14 @@ class Post {
         $this->hydrate($tableQueryData);
     }
 
-    public function hydrate(array $tableQueryDate) {
-        foreach ($tableQueryDate as $key => $value) {
-            echo 'hydrate1';
+    public function hydrate(array $tableQueryData) {
+
+        // Incrémentation automatique des méthodes pour l'hydratation
+        foreach ($tableQueryData as $key => $value) {
             $method = 'set' . ucfirst($key);
-            echo 'hydrate2';
 
             if (method_exists($this, $method)) {
                 $this->$method($value);
-                echo 'hydrate3';
             }
         }
     }
@@ -44,7 +43,7 @@ class Post {
         }
     }
 
-    public function setDateCreation($date_creation) {
+    public function setDate_creation($date_creation) {
         $this->_date_creation = $date_creation;
     }
 

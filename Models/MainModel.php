@@ -1,5 +1,5 @@
 <?php
-
+    //Classe abstraite car sert uniquement à accèder a la BDD
 abstract class MainModel {
 
     private static $_dbConnection;
@@ -8,57 +8,40 @@ abstract class MainModel {
     private const USER_NAME = 'dbu35984';
     private const PASSWORD = '$2y$10$e.cqZR4c2/uL6nQ3HEAgg.nO8yy/loeDef/';
 
+    // Connection à la BDD suivant les directives du server
     private static function setDbConnection()
     {
         try {
-            echo 'try';
-            $host_name = 'db5000177647.hosting-data.io';
-            $database = 'dbs172441';
-            $user_name = 'dbu35984';
-            $password = '$2y$10$e.cqZR4c2/uL6nQ3HEAgg.nO8yy/loeDef/';
-            self::$_dbConnection = new PDO("mysql:host=$host_name; dbname=$database;", $user_name, $password,
+            self::$_dbConnection = new PDO("mysql:host=" . self::HOST_NAME . "; dbname=" . self::DATABASE . ";", self::USER_NAME, self::PASSWORD,
                 array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-            echo 'try';
         }
         catch (PDOException $e) {
             echo "Erreur!: " . $e->getMessage() . "<br/>";
             die();
-        };
-    }
-
-    protected function getDbConnection() {
-        if (self::$_dbConnection = null) {
-            self::setDbConnection();
-            return self::$_dbConnection;
         }
     }
 
-    protected function getAll($table, $object) {
-            $tableContent = [];
+    // Vérifie si la connection est établie, se connecte si null et renvoie le resultat
+    protected function getDbConnection() {
+        if (self::$_dbConnection === null) {
             self::setDbConnection();
-            $tableQuery = self::$_dbConnection->prepare('SELECT * FROM ' . $table . ' ORDER BY id DESC');
-            $tableQuery->execute();
+        }
+        return self::$_dbConnection;
+    }
+
+    // Vérifie et effectue connection à la BDD, récupère les données de la table et les intègre dans de nouveaux objets
+    protected function getTableContent($table, $object) {
+        $this->getDbConnection();
+        $tableContent = [];
+        $tableQuery = self::$_dbConnection->prepare('SELECT * FROM ' . $table . ' ORDER BY id DESC') or die(print_r(self::$_dbConnection->errorInfo()));
+        $tableQuery->execute();
+        if (isset($tableQuery)) {
             while ($tableQueryData = $tableQuery->fetch(PDO::FETCH_ASSOC)){
                 $tableContent[] = new $object($tableQueryData);
-                echo $tableContent;
             }
-            $tableQuery->closeCursor();
-            echo 'lala';
-            return $tableContent;
-
+        }
+        $tableQuery->closeCursor();
+        return $tableContent;
     }
 
 };
-/*
-if(isset($_dbConnection)) {
-
-    $dataListPosts = $_dbConnection->query('SELECT id, content, title, date_creation FROM `Posts` ORDER BY id DESC') or die(print_r($_dbConnection->errorInfo()));
-            if (isset($dataListPosts)) {
-                while($listPosts = $dataListPosts->fetch()) {
-                    print_r($listPosts);
-                };
-            }
-
-}
-
-$postTitle = $listPosts['title']; */
