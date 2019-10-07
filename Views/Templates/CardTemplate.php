@@ -1,23 +1,13 @@
 <?php
 
-class CardTemplate
+abstract class CardTemplate
 {
-    public function __construct($cardTextContent)
-    {
-        $this->_cardBuilder($cardTextContent);
-    }
-
-    /*public function setCardTextContent(string $cardTextContent): void
-    {
-        $this->_cardTextContent = htmlspecialchars($cardTextContent);
-    }*/
-
     // Créé la carte en fonction du texte inséré dans l'argument
-    private function _cardBuilder($cardTextContent) {
+    public static function _cardBuilder($cardTextContent) {
         ob_start()
             ?>
 
-            <div class="py-5" style="background-image: url(https://static.pingendo.com/cover-bubble-dark.svg); background-position: right bottom;  background-size: cover; background-repeat: repeat; background-attachment: fixed;">
+            <div class="py-5" style="background-image: url(../../Vendor/assets/styleguide/cover-bubble-dark.svg); background-position: right bottom;  background-size: cover; background-repeat: repeat; background-attachment: fixed;">
                 <div class="container">
                     <div class="row m-0">
                         <div class="ml-auto bg-white col-md-4 p-4 border border-right-0 border-dark">
@@ -43,5 +33,6 @@ class CardTemplate
         return ob_get_clean();
     }
 }
+?>
 
 

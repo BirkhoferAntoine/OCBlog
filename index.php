@@ -1,14 +1,19 @@
 <?php
 
-class Router {
+define('URL', str_replace('index.php', '', (isset($_SERVER['HTTPS']) ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
+require_once($_SERVER['DOCUMENT_ROOT'] . '/Views/View.php');
+
+class Router
+{
 
     private $_controller;
     private $_view;
 
-    public function routerQuery() {
+    public function routerQuery()
+    {
         try {
             // Chargement automatique des models/classes
-            spl_autoload_register(function($class){
+            spl_autoload_register(function ($class) {
                 require_once('Models/' . $class . '.php');
             });
 
@@ -20,8 +25,8 @@ class Router {
 
                 // Recherche les fichiers controlleurs
                 $controller = ucfirst(strtolower($url[0]));
-                $controllerClass = "Controller" . $controller;
-                $controllerFile = "Controllers/" . $controllerClass . ".php";
+                $controllerClass = 'Controller' . $controller;
+                $controllerFile = 'Controllers/' . $controllerClass . '.php';
 
                 // Execute la classe controlleur inclue dans le fichier si il existe
                 if (file_exists($controllerFile)) {
@@ -34,13 +39,12 @@ class Router {
                 require_once('Controllers/ControllerHome.php');
                 $this->_controller = new ControllerHome($url);
             }
-        }
-        catch (Exception $e) {
-            $errorMsg = $e -> getMessage();
-            require_once('Views/viewError.php');
+        } catch (Exception $e) {
+            $errorMsg = $e->getMessage();
+            $this->_view = new View('Error');
+            $this->_view->generate(array('true', 'errorMsg' => $errorMsg));
         }
     }
 }
-
 $homeRouter = new Router();
 $homeRouter->routerQuery();

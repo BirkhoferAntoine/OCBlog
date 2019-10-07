@@ -11,7 +11,7 @@ ob_start();
             <div class="row">
                 <div class="col-md-12">
                     <ul class="navbar-nav d-flex">
-                        <li class="nav-item mx-1"> <a class="nav-link" href="#"><span class="fa fa-newspaper-o mx-1"></span>Accueil</a> </li>
+                        <li class="nav-item mx-1"> <a class="nav-link" href="<?= URL ?>"><span class="fa fa-newspaper-o mx-1"></span>Accueil</a> </li>
                         <li class="nav-item"> <a class="nav-link" href="#"><span class="fa fa-pencil-square-o mx-1"></span>Livre d'or</a> </li>
                     </ul>
                 </div>

@@ -16,7 +16,7 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous" style=""></script>
 
-    <title><?= $metaTitle ?> Jean Forteroche Blog</title>
+    <title><?= $preViews_fileTitle ?> Jean Forteroche Blog</title>
 
     <?php
     require_once('Templates/navbarTemplate.php');
@@ -29,11 +29,11 @@
 <body>
 
 
-    <?php print_r($navbarTemplate)?>
+    <?php echo $navbarTemplate?>
 
-    <?php print_r($viewContent)?>
+    <?php echo $preViews_viewContent ?>
 
-    <?php print_r($footerTemplate)?>
+    <?php echo $footerTemplate ?>
 
 
 </body>

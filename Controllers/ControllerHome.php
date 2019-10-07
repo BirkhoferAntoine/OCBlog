@@ -6,8 +6,7 @@ class ControllerHome
 {
     private $_postsManager;
     private $_view;
-    private $_headerContent;
-    private $_card;
+
 
     public function __construct($url)
     {
@@ -16,7 +15,6 @@ class ControllerHome
         }
         else {
             $this->_posts();
-            $this->_card();
         }
     }
 
@@ -28,14 +26,6 @@ class ControllerHome
         $this->_view = new View('Home');
         $this->_view->generate(array('posts' => $posts));
     }
-
-    // TODO: Assembler la carte depuis le controleur (viewHome -> controlleur + CardTemplate -> controlleur = HomeCard)
-    private function _card() {
-        $cardTextContent = getCardTextContent();
-        $this->_card = new CardTemplate($cardTextContent);
-        $this->_view->generate(array('card' => $this->_card));
-    }
-
 
 }
 
