@@ -5,20 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d303c589-e3e4-495a-a694-98c800087c98" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Views/Templates/ListedPostTemplate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/ControllerHome.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ControllerHome.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Templates/CardTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/CardTemplate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Templates/footerTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/footerTemplate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Templates/headerTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/headerTemplate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Templates/navbarTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/navbarTemplate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/View.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/View.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/template.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/viewError.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/ViewError.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/viewHome.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/ViewHome.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/listPostsView.php" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -66,16 +55,16 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Views/Templates/ListedPostTemplate.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="12" column="8" lean-forward="true" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+            <state relative-caret-position="-1224">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Models/Post.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-636">
@@ -98,24 +87,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-48">
               <caret line="27" column="9" lean-forward="true" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Views/listPostsView.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="24">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Views/listPostsViewFailure.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="33" column="37" lean-forward="true" selection-start-line="32" selection-start-column="4" selection-end-line="33" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -294,8 +265,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\wamp64\www\OCBlog" />
       <recent name="C:\Users\AntonBirkh\.PhpStorm2019.1\config\scratches" />
+      <recent name="C:\wamp64\www\OCBlog" />
       <recent name="C:\wamp64\www\OCBlog\View" />
       <recent name="C:\wamp64\www\OCBlog\View\Templates" />
       <recent name="C:\wamp64\www\OCBlog\Private" />
@@ -357,7 +328,7 @@
       <workItem from="1570176996046" duration="5755000" />
       <workItem from="1570225525866" duration="3985000" />
       <workItem from="1570309808688" duration="596000" />
-      <workItem from="1570400707115" duration="10776000" />
+      <workItem from="1570400707115" duration="12836000" />
     </task>
     <task id="LOCAL-00001" summary="Base">
       <created>1568854791242</created>
@@ -450,11 +421,18 @@
       <option name="project" value="LOCAL" />
       <updated>1570011852582</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="02/10/19">
+      <created>1570414178377</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1570414178377</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="183498000" />
+    <option name="totallyTimeSpent" value="185558000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -467,7 +445,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49584025" visible="true" weight="0.31236672" />
       <window_info id="Structure" order="1" sideWeight="0.50415975" side_tool="true" weight="0.2739872" />
@@ -729,6 +706,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Views/View.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Views/Templates/ListedPostTemplate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1224">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Models/MainModel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-48">
@@ -736,10 +727,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Models/Post.php">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/listPostsViewFailure.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-636">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
+        <state relative-caret-position="2256">
+          <caret line="94" column="8" lean-forward="true" selection-start-line="94" selection-start-column="8" selection-end-line="94" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -750,31 +741,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Views/listPostsViewFailure.php">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/listPostsView.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="33" column="37" lean-forward="true" selection-start-line="32" selection-start-column="4" selection-end-line="33" selection-end-column="37" />
+        <state relative-caret-position="312">
+          <caret line="13" column="95" lean-forward="true" selection-start-line="13" selection-start-column="95" selection-end-line="13" selection-end-column="95" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Views/View.php">
+    <entry file="file://$PROJECT_DIR$/Models/Post.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Views/listPostsView.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Views/Templates/ListedPostTemplate.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="12" column="8" lean-forward="true" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+        <state relative-caret-position="-636">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
         </state>
       </provider>
     </entry>
