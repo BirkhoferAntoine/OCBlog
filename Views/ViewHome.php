@@ -17,12 +17,5 @@ class ViewHome extends View {
 
 
 /*foreach ($posts as $post) : ?>
-<p><?= 'Hey' ?></p>
-<?php print_r($post) ?>
-<?= 'Je crois'?>
 
-<?= $post->title() ?>
-><?= $post->date_creation() ?>
-
-<?= 'Que ca marche'?>
 <?php endforeach; ?>*/

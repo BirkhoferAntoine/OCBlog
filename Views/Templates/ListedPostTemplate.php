@@ -29,6 +29,8 @@ class ListedPostTemplate extends ViewHome
                 <?php
                 foreach ($postInjection as $postContent) {
                     $this->_postNumber++;
+                    $this->postArray{$this->_postNumber} = new ArrayObject($postContent);
+                    echo '<pre>' . print_r($this->postArray{$this->_postNumber}) . '</pre>';
                     if ( $this->_postNumber % 2 === 0) {
                         $this->_postPair[2] = $postContent;
                         echo $this->_rowBuilder($this->_postPair[1], $this->_postPair[2]);
@@ -84,16 +86,26 @@ class ListedPostTemplate extends ViewHome
         return ob_get_clean();
     }
 
-    private function _postBuilder($postContent) {
+    private function _postBuilder($post) {
         $postColor = $this->_setColor(random_int(1, 5));
+        $postTitle = $post->title();
+        $postContent = $post->content();
+        //$postUrl = $postTitle;
+        $postId = $post->id();
+        //$postImg = $post->image();
+        // $this->_view = new View('Post');
 
         ob_start();
         ?>
 
         <div class="col mx-2 bg-<?= $postColor ?> pt-5 px-5 mb-3">
-            <h2 class="mt-3 "><b><?= $postContent->title() ?></b></h2>
-            <p class="lead mb-5"><?= $postContent->content() ?></p>
-           <img class="img-fluid d-block" src="<?= '$postContent->image()' ?>" width="">
+            <h2 class="mt-3 ">
+                <a href='post=<?= $postId ?>'>
+                    <b><?= $postTitle ?></b>
+                </a>
+            </h2>
+            <p class="lead mb-5"><?= $postContent ?></p>
+           <img class="img-fluid d-block" src="<?= '$post->image()' ?>" width="">
         </div>
 
         <?php
