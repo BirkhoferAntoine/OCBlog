@@ -7,19 +7,19 @@ class ListedPostTemplate extends ViewHome
     private $_postPair = [];
     private $_postEnd;
 
-    public function __construct($postInjection)
+    public function __construct($postsInjection)
     {
         parent::__construct();
 
-        $postReturn = $postInjection['posts'];
+        $posts = $postsInjection['posts'];
 
-        $this->_postEnd = count($postReturn);
+        $this->_postEnd = count($posts);
 
-        echo $this->_postListBuilder($postReturn);
+        echo $this->_postListBuilder($posts);
 
     }
 
-    private function _postListBuilder($postInjection) {
+    private function _postListBuilder($postsInjection) {
         ob_start();
         ?>
 
@@ -27,7 +27,7 @@ class ListedPostTemplate extends ViewHome
             <div class="container-fluid">
 
                 <?php
-                foreach ($postInjection as $postContent) {
+                foreach ($postsInjection as $postContent) {
                     $this->_postNumber++;
                     $this->postArray{$this->_postNumber} = new ArrayObject($postContent);
                     echo '<pre>' . print_r($this->postArray{$this->_postNumber}) . '</pre>';
@@ -90,17 +90,17 @@ class ListedPostTemplate extends ViewHome
         $postColor = $this->_setColor(random_int(1, 5));
         $postTitle = $post->title();
         $postContent = $post->content();
-        //$postUrl = $postTitle;
+        $postUrl = '?' . $postTitle;
         $postId = $post->id();
         //$postImg = $post->image();
-        // $this->_view = new View('Post');
+        // $this->_view = new View('PostModel');
 
         ob_start();
         ?>
 
         <div class="col mx-2 bg-<?= $postColor ?> pt-5 px-5 mb-3">
             <h2 class="mt-3 ">
-                <a href='post=<?= $postId ?>'>
+                <a href='Post<?= $postUrl ?>'>
                     <b><?= $postTitle ?></b>
                 </a>
             </h2>

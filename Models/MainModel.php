@@ -30,10 +30,14 @@ abstract class MainModel {
     }
 
     // Vérifie et effectue connection à la BDD, récupère les données de la table et les intègre dans de nouveaux objets
-    protected function getTableContent($table, $object) {
+    protected function getTableContent($table, $object, $order, $where) {
+        $orderSelect = ' ORDER BY ' . $order;
+        if ($where !== null ) {
+            $whereSelect = ' WHERE ' . $where;
+        }
         $this->getDbConnection();
         $tableContent = [];
-        $tableQuery = self::$_dbConnection->prepare('SELECT * FROM ' . $table . ' ORDER BY id DESC') or die(print_r(self::$_dbConnection->errorInfo()));
+        $tableQuery = self::$_dbConnection->prepare('SELECT * FROM ' . $table . $orderSelect . $whereSelect) or die(print_r(self::$_dbConnection->errorInfo()));
         $tableQuery->execute();
         if (isset($tableQuery)) {
             while ($tableQueryData = $tableQuery->fetch(PDO::FETCH_ASSOC)){
@@ -43,5 +47,4 @@ abstract class MainModel {
         $tableQuery->closeCursor();
         return $tableContent;
     }
-
 };
