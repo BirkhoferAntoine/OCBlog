@@ -9,5 +9,5 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 # Redirection url/action
-RewriteRule ^(.*)$ index.php?url=$1
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
 #php_flag display_errors 1*/

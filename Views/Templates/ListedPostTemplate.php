@@ -52,14 +52,8 @@ class ListedPostTemplate extends ViewHome
 
     private function _setColor($randNumber) {
         switch ($randNumber) {
-            case ($randNumber === 5):
-                return 'info';
-                break;
-            case ($randNumber === 4):
-                return 'secondary';
-                break;
             case ($randNumber === 3):
-                return 'light';
+                return 'secondary';
                 break;
             case ($randNumber === 2):
                 return 'primary';
@@ -87,24 +81,24 @@ class ListedPostTemplate extends ViewHome
     }
 
     private function _postBuilder($post) {
-        $postColor = $this->_setColor(random_int(1, 5));
+        $postColor = $this->_setColor(random_int(1, 3));
         $postTitle = $post->title();
         $postContent = $post->content();
-        $postUrl = '?' . $postTitle;
+        $postUrl = '?name=' . $postTitle;
         $postId = $post->id();
         //$postImg = $post->image();
-        // $this->_view = new View('PostModel');
+        // $this->_view = new View('Post');
 
         ob_start();
         ?>
 
         <div class="col mx-2 bg-<?= $postColor ?> pt-5 px-5 mb-3">
-            <h2 class="mt-3 ">
+            <h2 class="mt-3">
                 <a href='Post<?= $postUrl ?>'>
                     <b><?= $postTitle ?></b>
                 </a>
             </h2>
-            <p class="lead mb-5"><?= $postContent ?></p>
+            <p class="lead mb-5 text-white"><?= $postContent ?></p>
            <img class="img-fluid d-block" src="<?= '$post->image()' ?>" width="">
         </div>
 

@@ -10,7 +10,7 @@ class ControllerHome extends Controller
     {
         parent::__construct($url);
         if (isset($url) && count($url) > 1) {
-            throw new Exception('404 Page introuvable');
+            throw new Exception('404 Page Home introuvable');
         }
         else {
             $this->_posts();
@@ -19,7 +19,8 @@ class ControllerHome extends Controller
 
     // Récupère les Posts du Postmanager, intègre les éléments de la page d'accueil
     private function _posts() {
-        $this->_postsManager = new PostsManagerModel();
+        require_once(ROOT_FOLDER . '/Models/PostsManager.php');
+        $this->_postsManager = new PostsManager();
         $posts = $this->_postsManager->getPosts('`id` DESC', null);
 
         $this->_view = new ViewHome;

@@ -19,7 +19,17 @@ class ViewHome extends View {
 
     protected function generatePostsList($injectContent) {
         require_once('Templates/ListedPostTemplate.php');
-        return new ListedPostTemplate($injectContent);
+        new ListedPostTemplate($injectContent);
+    }
+    // TODO CHANGER VIEW
+    // Génère les cartes pour les billets si un texte est trouvé dans le fichier
+    protected function generateCard() {
+        if ($this->_cardTextContent !== null) {
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/Views/Templates/CardTemplate.php');
+            return CardTemplate::_cardBuilder($this->_cardTextContent);
+        } else {
+            return null;
+        }
     }
 
     protected function generateContent($injectContent) {

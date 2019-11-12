@@ -1,6 +1,6 @@
 <?php
 
-class PostModel {
+class Post {
     private $_id;
     private $_title;
     private $_content;
