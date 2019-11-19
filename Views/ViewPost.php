@@ -7,6 +7,8 @@ class ViewPost extends View
     private $_cardTextContent;
     private $_postDate;
     private $_post;
+    private $_postComments;
+    private $_postImage;
 
     public function __construct()
     {
@@ -16,12 +18,16 @@ class ViewPost extends View
     {
         parent::generate($injectContent);
     }
+
+    public function setComments($comments) {
+        $this->_postComments = $comments;
+    }
+
     // TODO CHANGER VIEW
     // Génère les cartes pour les billets si un texte est trouvé dans le fichier
     protected function generateCard() {
         if ($this->_cardTextContent !== null) {
-            require_once($_SERVER['DOCUMENT_ROOT'] . '/Views/Templates/CardTemplate.php');
-            return CardTemplate::_cardBuilder($this->_cardTextContent);
+            return $this->cardBuilder($this->_cardTextContent, $this->_postDate, $this->_postImage);
         } else {
             return null;
         }
@@ -33,14 +39,23 @@ class ViewPost extends View
         $this->_fileTitle = $this->_post->title();
         $this->_cardTextContent = $this->_post->content();
         $this->_postDate = $this->_post->date_creation();
+        $this->_postImage = $this->_post->image();
     }
-        protected function generateContent($injectContent) {
+
+    protected function generatePostComments() {
+
+        print_r($this->_postComments);
+        return new CommentsTemplate($this->_postComments);
+    }
+
+    protected function generateContent($injectContent) {
 
         ob_start();
 
         if ($injectContent['Post']) {
             $this->generateSelectedPost($injectContent);
-            echo $this->generateCard();
+            print_r($this->generateCard());
+            print_r($this->generatePostComments());
         }
 
         return ob_get_clean();

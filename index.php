@@ -1,5 +1,6 @@
 <?php
-
+//TODO SESSION START LOGIN
+define(USER_LEVEL_ADMIN, '1');
 define(ROOT_FOLDER, $_SERVER['DOCUMENT_ROOT']);
 define('URL', str_replace('index.php', '', (isset($_SERVER['HTTPS']) ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 
@@ -51,13 +52,16 @@ class Router
                 $classTest1 = 'Model';
                 $classTest2 = 'View';
                 $classTest3 = 'Controller';
-                $classTest4 = 'Template';
-                $classTest5 = 'Post';
-                $classTests = '/(' . $classTest1 . '|' . $classTest2 . '|' . $classTest3 . '|' . $classTest4 . '|' . $classTest5 . ')/';
-                print_r($classTests);
+                $classTest4 = 'PostTemplate';
+                $classTest5 = 'Template';
+                $classTest6 = 'Post';
+                $classTest7 = 'Manager';
+                $classTests = '/(' . $classTest1 . '|' . $classTest2 . '|' . $classTest3 . '|' . $classTest4 . '|' . $classTest5 . '|' . $classTest6 . '|' . $classTest7 . ')/';
                 preg_match($classTests, $className, $classMatch);
-                if ($classMatch[1] === 'Post') {
-                    print_r($classMatch[1]);
+                print_r($classMatch[1]);
+                if ($classMatch[1] === $classTest4 || $classMatch[1] === $classTest5) {
+                    $strReplace = 'Views/Templates';
+                } elseif ($classMatch[1]=== $classTest6 || $classMatch[1] === $classTest7) {
                     $strReplace = 'Models';
                 } else {
                     $strReplace = $classMatch[1] . 's';
@@ -74,7 +78,10 @@ class Router
             if (isset($_GET['url'])) {
                 // Decoupe et filtrage de l'url / des actions
                 $url = explode('/', filter_var($_GET['url'], FILTER_SANITIZE_URL));
+                var_dump(htmlspecialchars($_GET['url'])); print_r('GETURLHTML | ');
+                var_dump(filter_var($_GET['url'] , FILTER_SANITIZE_URL)); print_r('GETURLfilter | ');
                 print_r('u' . $url[0] . 'u');
+                var_dump($_SERVER['QUERY_STRING']);
 
                 // Recherche les fichiers controlleurs
                 $controller = ucfirst(strtolower($url[0]));

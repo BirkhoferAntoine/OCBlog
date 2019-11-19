@@ -43,8 +43,7 @@ abstract class MainModel {
         }
         $this->getDbConnection();
         $tableContent = [];
-        $tableQuery = self::$_dbConnection->prepare('SELECT * FROM ' . $table . $orderSelect . $whereSelect) or die(print_r(self::$_dbConnection->errorInfo()));
-        print_r($tableQuery);
+        $tableQuery = self::$_dbConnection->prepare('SELECT * FROM ' . $table . $whereSelect . $orderSelect) or die(print_r(self::$_dbConnection->errorInfo()));
         $tableQuery->execute();
         if (isset($tableQuery)) {
             while ($tableQueryData = $tableQuery->fetch(PDO::FETCH_ASSOC)){
@@ -53,5 +52,20 @@ abstract class MainModel {
         }
         $tableQuery->closeCursor();
         return $tableContent;
+    }
+
+    protected function checkUserInfo($username, $password) {
+        $this->getDbConnection();
+        $userCheck = self::$_dbConnection->prepare('SELECT * FROM `Users` WHERE (`user_name` = `' . $username . '` AND `password` = `' . $password . '`) OR (`user_email` = `' . $username . '` AND `password` = `' . $password . '`') or die(print_r(self::$_dbConnection->errorInfo()));
+        print_r($userCheck);
+
+        $userCheck->execute();
+        if (isset($userCheck)) {
+            print_r('SuccessUser!');
+        }
+        $userReturn = $userCheck->fetch(PDO::FETCH_ASSOC);
+        $userCheck->closerCursor();
+        return $userReturn;
+
     }
 };

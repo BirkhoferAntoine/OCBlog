@@ -25,8 +25,8 @@
     ?>
 
 </head>
-
-<body>
+//TODO CSS OVERFLOW
+<body style="overflow-x: hidden">
 
 
     <?php echo $navbarTemplate?>

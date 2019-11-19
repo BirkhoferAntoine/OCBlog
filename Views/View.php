@@ -3,13 +3,18 @@
 
 class View
 {
+
     private $_fileTitle;
     private $_cardTextContent;
 
     // Récupère le nom de la classe View à exécuter et appelle le fichier nécéssaire
     public function __construct()
     {
+        define(TEMPLATE_PATH, ROOT_FOLDER . '/Views/template.php');
 
+    }
+    use CardTemplate {
+        cardBuilder as protected;
     }
 
     // Génère un fichier View et retourne le contenu
@@ -32,8 +37,7 @@ class View
     // Génère les cartes pour les billets si un texte est trouvé dans le fichier
     protected function generateCard() {
         if ($this->_cardTextContent !== null) {
-            require_once($_SERVER['DOCUMENT_ROOT'] . '/Views/Templates/CardTemplate.php');
-            return CardTemplate::_cardBuilder($this->_cardTextContent);
+            return $this->cardBuilder($this->_cardTextContent, null);
         } else {
             return null;
         }
@@ -58,9 +62,8 @@ class View
             $fileTitle = $this->_fileTitle;
         }
 
-
         // Incrémentation du template
-        $view = $this->generateFile($_SERVER['DOCUMENT_ROOT'] . '/Views/template.php', array('fileTitle' => $fileTitle, 'viewContent' => $viewContent));
+        $view = $this->generateFile(TEMPLATE_PATH, array('fileTitle' => $fileTitle, 'viewContent' => $viewContent));
 
         echo $view;
     }

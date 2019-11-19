@@ -1,6 +1,5 @@
 <?php
 
-// TODO Controller with $_GET['posts'] = new Post, etc...
 class ControllerPost extends Controller
 {
     private $_view;
@@ -15,10 +14,10 @@ class ControllerPost extends Controller
                 throw new Exception('404 Page introuvable');
         } else {
             // Decoupe et filtrage de l'url
-            var_dump($_GET["name"] . 'tada');
             $urlPost = $_GET['name'];
             if ($urlPost !== null) {
                 $this->_post = $urlPost;
+
                 // Recherche les posts
                 $this->_selectedPost($urlPost);
             } else {
@@ -31,9 +30,19 @@ class ControllerPost extends Controller
     private function _selectedPost($urlPost) {
         $this->_postsManager = new PostsManager();
         $post = $this->_postsManager->getPosts(null, '`title` = \'' . $urlPost . '\'');
-        print_r($post);
+        $postCheck = $post[0];
+        $postId = $postCheck->id();
+
+        $postComments = $this->_selectedPostComments($postId);
 
         $this->_view = new ViewPost;
+        $this->_view->setComments($postComments);
         $this->_view->generate(array('Post' => $post));
+    }
+
+    private function _selectedPostComments($idPost) {
+        $this->_commentsManager = new PostCommentsManager();
+        $comments = $this->_commentsManager->getComments('`id`', '`billet_id` = ' . $idPost);
+        return $comments;
     }
 }

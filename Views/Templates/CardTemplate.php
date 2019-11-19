@@ -1,13 +1,20 @@
 <?php
 
-abstract class CardTemplate
+trait CardTemplate
 {
+    private function _setBgImage($bgImage) {
+        if ($bgImage !== null) {
+            return 'background-image: url(' . $bgImage . ')';
+        } else {
+            return 'background-image: url(../../Vendor/assets/styleguide/cover-bubble-dark.svg); background-position: right bottom; background-repeat: repeat';
+        }
+    }
     // Créé la carte en fonction du texte inséré dans l'argument
-    public static function _cardBuilder($cardTextContent) {
+    public function cardBuilder($cardTextContent, $cardDate, $bgImage) {
         ob_start()
             ?>
 
-            <div class="py-5" style="background-image: url(../../Vendor/assets/styleguide/cover-bubble-dark.svg); background-position: right bottom;  background-size: cover; background-repeat: repeat; background-attachment: fixed;">
+            <div class="py-5" style="<?= $this->_setBgImage($bgImage)?>; background-size: cover; background-attachment: fixed;">
                 <div class="container">
                     <div class="row m-0">
                         <div class="ml-auto bg-white col-md-4 p-4 border border-right-0 border-dark">
@@ -19,9 +26,10 @@ abstract class CardTemplate
                             </div>
                         </div>
                         <div class="p-3 col-md-7 mr-auto bg-white text-dark justify-content-between d-inline-flex border border-left-0 border-dark">
-                            <div class="blockquote mb-0 flex-column align-items-end justify-content-center d-inline-flex bg-primary">
-                                <p class="bg-primary"><?= htmlspecialchars($cardTextContent) ?></p>
-                                <div class="blockquote-footer"> <b>Jean Forteroche</b>, écrivain d'intérieur.</div>
+                            <div class="blockquote mb-0 flex-column align-items-end justify-content-center d-inline-flex bg-primary" style="width: 100%">
+                                <p class="bg-primary align-self-center"><?= htmlspecialchars($cardTextContent) ?></p>
+                                <p class="justify-content-end"><?= htmlspecialchars($cardDate) ?></p>
+                                <div class="blockquote-footer"><b>Jean Forteroche</b>, écrivain d'intérieur.</div>
                             </div>
                         </div>
                     </div>

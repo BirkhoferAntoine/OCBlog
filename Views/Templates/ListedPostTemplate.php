@@ -14,8 +14,8 @@ class ListedPostTemplate extends ViewHome
         $posts = $postsInjection['posts'];
 
         $this->_postEnd = count($posts);
-
         echo $this->_postListBuilder($posts);
+        echo $this->_listIndex();
 
     }
 
@@ -29,8 +29,6 @@ class ListedPostTemplate extends ViewHome
                 <?php
                 foreach ($postsInjection as $postContent) {
                     $this->_postNumber++;
-                    $this->postArray{$this->_postNumber} = new ArrayObject($postContent);
-                    echo '<pre>' . print_r($this->postArray{$this->_postNumber}) . '</pre>';
                     if ( $this->_postNumber % 2 === 0) {
                         $this->_postPair[2] = $postContent;
                         echo $this->_rowBuilder($this->_postPair[1], $this->_postPair[2]);
@@ -80,30 +78,69 @@ class ListedPostTemplate extends ViewHome
         return ob_get_clean();
     }
 
-    private function _postBuilder($post) {
-        $postColor = $this->_setColor(random_int(1, 3));
-        $postTitle = $post->title();
-        $postContent = $post->content();
-        $postUrl = '?name=' . $postTitle;
-        $postId = $post->id();
-        //$postImg = $post->image();
-        // $this->_view = new View('Post');
+    private function _postBuilder($post)
+    {
+        if ($post !== null) {
+            $postColor = $this->_setColor(random_int(1, 3));
+            $postTitle = $post->title();
+            $postContent = $post->content();
+            $postUrl = '?name=' . $postTitle;
+            $postImg = $post->image();
 
+            ob_start();
+
+            if ($postImg !== null) {
+                ?>
+                    <div class="col mx-2 pt-5 px-5 mb-3 d-flex flex-column align-items-center" style="background-image: url(<?= $postImg ?>); background-size: cover;">
+                <?php
+            } else {
+                ?>
+                    <div class="col d-flex flex-column align-items-center bg-<?= $postColor ?> pt-5 px-5 mb-3">
+                <?php
+            }
+            ?>
+                        <div class="col-md-4">
+                            <h3 class="mt-3 bg-light">
+                                <a href='Post<?= $postUrl ?>' class="text-decoration-none text-dark">
+                                    <b><?= $postTitle ?></b>
+                                </a>
+                            </h3>
+                        </div>
+                        <div class="col-md-4">
+                        <p class="lead mb-5 text-white"><?= $postContent ?></p>
+                        </div>
+                    </div>
+            <?php
+            return ob_get_clean();
+        } else {
+            return null;
+        }
+    }
+
+    private function _listIndex() {
         ob_start();
         ?>
-
-        <div class="col mx-2 bg-<?= $postColor ?> pt-5 px-5 mb-3">
-            <h2 class="mt-3">
-                <a href='Post<?= $postUrl ?>'>
-                    <b><?= $postTitle ?></b>
-                </a>
-            </h2>
-            <p class="lead mb-5 text-white"><?= $postContent ?></p>
-           <img class="img-fluid d-block" src="<?= '$post->image()' ?>" width="">
-        </div>
-
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item"> <a class="page-link" href="#">Prev</a> </li>
+                        <li class="page-item active"> <a class="page-link" href="#">1</a> </li>
+                        <li class="page-item"> <a class="page-link" href="#">2</a> </li>
+                        <li class="page-item"> <a class="page-link" href="#">3</a> </li>
+                        <li class="page-item"> <a class="page-link" href="#">4</a> </li>
+                        <li class="page-item"> <a class="page-link" href="#">Next</a> </li>
+                    </ul>
+                </div>
+            </div>
         <?php
         return ob_get_clean();
     }
-
 }
+              /*  <picture>
+                    <source srcset="<?= $postImg ?>" type="image">
+                    <img class="img-fluid d-block" src="<?= $postImg ?>" alt="Image du billet">
+                </picture>
+                <?php // width="">
+            }*/
+
+              ?>

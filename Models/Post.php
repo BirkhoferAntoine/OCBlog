@@ -5,6 +5,7 @@ class Post {
     private $_title;
     private $_content;
     private $_date_creation;
+    private $_image;
 
     public function __construct(array $tableQueryData)
     {
@@ -47,6 +48,14 @@ class Post {
         $this->_date_creation = $date_creation;
     }
 
+    public function setImage($image) {
+        if ($image !== '') {
+            $this->_image = $image;
+        } else {
+            return null;
+        }
+    }
+
     // GETTERS
     public function id() {
         return $this->_id;
@@ -62,6 +71,10 @@ class Post {
 
     public function date_creation() {
         return $this->_date_creation;
+    }
+
+    public function image() {
+        return $this->_image;
     }
 }
 

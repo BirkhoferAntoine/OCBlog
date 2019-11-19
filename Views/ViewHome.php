@@ -13,20 +13,18 @@ class ViewHome extends View {
 
     protected function generateHeader() {
         if ($this->_header !== null) {
-            echo $this->generateFile($_SERVER['DOCUMENT_ROOT'] . $this->_header, null);
+            echo $this->generateFile(ROOT_FOLDER . $this->_header, null);
         }
     }
 
     protected function generatePostsList($injectContent) {
-        require_once('Templates/ListedPostTemplate.php');
-        new ListedPostTemplate($injectContent);
+        return new ListedPostTemplate($injectContent);
     }
-    // TODO CHANGER VIEW
+
     // Génère les cartes pour les billets si un texte est trouvé dans le fichier
     protected function generateCard() {
         if ($this->_cardTextContent !== null) {
-            require_once($_SERVER['DOCUMENT_ROOT'] . '/Views/Templates/CardTemplate.php');
-            return CardTemplate::_cardBuilder($this->_cardTextContent);
+            return $this->cardBuilder($this->_cardTextContent, null, null);
         } else {
             return null;
         }
@@ -38,8 +36,8 @@ class ViewHome extends View {
 
         $this->generateHeader();
         if ($injectContent['posts']) {
-            echo $this->generateCard();
-            echo $this->generatePostsList($injectContent);
+            print_r($this->generateCard());
+            print_r($this->generatePostsList($injectContent));
         }
         return ob_get_clean();
     }
@@ -56,18 +54,13 @@ class ViewHome extends View {
             $fileTitle = $this->_title;
         }
 
-
         // Incrémentation du template
-        $view = $this->generateFile($_SERVER['DOCUMENT_ROOT'] . '/Views/template.php', array('fileTitle' => $fileTitle, 'viewContent' => $viewContent));
+        $view = $this->generateFile(TEMPLATE_PATH, array('fileTitle' => $fileTitle, 'viewContent' => $viewContent));
 
         echo $view;
     }
-
-
 }
-
-
-
+//TODO CLEAN CODE
 /*foreach ($posts as $post) : ?>
 
 <?php endforeach; ?>*/

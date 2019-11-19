@@ -27,8 +27,8 @@ ob_start();
         <div class="container">
             <div class="d-flex col-md-12 justify-content-around align-items-baseline" style="">
                 <ul class="navbar-nav m-0">
-                    <li class="nav-item p-0"> <a class="nav-link" href="#">Log in</a> </li>
-                    <li class="nav-item p-0"> <a class="nav-link text-primary" href="#">Register</a> </li>
+                    <li class="nav-item p-0"> <a class="nav-link" href="User?login">Connexion</a> </li>
+                    <li class="nav-item p-0"> <a class="nav-link text-primary" href="User?register">Inscription</a> </li>
                 </ul>
                 <ul class="nav nav-pills d-flex align-items-center justify-content-center" style="">
                     <li class="nav-item"> <a href="" class="nav-link" data-toggle="pill" data-target="#tabone"><span class="fa fa-lg fa-envelope-open"></span> </a> </li>
