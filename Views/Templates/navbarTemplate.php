@@ -27,8 +27,8 @@ ob_start();
         <div class="container">
             <div class="d-flex col-md-12 justify-content-around align-items-baseline" style="">
                 <ul class="navbar-nav m-0">
-                    <li class="nav-item p-0"> <a class="nav-link" href="User?login">Connexion</a> </li>
-                    <li class="nav-item p-0"> <a class="nav-link text-primary" href="User?register">Inscription</a> </li>
+                    <li class="nav-item p-0"> <a class="nav-link" href="<?= URL ?>User/Login">Connexion</a> </li>
+                    <li class="nav-item p-0"> <a class="nav-link text-primary" href="<?= URL ?>User/Register">Inscription</a> </li>
                 </ul>
                 <ul class="nav nav-pills d-flex align-items-center justify-content-center" style="">
                     <li class="nav-item"> <a href="" class="nav-link" data-toggle="pill" data-target="#tabone"><span class="fa fa-lg fa-envelope-open"></span> </a> </li>
@@ -36,8 +36,8 @@ ob_start();
                     <li class="nav-item">
                         <div class="btn-group m-2"> <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="fa fa-lg fa-cog"></span> </button>
                             <div class="dropdown-menu">
-                                <h6 class="dropdown-header">Dropdown header</h6> <a class="dropdown-item" href="#">Option 1</a> <a class="dropdown-item" href="#">Option 2</a> <a class="dropdown-item disabled" href="#">Disabled option</a>
-                                <div class="dropdown-divider"></div> <a class="dropdown-item" href="#">Separated link</a>
+                                <h6 class="dropdown-header">Dropdown header</h6> <a class="dropdown-item" href="#">Mon compte</a> <a class="dropdown-item" href="#">Deconnexion</a> <a class="dropdown-item disabled" href="#">Disabled option</a>
+                                <div class="dropdown-divider"></div> <a class="dropdown-item disabled" href="#">Page Admin</a>
                             </div>
                         </div>
                     </li>

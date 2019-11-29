@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/Vendor/assets/coreui-master/coreui-master/vendor/composer" />
+    </include_path>
+  </component>
   <component name="PhpInterpreters">
     <interpreters>
       <interpreter id="80f98c8c-b8c4-4bf9-bd9c-b65472dd7d60" name="Remote PHP" home="sftp://DATA" debugger_id="php.debugger.XDebug">
-        <remote_data WEB_SERVER_CONFIG_ID="a542377a-b1cb-4fcc-8c15-2b9292b6db95" WEB_SERVER_CONFIG_NAME="1&amp;1" WEB_SERVER_CREDENTIALS_ID="sftp://u95785354@access764386720.webspace-data.io:22" INTERPRETER_PATH="/usr/bin/php" HELPERS_PATH="" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" />
+        <remote_data WEB_SERVER_CONFIG_ID="a542377a-b1cb-4fcc-8c15-2b9292b6db95" WEB_SERVER_CONFIG_NAME="1&amp;1" WEB_SERVER_CREDENTIALS_ID="sftp://u95785354@access764386720.webspace-data.io:22" INTERPRETER_PATH="" HELPERS_PATH="" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" />
       </interpreter>
     </interpreters>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings load_method="CUSTOM_LOADER" custom_loader_path="$PROJECT_DIR$/Vendor/assets/coreui-master/coreui-master/vendor/autoload.php" />
+    </phpunit_settings>
+  </component>
 </project>

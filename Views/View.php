@@ -6,6 +6,8 @@ class View
 
     private $_fileTitle;
     private $_cardTextContent;
+    private static $_errorLog = [];
+
 
     // Récupère le nom de la classe View à exécuter et appelle le fichier nécéssaire
     public function __construct()
@@ -15,6 +17,18 @@ class View
     }
     use CardTemplate {
         cardBuilder as protected;
+    }
+
+    public static function addErrorLog($add) {
+        $addToLog = $add; // html spec char
+        if ($add !== $addToLog) {
+            $addToLog .= 'NOT SAME';
+        }
+        static::$_errorLog .= $addToLog;
+    }
+
+    public static function showErrorLog() {
+        var_dump(static::$_errorLog);
     }
 
     // Génère un fichier View et retourne le contenu
@@ -54,7 +68,8 @@ class View
     protected function generate($injectContent) {
         // Récupère le contenu
         if ($injectContent['errorMsg']) {
-            $viewContent = ViewError::showError($injectContent);
+            $errorMessage = $injectContent . self::$_errorLog;
+            $viewContent = ViewError::showError($errorMessage);
         } else {
             $viewContent = $this->generateContent($injectContent);
         }

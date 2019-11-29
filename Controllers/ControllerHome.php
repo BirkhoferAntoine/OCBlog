@@ -1,6 +1,6 @@
 <?php
 
-class ControllerHome extends Controller
+class ControllerHome
 {
     private $_postsManager;
     private $_view;
@@ -8,9 +8,8 @@ class ControllerHome extends Controller
 
     public function __construct($url)
     {
-        parent::__construct($url);
-        if (isset($url) && count($url) > 1) {
-            throw new Exception('404 Page Home introuvable');
+        if (!empty($url)) {
+            throw new Exception('404 Page introuvable');
         }
         else {
             $this->_posts();

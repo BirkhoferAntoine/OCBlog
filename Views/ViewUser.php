@@ -4,6 +4,7 @@
 class ViewUser extends View
 {
     private $_title = "User";
+    private $_message;
 
     public function __construct()
     {
@@ -12,45 +13,37 @@ class ViewUser extends View
 
     protected function generateLoginForm() {
         $this->_title = "Connexion";
-        return new LoginFormTemplate;
+        return new LoginFormTemplate($this->_message);
     }
     protected function generateRegisterForm() {
         $this->_title = "Inscription";
-        return new RegisterFormTemplate;
+        return new RegisterFormTemplate($this->_message);
     }
     protected function generateForgotForm() {
         $this->_title = "Récupération de mot de passe";
-        return 'new ForgotFormTemplate';
+        return 'new ForgotFormTemplate($this->_message)';
     }
 
-    public function generateContent($form)
+    protected function generateContent($form)
     {
-        $formTest1 = 'login';
-        $formTest2 = 'register';
-        $formTest3 = 'forgot';
+        $formGen = 'generate' . ucfirst($form) . 'Form';
+        if (method_exists($this, $formGen)) {
+            ob_start();
 
-        ob_start();
-        switch ($form) {
-            case ($formTest1) :
-                print_r($this->generateLoginForm());
-                break;
-            case ($formTest2) :
-                print_r($this->generateRegisterForm());
-                break;
-            case ($formTest3) :
-                print_r('WHAT YA FORGOT YAR PASSWURD?');
-                print_r($this->generateForgotForm());
-                break;
-            default :
-                throw new Exception('404 Page User ' . filter_var($form, FILTER_SANITIZE_URL) . ' introuvable.');
-                break;
+            $this->$formGen();
+
+            return ob_get_clean();
+        } else {
+            throw new Exception('404 Formulaire ' . $formGen . ' introuvable');
         }
-        return ob_get_clean();
     }
 
-    public function generate($form) {
+    public function generate($form, $message) {
 
         // Récupère le contenu
+        $this->_message = $message;
+        //Router::$_errorLog .= '_message => ' . $message . '<br/>';
+
         $viewContent = $this->generateContent($form);
 
         if ($this->_title !== null) {

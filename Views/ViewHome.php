@@ -45,11 +45,9 @@ class ViewHome extends View {
 
     public function generate($injectContent) {
         // Récupère le contenu
-        if ($injectContent['errorMsg']) {
-            $viewContent = ViewError::showError($injectContent);
-        } else {
+
             $viewContent = $this->generateContent($injectContent);
-        }
+
         if ($this->_title !== null) {
             $fileTitle = $this->_title;
         }

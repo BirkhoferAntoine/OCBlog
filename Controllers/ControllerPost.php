@@ -1,28 +1,19 @@
 <?php
 
-class ControllerPost extends Controller
+class ControllerPost
 {
     private $_view;
-    private $_post;
     private $_postsManager;
     private $_commentsManager;
 
-    public function __construct($url)
+    public function __construct($urlPost)
     {
-        parent::__construct($url);
-        if (isset($url) && count($url) > 1) {
+        if (empty($urlPost)) {
                 throw new Exception('404 Page introuvable');
         } else {
-            // Decoupe et filtrage de l'url
-            $urlPost = $_GET['name'];
-            if ($urlPost !== null) {
-                $this->_post = $urlPost;
-
+            var_dump($urlPost);
                 // Recherche les posts
-                $this->_selectedPost($urlPost);
-            } else {
-                throw new Exception('404 Billet ' . $urlPost . ' introuvable');
-            }
+            $this->_selectedPost($urlPost);
         }
     }
 
@@ -31,13 +22,18 @@ class ControllerPost extends Controller
         $this->_postsManager = new PostsManager();
         $post = $this->_postsManager->getPosts(null, '`title` = \'' . $urlPost . '\'');
         $postCheck = $post[0];
-        $postId = $postCheck->id();
 
-        $postComments = $this->_selectedPostComments($postId);
+        if (!empty($postCheck)) {
+            $postId = $postCheck->id();
 
-        $this->_view = new ViewPost;
-        $this->_view->setComments($postComments);
-        $this->_view->generate(array('Post' => $post));
+            $postComments = $this->_selectedPostComments($postId);
+
+            $this->_view = new ViewPost;
+            $this->_view->setComments($postComments);
+            $this->_view->generate(array('Post' => $post));
+        } else {
+            throw new Exception('404 Billet ' . $urlPost . ' introuvable');
+        }
     }
 
     private function _selectedPostComments($idPost) {

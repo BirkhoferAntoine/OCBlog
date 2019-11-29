@@ -42,6 +42,7 @@ class ViewPost extends View
         $this->_postImage = $this->_post->image();
     }
 
+    // TODO COMMENTS FORM
     protected function generatePostComments() {
 
         print_r($this->_postComments);

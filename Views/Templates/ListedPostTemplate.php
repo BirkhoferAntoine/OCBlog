@@ -84,7 +84,6 @@ class ListedPostTemplate extends ViewHome
             $postColor = $this->_setColor(random_int(1, 3));
             $postTitle = $post->title();
             $postContent = $post->content();
-            $postUrl = '?name=' . $postTitle;
             $postImg = $post->image();
 
             ob_start();
@@ -101,7 +100,7 @@ class ListedPostTemplate extends ViewHome
             ?>
                         <div class="col-md-4">
                             <h3 class="mt-3 bg-light">
-                                <a href='Post<?= $postUrl ?>' class="text-decoration-none text-dark">
+                                <a href='Post/<?= $postTitle ?>' class="text-decoration-none text-dark">
                                     <b><?= $postTitle ?></b>
                                 </a>
                             </h3>
