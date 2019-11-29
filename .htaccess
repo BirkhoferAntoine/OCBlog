@@ -1,0 +1,13 @@
+# Activation de l'édition du moteur
+RewriteEngine On
+RewriteBase /
+#RewriteCond %{Server_Port} !=443
+#RewriteRule ^(.*)$ http://jean-forteroche.rongeasse.com/$1 [R=301, L]
+
+# N'accèpte ni fichier, ni dossier
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirection url/action
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+#php_flag display_errors 1*/
