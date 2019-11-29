@@ -36,8 +36,7 @@ ob_start();
                     <li class="nav-item">
                         <div class="btn-group m-2"> <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="fa fa-lg fa-cog"></span> </button>
                             <div class="dropdown-menu">
-                                <h6 class="dropdown-header">Dropdown header</h6> <a class="dropdown-item" href="#">Mon compte</a> <a class="dropdown-item" href="#">Deconnexion</a> <a class="dropdown-item disabled" href="#">Disabled option</a>
-                                <div class="dropdown-divider"></div> <a class="dropdown-item disabled" href="#">Page Admin</a>
+                                <h6 class="dropdown-header">Dropdown header</h6> <a class="dropdown-item" href="<?= URL ?>User/Panel">Mon compte</a> <a class="dropdown-item" href="#">Deconnexion</a> <a class="dropdown-item disabled" href="#">Disabled option</a>
                             </div>
                         </div>
                     </li>

@@ -1,7 +1,10 @@
 <?php
 //TODO SESSION START LOGIN
-define(USER_LEVEL_ADMIN, '1');
-define(ROOT_FOLDER, $_SERVER['DOCUMENT_ROOT']);
+// ADMIN PANEL AVATAR IMAGE
+session_start();
+//var_dump($_SESSION);
+
+define(ROOT_FOLDER, filter_var($_SERVER['DOCUMENT_ROOT']));
 define('URL', str_replace('index.php', '', (isset($_SERVER['HTTPS']) ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]"));
 
 class Router
@@ -21,9 +24,9 @@ class Router
 
     public function routerQuery()
     {
-        static::$_errorLog .= 'ROUTER <br/>';
+        static::$_errorLog .= '<br/>ROUTER <br/>';
 
-
+        //var_dump($_SESSION['level']);
         try {
             // Chargement automatique des models/classes
             spl_autoload_register(static function($className) {
@@ -76,8 +79,8 @@ class Router
         }
     }
 }
-$homeRouter = new Router();
-$homeRouter->routerQuery();
+$mainRouter = new Router();
+$mainRouter->routerQuery();
 
 Router::addToErrorLog();
 View::showErrorLog();

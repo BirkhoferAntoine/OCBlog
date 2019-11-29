@@ -1,4 +1,4 @@
 AuthType Basic
 AuthName "Password Protected Area"
-AuthUserFile /kunden/homepages/11/d764386720/htdocs/OCBlog/.htpasswd
+AuthUserFile /kunden/homepages/11/d764386720/htdocs/OCBlog/Private/.htpasswd
 require valid-user

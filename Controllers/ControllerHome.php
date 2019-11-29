@@ -20,7 +20,7 @@ class ControllerHome
     private function _posts() {
         $this->_postsManager = new PostsManager();
         $posts = $this->_postsManager->getPosts('`id` DESC LIMIT 0, 10', null);
-        print_r($posts);
+        View::addErrorLog($posts);
 
         $this->_view = new ViewHome;
         $this->_view->generate(array('posts' => $posts));

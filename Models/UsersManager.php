@@ -46,10 +46,9 @@ class UsersManager extends MainModel
         var_dump($dbUser);
         if (password_verify($userPassword, $dbPassword)) {
             print_r('LOGGED IN');
-            session_start();
 
             $_SESSION['loggedin'] = true;
-            $_SESSION['nickname'] = $dbUser['user_name'];
+            $_SESSION['username'] = $dbUser['user_name'];
             $_SESSION['level'] = $dbUser['user_level'];
             var_dump($_SESSION);
         }
@@ -89,23 +88,3 @@ class UsersManager extends MainModel
     }
 
 }
-/*
-<pre>
-     <?php
-     print_r($_SESSION);
-     ?>
- </pre>
-
- <?php
-        if (isset($_POST['passInput']))
-        {
-            $infoTxt = htmlspecialchars($_POST['passInput']);
-            if ($infoTxt === "kangourou")
-            {
-                echo 'Patatate!';
-            } else {
-                echo 'Ehbahnon!';
-            }
-
-        }
-     ?>*/

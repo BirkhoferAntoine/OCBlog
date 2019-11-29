@@ -17,36 +17,43 @@ class ControllerUser
             $this->_errorLog .= 'URL => ' . $url . '<br/>';
 
             $query = explode('&', $url);
-            $form = $query[0];
-            var_dump($form);
 
-            $this->_buildForm($form);
+            /*var_dump($_COOKIE);
+            var_dump($_SESSION['username']);
+            print_r('level =>');
+            var_dump($_SESSION['level']);
+            var_dump($query);*/
 
-            var_dump('submit => ' . $_GET['submit'] . '<br/>');
+            if ($query[0] === 'Panel' && isset($_SESSION['username'])) {
 
+                if ($_SESSION['level'] === '1') {
+                    require_once(ROOT_FOLDER . '/Views/Templates/AdminPanel.php');
+                    View::addErrorLog(ROOT_FOLDER . '/Views/Templates/AdminPanel.php');
+                    $this->_view = new AdminPanel();
+                }
 
-            var_dump(isset($_GET['Login']));
-            var_dump(isset($_GET['register']));
-            print_r('parseURL');
-            $parseURL = parse_url($_SERVER['QUERY_STRING'], PHP_URL_QUERY);
-            var_dump($parseURL);
-            print_r('parseSTR');
-            $queries = [];
-            var_dump(parse_str($_SERVER['QUERY_STRING'], $queries));
+            } else {
+                $form = $query[0];
+                var_dump($form);
 
-            print_r('QueryS');
-            var_dump($_SERVER['QUERY_STRING']);
-            print_r('SCRIPTNAME');
-            var_dump($_SERVER['SCRIPT_NAME']);
-            print_r('phpself');
-            var_dump($_SERVER['PHP_SELF']);
-            print_r('HTTP');
-            var_dump($_SERVER['HTTP_REFERER']);
-            print_r('script');
-            var_dump($_SERVER['SCRIPT_FILENAME']);
-            var_dump($_GET['login']);
+                $this->_buildForm($form);
 
-            View::addErrorLog($this->_errorLog);
+                var_dump('submit => ' . $_GET['submit'] . '<br/>');
+
+                print_r('QueryS');
+                var_dump($_SERVER['QUERY_STRING']);
+                print_r('SCRIPTNAME');
+                var_dump($_SERVER['SCRIPT_NAME']);
+                print_r('phpself');
+                var_dump($_SERVER['PHP_SELF']);
+                print_r('HTTP');
+                var_dump($_SERVER['HTTP_REFERER']);
+                print_r('script');
+                var_dump($_SERVER['SCRIPT_FILENAME']);
+                var_dump($_GET['login']);
+
+                View::addErrorLog($this->_errorLog);
+            }
         }
     }
 
