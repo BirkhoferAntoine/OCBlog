@@ -9,18 +9,22 @@
     <meta name="author" content="Antoine Birkhofer">
     <!-- CoreUI CSS -->
     <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
 
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script type="text/javascript">
         tinymce.init({
-            selector: '#tinyEditor'
+            selector: '#tinyEditor',
+            plugins: 'autolink code link preview',
+            toolbar: 'code link preview',
+            menubar: 'tools insert view'
         });</script>
 
+    <script defer src="https://kit.fontawesome.com/e1049b5881.js" crossorigin="anonymous"></script>
     <script defer src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous" style=""></script>
     <script defer src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
+
     <title>ADMIN PANEL</title>
 
 </head>
@@ -153,23 +157,21 @@
                     <li class="nav-title">Gestion des billets</li>
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#">
-                            <i class="nav-icon fa fa-code"></i> Editors</a>
+                            <i class="nav-icon fa fa-feather-alt"></i> Edition</a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a class="nav-link" href="editors/code-editor.html">
-                                    <i class="nav-icon icon-note"></i> Code Editor
-                                    <span class="badge badge-danger">PRO</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="editors/markdown-editor.html">
+                                <a class="nav-link" href="Panel?markdown=true">
                                     <i class="nav-icon fa fa-code"></i> Markdown
-                                    <span class="badge badge-danger">PRO</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="Panel?editor=true">
-                                    <i class="nav-icon icon-note"></i> Nouveau billet
+                                    <i class="nav-icon far fa-file"></i> Nouveau billet
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Panel?editor=true">
+                                    <i class="nav-icon far fa-edit"></i> Editer un billet
                                 </a>
                             </li>
                         </ul>
@@ -198,8 +200,6 @@
                             </li>
                         </ul>
                     </li>
-
-
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="nav-icon icon-star"></i> Pages</a>
@@ -224,41 +224,25 @@
                     </li>
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#">
-                            <i class="nav-icon icon-layers"></i> Apps</a>
+                            <i class="nav-icon far fa-envelope"></i> Email</a>
                         <ul class="nav-dropdown-items">
-                            <li class="nav-item nav-dropdown">
-                                <a class="nav-link nav-dropdown-toggle" href="#">
-                                    <i class="nav-icon icon-speech"></i> Invoicing</a>
-                                <ul class="nav-dropdown-items">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="apps/invoicing/invoice.html">
-                                            <i class="nav-icon icon-speech"></i> Invoice
-                                        </a>
-                                    </li>
-                                </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="apps/email/inbox.html">
+                                    <i class="nav-icon icon-speech"></i> Inbox
+                                </a>
                             </li>
-                            <li class="nav-item nav-dropdown">
-                                <a class="nav-link nav-dropdown-toggle" href="#">
-                                    <i class="nav-icon icon-speech"></i> Email</a>
-                                <ul class="nav-dropdown-items">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="apps/email/inbox.html">
-                                            <i class="nav-icon icon-speech"></i> Inbox
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="apps/email/message.html">
-                                            <i class="nav-icon icon-speech"></i> Message
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="apps/email/compose.html">
-                                            <i class="nav-icon icon-speech"></i> Compose
-                                        </a>
-                                    </li>
-                                </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="apps/email/message.html">
+                                    <i class="nav-icon icon-speech"></i> Message
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="apps/email/compose.html">
+                                    <i class="nav-icon icon-speech"></i> Compose
+                                </a>
                             </li>
                         </ul>
+                    </li>
                     </li>
                     <li class="nav-divider"></li>
                     <li class="nav-title">Labels</li>
@@ -301,7 +285,7 @@
                     </div>
                 </li>
             </ol>
-            <?php var_dump($prePanel_panelContent) ?>
+            <?php echo $prePanel_panelContent ?>
         </main>
         <aside class="aside-menu">
             <ul class="nav nav-tabs" role="tablist">

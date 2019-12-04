@@ -10,7 +10,8 @@ class AdminPanel {
 
     private function _mainBuild($insert)
     {
-        extract($insert, EXTR_PREFIX_ALL, 'prePanel');
+        $prePanel_panelContent = $insert;
+
 
         ob_start();
 
@@ -23,9 +24,14 @@ class AdminPanel {
     private function _panelBuild() {
 
         if ($_GET['editor']) {
-            return $this->_mainBuild($this->_tinyMCEBuild());
+            $panelContent = $this->_tinyMCEBuild();
+            return $this->_mainBuild($panelContent);
+        } elseif ($_GET['markdown']) {
+            $panelContent = $this->_markdownBuild();
+            return $this->_mainBuild($panelContent);
         } else {
-            return $this->_mainBuild($this->dashboard());
+            $panelContent = $this->_dashboard();
+            return $this->_mainBuild($panelContent);
         }
     }
 
@@ -40,19 +46,70 @@ class AdminPanel {
                         <div class="card">
                             <div class="card-header">TinyMCE</div>
                             <div class="card-body">
-                                <form method="post">
+                                <form method="post" action="">
                                     <label for="tinyEditor">Nouveau Billet</label>
                                     <textarea id="tinyEditor" name="tinyEditor">Ca marche!</textarea>
+                                    <input type="submit" onclick="event.preventDefault()">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="animated fadeIn">
+                        <div class="card">
+                            <div class="card-header">Aperçu</div>
+                            <div class="card-body">
+                                <div id="tinyPreview"></div>
+                                <form method="post" action="">
+                                    <input type="submit" onclick="event.preventDefault()">
                                 </form>
                             </div>
                         </div>
                     </div></div></div>
         </div>
         <?php
-        $panelContent = ob_get_clean();
+        return ob_get_clean();
     }
 
-    private function dashboard() {
+    private function _markdownBuild() {
+
+        include(ROOT_FOLDER . '/Vendor/assets/Markdown/Parsedown.php');
+        $Parsedown = new Parsedown();
+        $this->_parsedownText = $_POST['markdown'];
+
+
+        ob_start();
+        ?>
+        <div class="container-fluid">
+            <div id="ui-view"><div>
+
+                    <div class="animated fadeIn">
+                        <div class="card">
+                            <div class="card-header">Markdown</div>
+                            <div class="card-body">
+                                <form method="post">
+                                    <label for="markdown">Nouveau Billet</label>
+                                    <textarea id="markdown" name="markdown">Ca marche!</textarea>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="animated fadeIn">
+                        <div class="card">
+                            <div class="card-header">Textdown</div>
+                            <div class="card-body">
+                                <form method="post">
+                                    <label for="textdown">Result</label>
+                                    <p id="textdown" name="textdown"><?php echo $Parsedown->text($this->_parsedownText); ?></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div></div></div>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
+
+    private function _dashboard() {
 
         ob_start();
         ?>
@@ -297,6 +354,7 @@ class AdminPanel {
 
         </div>
         <?php
-        $panelContent = ob_get_clean();
+        return ob_get_clean();
+
     }
 }

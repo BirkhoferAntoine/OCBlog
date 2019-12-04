@@ -15,6 +15,7 @@ class ControllerUser
             // Decoupe et filtrage de l'url
 
             $this->_errorLog .= 'URL => ' . $url . '<br/>';
+            View::addErrorLog($_POST);
 
             $query = explode('&', $url);
 
@@ -34,23 +35,10 @@ class ControllerUser
 
             } else {
                 $form = $query[0];
-                var_dump($form);
 
                 $this->_buildForm($form);
 
-                var_dump('submit => ' . $_GET['submit'] . '<br/>');
-
-                print_r('QueryS');
-                var_dump($_SERVER['QUERY_STRING']);
-                print_r('SCRIPTNAME');
-                var_dump($_SERVER['SCRIPT_NAME']);
-                print_r('phpself');
-                var_dump($_SERVER['PHP_SELF']);
-                print_r('HTTP');
-                var_dump($_SERVER['HTTP_REFERER']);
-                print_r('script');
-                var_dump($_SERVER['SCRIPT_FILENAME']);
-                var_dump($_GET['login']);
+                View::addErrorLog('submit => ' . $_GET['submit'] . '<br/>');
 
                 View::addErrorLog($this->_errorLog);
             }

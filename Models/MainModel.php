@@ -16,6 +16,8 @@ abstract class MainModel {
 
     private $_errorLog = [];
 
+    use PasswordManager;
+
     // Connection à la BDD suivant les directives du server
     private static function setDbConnection() {
         try {
@@ -70,64 +72,59 @@ abstract class MainModel {
         return $tableContent;
     }
 
+    protected function newPost() {
+
+    }
+
+    protected function updatePost() {
+        
+    }
+
     protected function checkUserExists($userName, $userEmail) {
         $this->getDbConnection();
-
         $this->_errorLog .= 'CHECK USER EXISTS => ' . $userName . $userEmail . '<br/>';
 
-        $userNameCheck = self::$_dbConnection->prepare('
+        $userCheck = self::$_dbConnection->prepare('
 			SELECT
-				`user_name`
-			FROM
-				`Users`
-			WHERE
-				`user_name` = :user_name');
-
-        $userEmailCheck = self::$_dbConnection->prepare('
-			SELECT
+				`user_name`, 
 				`user_email`
 			FROM
 				`Users`
 			WHERE
-				`user_email` = :user_email');
+				(`user_name` = :user_name 
+				OR 
+				`user_email` = :user_email)
+				');
+
         // execute sql with actual values
-        $userNameCheck->bindParam(':user_name', $userName);
-        $userEmailCheck->bindParam(':user_email', $userEmail);
+        $userCheck->bindParam(':user_name', $userName);
+        $userCheck->bindParam(':user_email', $userEmail);
 
-        $userNameCheck->execute();
-        $userEmailCheck->execute();
         // get and return user
-        $userNameFetch = $userNameCheck->fetch();
-        $userEmailFetch = $userEmailCheck->fetch();
+        $userCheck->execute();
 
-        $message = [];
-        if (!empty($userNameFetch)) {
-            $message[1] = 'Nickname already exists';
+        $userFetch = $userCheck->fetch();
+
+        if (!empty($userFetch['user_name'])) {
+            $message = 'Pseudo déjà utilisé';
         }
-        if (!empty($userEmailFetch)) {
-            $message[2] = 'Email already exists';
+        elseif (!empty($userFetch['user_email'])) {
+            $message = 'Email déjà utilisé';
         }
 
-        print_r('USERCHECK');
-        var_dump($userNameFetch);
-        var_dump($userEmailFetch);
-        var_dump($message);
-        print_r('USERCHECK');
-
-        $userNameCheck->closeCursor();
-        $userEmailCheck->closeCursor();
+        $userCheck->closeCursor();
 
         View::addErrorLog($this->_errorLog);
         return $message;
     }
 
-    protected function checkUserInfo($username) {
+    protected function checkUserInfo($username, $password) {
         $this->getDbConnection();
         $userCheck = self::$_dbConnection->prepare('
             SELECT 
                 `user_name` ,
-                `password` ,
-                `user_level`
+                `salt` ,
+                `iteration`
              FROM 
                 `Users` 
              WHERE 
@@ -137,38 +134,64 @@ abstract class MainModel {
                 ');
         $userCheck->bindParam(':username', $username);
 
-        print_r($userCheck);
-
         $userCheck->execute();
         $userCheckFetch = $userCheck->fetch();
+        $userCheck->closeCursor();
 
         if (isset($userCheckFetch)) {
-            print_r('SuccessUser!');
-            var_dump($userCheckFetch);
-            return $userCheckFetch;
+            $passwordToVerify = $this->passwordBuilder($password, $userCheckFetch['salt'], $userCheckFetch['iteration']);
+            return $this->_passwordCheck($userCheckFetch['user_name'], $passwordToVerify['password']);
         }
-        $userCheck->closeCursor();
     }
 
     protected function newUser($username, $email, $password) {
         $this->getDbConnection();
 
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $insertUser = self::$_dbConnection->prepare('
             INSERT INTO 
                 `Users` 
-                (`id`, `user_name`, `user_email`, `password`, `creation_date`, `user_level`) 
+                (`id`, `user_name`, `user_email`, `iteration`, `salt`, `password`, `creation_date`, `user_level`) 
             VALUES 
-                (NULL, :user_name, :user_email, :password, UTC_TIMESTAMP(), 0)
+                (NULL, :user_name, :user_email, :iteration, :salt, :password, UTC_TIMESTAMP(), 0)
         ');
+
+        $cryptedPassword = $this->passwordBuilder($password, null, null);
+
         $insertUser->bindParam(':user_name', $username);
         $insertUser->bindParam(':user_email', $email);
-        $insertUser->bindParam(':password', $hashedPassword);
+        $insertUser->bindParam(':iteration', $cryptedPassword['iteration']);
+        $insertUser->bindParam(':salt', $cryptedPassword['salt']);
+        $insertUser->bindParam(':password', $cryptedPassword['password']);
 
         $insertUser->execute();
 
         print_r('TODATA');
         var_dump($insertUser);
         $insertUser->closeCursor();
+    }
+
+    private function _passwordCheck($username, $password) {
+
+        $passCheck = self::$_dbConnection->prepare('
+            SELECT 
+               `user_name` ,
+               `user_email` ,
+               `user_level` ,
+               `creation_date`
+             FROM 
+                `Users` 
+             WHERE 
+                (`user_name` = :user_name
+                AND
+                `password` = :password)
+                ');
+        $passCheck->bindParam(':user_name', $username);
+        $passCheck->bindParam(':password', $password);
+        $passCheck->execute();
+
+        $passCheckFetch = $passCheck->fetch();
+        $passCheck->closeCursor();
+
+        return $passCheckFetch;
     }
 };

@@ -10,7 +10,7 @@ trait CardTemplate
         }
     }
     // Créé la carte en fonction du texte inséré dans l'argument
-    public function cardBuilder($cardTextContent, $cardDate, $bgImage) {
+    protected function cardBuilder($cardTextContent, $cardDate, $bgImage) {
         ob_start()
             ?>
 

@@ -41,10 +41,10 @@ class UsersManager extends MainModel
         $userData = $_POST;
         $userIdentifier = $this->_testInput($userData['user_identifier']);
         $userPassword = $this->_testInput($userData['user_password']);
-        $dbUser = $this->checkUserInfo($userIdentifier);
-        $dbPassword = $dbUser['password'];
+        $dbUser = $this->checkUserInfo($userIdentifier, $userPassword);
+        print_r('dbUser');
         var_dump($dbUser);
-        if (password_verify($userPassword, $dbPassword)) {
+        if (!empty($dbUser)) {
             print_r('LOGGED IN');
 
             $_SESSION['loggedin'] = true;
@@ -56,10 +56,14 @@ class UsersManager extends MainModel
 
     private function _userDataCheck (){
         $userData = $_POST;
+        var_dump($userData);
         $userName = $this->_testInput($userData['nickname']);
         $userEmail = $this->_testInput($userData['email']);
         $userPassword = $this->_testInput($userData['password']);
         $userConfPassword = $this->_testInput($userData['confirm_password']);
+        var_dump($userConfPassword);
+        $userExists = $this->checkUserExists($userName, $userEmail);
+        var_dump($userExists);
 
         if ($userEmail === null || !filter_var($userEmail, FILTER_VALIDATE_EMAIL)) { // check email address
             $this->_status = "fail";
@@ -67,20 +71,20 @@ class UsersManager extends MainModel
         } elseif ($userName === null) {
             $this->_status = "fail";
             $this->_message = "Pseudo invalide";
-        } elseif (!empty($this->checkUserExists($userName, $userEmail))) {
+        } elseif (!empty($userExists)) {
             $this->_status = "fail";
-            print_r($this->checkUserExists($userName, $userEmail));
-            $this->_message = print_r($this->checkUserExists($userName, $userEmail));
-        } elseif ($userPassword === null || $userPassword !== $userConfPassword || strlen($userPassword) < 8) { // check password/confirm password
+            $this->_message = $userExists;
+        } elseif ($userPassword === null || $userPassword !== $userConfPassword || (strlen($userPassword) < 8) || (strlen($userPassword)) > 128) { // check password/confirm password
             $this->_status = "fail";
             $this->_message = "Mot de passe invalide ou contenant moins de 8 caractères";
         } else { // all passes so we are all good!
             $this->_status = "ok";
             $this->_message = 'valide';
             // sign the user up to our site!
-            print_r($this->_message);
             $this->registerUser($userName, $userEmail, $userPassword);
         }
+
+        var_dump($this->_message);
     }
 
     private function registerUser($userName, $userEmail, $userPassword) {
