@@ -77,7 +77,7 @@ abstract class MainModel {
     }
 
     protected function updatePost() {
-        
+
     }
 
     protected function checkUserExists($userName, $userEmail) {

@@ -51,7 +51,7 @@ class View
     // Génère les cartes pour les billets si un texte est trouvé dans le fichier
     protected function generateCard() {
         if ($this->_cardTextContent !== null) {
-            return $this->cardBuilder($this->_cardTextContent, null);
+            return $this->cardBuilder($this->_cardTextContent, null, null);
         } else {
             return null;
         }

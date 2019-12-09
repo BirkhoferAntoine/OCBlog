@@ -1,7 +1,7 @@
 <?php
 
 
-class ListedPostTemplate extends ViewHome
+class ListedPostTemplate
 {
     private $_postNumber = 0;
     private $_postPair = [];
@@ -9,13 +9,14 @@ class ListedPostTemplate extends ViewHome
 
     public function __construct($postsInjection)
     {
-        parent::__construct();
+        if (!empty($postsInjection['posts'])) {
+            $posts = $postsInjection['posts'];
+            $this->_postEnd = count($posts);
+            echo $this->_postListBuilder($posts);
+        }
 
-        $posts = $postsInjection['posts'];
-
-        $this->_postEnd = count($posts);
-        echo $this->_postListBuilder($posts);
         echo $this->_listIndex();
+
 
     }
 
@@ -23,26 +24,32 @@ class ListedPostTemplate extends ViewHome
         ob_start();
         ?>
 
-        <div class="text-center">
-            <div class="container-fluid">
+        <section id="listedPosts">
+            <div class="text-center">
+                <div class="container-fluid">
 
-                <?php
-                foreach ($postsInjection as $postContent) {
-                    $this->_postNumber++;
-                    if ( $this->_postNumber % 2 === 0) {
-                        $this->_postPair[2] = $postContent;
-                        echo $this->_rowBuilder($this->_postPair[1], $this->_postPair[2]);
-                    } else {
-                        $this->_postPair[1] = $postContent;
-                        if ($this->_postNumber === $this->_postEnd) {
-                            echo $this->_rowBuilder($this->_postPair[1], null);
+                    <div>
+                        <h2 class="lead p-4 m-4 bg-dark commentTitle">Liste des billets</h2>
+                    </div>
+
+                    <?php
+                    foreach ($postsInjection as $postContent) {
+                        $this->_postNumber++;
+                        if ( $this->_postNumber % 2 === 0) {
+                            $this->_postPair[2] = $postContent;
+                            echo $this->_rowBuilder($this->_postPair[1], $this->_postPair[2]);
+                        } else {
+                            $this->_postPair[1] = $postContent;
+                            if ($this->_postNumber === $this->_postEnd) {
+                                echo $this->_rowBuilder($this->_postPair[1], null);
+                            }
                         }
                     }
-                }
-                ?>
+                    ?>
 
+                </div>
             </div>
-        </div>
+        </section>
 
         <?php
         return ob_get_clean();
@@ -86,6 +93,17 @@ class ListedPostTemplate extends ViewHome
             $postContent = $post->content();
             $postImg = $post->image();
 
+            if($_GET['post'] === 'list') {
+                if (isset($_GET['editor'])) {
+                    $postUrl = 'Panel?editor=' . $_GET['editor'] . '&post=' . $postTitle;
+                } elseif (isset($_GET['comments'])) {
+                    $postUrl = 'Panel?comments=' . $_GET['comments'] . '&post=' . $postTitle;
+                }
+            } else {
+                $postUrl = 'Post/' . $postTitle;
+            }
+            //$_GET['editor'] === 'delete' ? $trashBox = $post->id() : null;
+
             ob_start();
 
             if ($postImg !== null) {
@@ -100,7 +118,7 @@ class ListedPostTemplate extends ViewHome
             ?>
                         <div class="col-md-4">
                             <h3 class="mt-3 bg-light">
-                                <a href='Post/<?= $postTitle ?>' class="text-decoration-none text-dark">
+                                <a href='<?= $postUrl ?>' class="text-decoration-none text-dark">
                                     <b><?= $postTitle ?></b>
                                 </a>
                             </h3>
@@ -117,17 +135,24 @@ class ListedPostTemplate extends ViewHome
     }
 
     private function _listIndex() {
+
+        $_GET['editor'] === 'edit' && $_GET['post'] === 'list' ? $urlRange = 'Panel?editor=edit&post=list&listrange=' : $urlRange = '?listrange=';
+        $prev = $_GET['listrange'] - 1;
+        $next = $_GET['listrange'] + 1;
+
+
+
         ob_start();
         ?>
             <div class="row">
                 <div class="col-md-12">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item"> <a class="page-link" href="#">Prev</a> </li>
-                        <li class="page-item active"> <a class="page-link" href="#">1</a> </li>
-                        <li class="page-item"> <a class="page-link" href="#">2</a> </li>
-                        <li class="page-item"> <a class="page-link" href="#">3</a> </li>
-                        <li class="page-item"> <a class="page-link" href="#">4</a> </li>
-                        <li class="page-item"> <a class="page-link" href="#">Next</a> </li>
+                        <li class="page-item"> <a class="page-link" href="<?= $urlRange . $prev ?>">Prev</a> </li>
+                        <li class="page-item"> <a class="page-link" href="<?= $urlRange ?>1">1</a> </li>
+                        <li class="page-item"> <a class="page-link" href="<?= $urlRange ?>2">2</a> </li>
+                        <li class="page-item"> <a class="page-link" href="<?= $urlRange ?>3">3</a> </li>
+                        <li class="page-item"> <a class="page-link" href="<?= $urlRange ?>4">4</a> </li>
+                        <li class="page-item"> <a class="page-link" href="<?= $urlRange . $next ?>">Next</a> </li>
                     </ul>
                 </div>
             </div>
@@ -135,11 +160,4 @@ class ListedPostTemplate extends ViewHome
         return ob_get_clean();
     }
 }
-              /*  <picture>
-                    <source srcset="<?= $postImg ?>" type="image">
-                    <img class="img-fluid d-block" src="<?= $postImg ?>" alt="Image du billet">
-                </picture>
-                <?php // width="">
-            }*/
-
-              ?>
+?>

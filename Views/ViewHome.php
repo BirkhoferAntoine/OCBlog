@@ -35,10 +35,9 @@ class ViewHome extends View {
         ob_start();
 
         $this->generateHeader();
-        if ($injectContent['posts']) {
-            print_r($this->generateCard());
-            print_r($this->generatePostsList($injectContent));
-        }
+        print_r($this->generateCard());
+        $this->generatePostsList($injectContent);
+
         return ob_get_clean();
     }
 

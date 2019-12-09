@@ -5,6 +5,7 @@ class ControllerUser
 {
     private $_usersManager;
     private $_view;
+    private $_panel;
     private $_errorLog = [];
 
     public function __construct($url)
@@ -19,6 +20,7 @@ class ControllerUser
 
             $query = explode('&', $url);
 
+            //TODO COOKIE
             /*var_dump($_COOKIE);
             var_dump($_SESSION['username']);
             print_r('level =>');
@@ -30,7 +32,7 @@ class ControllerUser
                 if ($_SESSION['level'] === '1') {
                     require_once(ROOT_FOLDER . '/Views/Templates/AdminPanel.php');
                     View::addErrorLog(ROOT_FOLDER . '/Views/Templates/AdminPanel.php');
-                    $this->_view = new AdminPanel();
+                    $this->_panel = new AdminPanel();
                 }
 
             } else {

@@ -1,8 +1,9 @@
 <?php
 
 
-class PostComments
-{   private $_id;
+class PostComments {
+    private $_id;
+    private $_billet_id;
     private $_user;
     private $_comment;
     private $_comment_date;
@@ -27,8 +28,15 @@ class PostComments
     // SETTERS
     public function setId($id) {
         $id = (int) $id;
-        if ($id > 0) {
+        if ($id >= 0) {
             $this->_id = $id;
+        };
+    }
+
+    public function setBillet_id($billet_id) {
+        $billet_id = (int) $billet_id;
+        if ($billet_id >= 0) {
+            $this->_billet_id = $billet_id;
         };
     }
 
@@ -51,6 +59,10 @@ class PostComments
     // GETTERS
     public function id() {
         return $this->_id;
+    }
+
+    public function billet_id() {
+        return $this->_billet_id;
     }
 
     public function user() {

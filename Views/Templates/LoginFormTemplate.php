@@ -7,9 +7,7 @@ class LoginFormTemplate extends ViewUser
     public function __construct($message)
     {
         parent::__construct();
-        print_r('CHACHA');
         $this->_message = $message;
-        print_r('CHACHA');
         echo $this->_formBuilder();
     }
 

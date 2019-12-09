@@ -27,7 +27,7 @@
     ?>
 
 </head>
-<body>
+<body class="bg-light">
 
 
     <?php echo $navbarTemplate?>
