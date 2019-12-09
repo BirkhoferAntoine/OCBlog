@@ -1,6 +1,5 @@
 <?php
 //TODO SESSION START LOGIN
-// ADMIN PANEL AVATAR IMAGE
 session_start();
 //var_dump($_SESSION);
 
@@ -53,9 +52,13 @@ class Router
                     $strReplace = $classMatch[1] . 's';
                 }
 
-                static::$_errorLog .= 'CLASSPATH => ' . ROOT_FOLDER . '/' . $strReplace . '/' . $className . '.php END' . '<br/>';
-                require_once(ROOT_FOLDER . '/' . $strReplace . '/' . $className . '.php');
-
+                $filePath = ROOT_FOLDER . '/' . $strReplace . '/' . $className . '.php';
+                static::$_errorLog .= 'CLASSPATH => ' . $filePath . ' END' . '<br/>';
+                if (file_exists($filePath)) {
+                    require_once($filePath);
+                } else {
+                    throw new Exception('Fichier ' . $className . 'introuvable');
+                }
             });
 
             if (isset($_GET['url'])) {
@@ -83,4 +86,6 @@ $mainRouter = new Router();
 $mainRouter->routerQuery();
 
 Router::addToErrorLog();
-View::showErrorLog();
+// View::showErrorLog();
+
+

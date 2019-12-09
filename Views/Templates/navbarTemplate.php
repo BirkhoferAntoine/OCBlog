@@ -11,7 +11,7 @@ ob_start();
             <div class="row">
                 <div class="col-md-12">
                     <ul class="navbar-nav d-flex">
-                        <li class="nav-item mx-1"> <a class="nav-link" href="<?= URL ?>"><span class="fa fa-newspaper-o mx-1"></span>Accueil</a> </li>
+                        <li class="nav-item mx-1"> <a class="nav-link" href="<?= URL ?>"><span class="fas fa-newspaper mx-1"></span>Accueil</a> </li>
                         <li class="nav-item"> <a class="nav-link" href="#"><span class="fa fa-pencil-square-o mx-1"></span>Livre d'or</a> </li>
                     </ul>
                 </div>
@@ -27,16 +27,20 @@ ob_start();
         <div class="container">
             <div class="d-flex col-md-12 justify-content-around align-items-baseline" style="">
                 <ul class="navbar-nav m-0">
-                    <li class="nav-item p-0"> <a class="nav-link" href="<?= URL ?>User/Login">Connexion</a> </li>
+                    <li class="nav-item p-0"> <a class="nav-link text-primary" href="<?= URL ?>User/Login">Connexion</a> </li>
                     <li class="nav-item p-0"> <a class="nav-link text-primary" href="<?= URL ?>User/Register">Inscription</a> </li>
                 </ul>
                 <ul class="nav nav-pills d-flex align-items-center justify-content-center" style="">
-                    <li class="nav-item"> <a href="" class="nav-link" data-toggle="pill" data-target="#tabone"><span class="fa fa-lg fa-envelope-open"></span> </a> </li>
-                    <li class="nav-item"> <a class="nav-link" href="" data-target="#tabtwo" data-toggle="pill"><span class="fa fa-lg fa-comment"></span></a> </li>
                     <li class="nav-item">
                         <div class="btn-group m-2"> <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="fa fa-lg fa-cog"></span> </button>
                             <div class="dropdown-menu">
-                                <h6 class="dropdown-header">Dropdown header</h6> <a class="dropdown-item" href="<?= URL ?>User/Panel">Mon compte</a> <a class="dropdown-item" href="#">Deconnexion</a> <a class="dropdown-item disabled" href="#">Disabled option</a>
+                                <h6 class="dropdown-header">Gestion</h6> <a class="dropdown-item" href="<?= URL ?>User/Panel">Mon compte</a> <a class="dropdown-item" href="#">Deconnexion</a>
+                                <div class="dropdown-divider"></div>
+                                <h6 class="dropdown-header">Messages</h6>
+                                <a class="dropdown-item" href="#">Inbox</a> <a class="dropdown-item" href="#">Nouveau Message</a>
+                                <div class="dropdown-divider"></div>
+                                <h6 class="dropdown-header">Commentaires</h6>
+                                <a class="dropdown-item" href="#">Editer</a> <a class="dropdown-item" href="#">Réagir</a>
                             </div>
                         </div>
                     </li>

@@ -14,17 +14,17 @@ ob_start();
                                         <p class="lead mb-2"><b>Follow us</b></p>
                                         <div class="row">
                                             <div class="col-md-12 d-flex align-items-center justify-content-between"> <a href="#">
-                                                    <span class="d-block fa fa-twitter text-muted fa-2x"></span>
+                                                    <span class="d-block fab fa-twitter text-muted fa-2x"></span>
                                                 </a> <a href="#">
-                                                    <span class="d-block fa fa-google-plus-official text-muted fa-2x"></span>
+                                                    <span class="d-block fab fa-google-plus text-muted fa-2x"></span>
                                                 </a> <a href="#">
-                                                    <span class="d-block fa fa-instagram text-muted fa-2x"></span>
+                                                    <span class="d-block fab fa-instagram text-muted fa-2x"></span>
                                                 </a> <a href="#">
-                                                    <span class="d-block fa fa-pinterest-p text-muted fa-2x"></span>
+                                                    <span class="d-block fab fa-pinterest-p text-muted fa-2x"></span>
                                                 </a> <a href="#">
-                                                    <span class="d-block fa fa-reddit text-muted fa-2x"></span>
+                                                    <span class="d-block fab fa-reddit text-muted fa-2x"></span>
                                                 </a> <a href="#">
-                                                    <span class="d-block fa fa-facebook-official text-muted fa-2x"></span>
+                                                    <span class="d-block fab fa-facebook-square text-muted fa-2x"></span>
                                                 </a>
                                             </div>
                                         </div>

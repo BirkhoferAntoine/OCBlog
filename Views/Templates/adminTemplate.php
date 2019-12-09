@@ -9,25 +9,31 @@
     <meta name="author" content="Antoine Birkhofer">
     <!-- CoreUI CSS -->
     <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../Vendor/wireframe.css">
+    <link rel="stylesheet" href="../Public/css/style.css">
 
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script type="text/javascript">
         tinymce.init({
-            selector: '#tinyEditor'
+            selector: '#postContent',
+            plugins: 'autolink code link preview',
+            toolbar: 'code link preview',
+            menubar: 'tools insert view'
         });</script>
 
+    <script defer src="https://kit.fontawesome.com/e1049b5881.js" crossorigin="anonymous"></script>
     <script defer src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous" style=""></script>
     <script defer src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
+
     <title>ADMIN PANEL</title>
 
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show pace-done aside-menu-lg-show">
 <div class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show   pace-done pace-done">
-    <header class="app-header navbar">
+    <header class="app-header navbar p-0">
         <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,10 +41,10 @@
             <span class="fa d-inline fa-lg fa-circle"></span>
             <b> BRAND</b>
         </a>
-        <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <ul class="nav navbar-nav d-md-down-none">
+            <li class="nav-item px-3">
+                <a class="nav-link" href="<?= URL ?>"><i class="nav-icon fas fa-home"></i> <b>Retour au site</b></a>
+            </li>
             <li class="nav-item px-3">
                 <a class="nav-link" href="#">Dashboard</a>
             </li>
@@ -52,7 +58,7 @@
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item dropdown d-md-down-none">
                 <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <i class="icon-bell"></i>
+                    <i class="icon fa fa-bell"></i>
                     <span class="badge badge-pill badge-danger">5</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
@@ -79,7 +85,7 @@
             </li>
             <li class="nav-item dropdown d-md-down-none">
                 <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <i class="icon-envelope-letter"></i>
+                    <i class="icon fa fa-envelope"></i>
                     <span class="badge badge-pill badge-info">7</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
@@ -93,7 +99,7 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    METTRE UNE IMAGE
+                    <img class="img-avatar" src="../../Vendor/assets/styleguide/people_5.jpg">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header text-center">
@@ -153,30 +159,61 @@
                     <li class="nav-title">Gestion des billets</li>
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#">
-                            <i class="nav-icon fa fa-code"></i> Editors</a>
+                            <i class="nav-icon fa fa-feather-alt"></i> <b>Edition</b></a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a class="nav-link" href="editors/code-editor.html">
-                                    <i class="nav-icon icon-note"></i> Code Editor
-                                    <span class="badge badge-danger">PRO</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="editors/markdown-editor.html">
+                                <a class="nav-link" href="Panel?markdown=true">
                                     <i class="nav-icon fa fa-code"></i> Markdown
-                                    <span class="badge badge-danger">PRO</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="Panel?editor=true">
-                                    <i class="nav-icon icon-note"></i> Nouveau billet
+                                <a class="nav-link" href="Panel?editor=new">
+                                    <i class="nav-icon far fa-file"></i> Nouveau billet
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Panel?editor=edit&post=list">
+                                    <i class="nav-icon far fa-edit"></i> Editer un billet
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Panel?editor=delete&post=list">
+                                    <i class="nav-icon far fa-trash-alt"></i> Supprimer un billet
                                 </a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#">
-                            <i class="nav-icon icon-bell"></i> Notifications</a>
+                            <i class="nav-icon fas fa-chalkboard-teacher"></i> <b>Moderation</b></a>
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a class="nav-link" href="Panel?comments=true&post=list">
+                                    <i class="nav-icon far fa-comments"></i> Commentaires billet
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Panel?comments=list">
+                                    <i class="nav-icon far fa-comment"></i> Approuver
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Panel?comments=edit&post=list">
+                                    <i class="nav-icon far fa-comment-dots"></i> Editer
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Panel?comments=list&flag=true">
+                                    <i class="nav-icon fas fa-comment-slash"></i> Signalements
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-divider"></li>
+                    <li class="nav-title">Gestion du site</li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon fas fa-bell"></i> <b>Notifications</b></a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
                                 <a class="nav-link" href="notifications/alerts.html">
@@ -193,24 +230,21 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="notifications/toastr.html">
                                     <i class="nav-icon icon-bell"></i> Toastr
-                                    <span class="badge badge-danger">PRO</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
-
-
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#">
-                            <i class="nav-icon icon-star"></i> Pages</a>
+                            <i class="nav-icon fas fa-chalkboard"></i> <b>Pages</b></a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
                                 <a class="nav-link" href="login.html" target="_top">
-                                    <i class="nav-icon icon-star"></i> Login</a>
+                                    <i class="nav-icon icon-star"></i> Connexion</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="register.html" target="_top">
-                                    <i class="nav-icon icon-star"></i> Register</a>
+                                    <i class="nav-icon icon-star"></i> Inscription</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="404.html" target="_top">
@@ -224,41 +258,25 @@
                     </li>
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#">
-                            <i class="nav-icon icon-layers"></i> Apps</a>
+                            <i class="nav-icon fa fa-envelope"></i> <b>Emails</b></a>
                         <ul class="nav-dropdown-items">
-                            <li class="nav-item nav-dropdown">
-                                <a class="nav-link nav-dropdown-toggle" href="#">
-                                    <i class="nav-icon icon-speech"></i> Invoicing</a>
-                                <ul class="nav-dropdown-items">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="apps/invoicing/invoice.html">
-                                            <i class="nav-icon icon-speech"></i> Invoice
-                                        </a>
-                                    </li>
-                                </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="apps/email/inbox.html">
+                                    <i class="nav-icon icon-speech"></i> Inbox
+                                </a>
                             </li>
-                            <li class="nav-item nav-dropdown">
-                                <a class="nav-link nav-dropdown-toggle" href="#">
-                                    <i class="nav-icon icon-speech"></i> Email</a>
-                                <ul class="nav-dropdown-items">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="apps/email/inbox.html">
-                                            <i class="nav-icon icon-speech"></i> Inbox
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="apps/email/message.html">
-                                            <i class="nav-icon icon-speech"></i> Message
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="apps/email/compose.html">
-                                            <i class="nav-icon icon-speech"></i> Compose
-                                        </a>
-                                    </li>
-                                </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="apps/email/message.html">
+                                    <i class="nav-icon icon-speech"></i> Messages
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="apps/email/compose.html">
+                                    <i class="nav-icon icon-speech"></i> Composer
+                                </a>
                             </li>
                         </ul>
+                    </li>
                     </li>
                     <li class="nav-divider"></li>
                     <li class="nav-title">Labels</li>
@@ -288,20 +306,8 @@
                     <a href="#">Admin</a>
                 </li>
                 <li class="breadcrumb-item active">Dashboard</li>
-
-                <li class="breadcrumb-menu d-md-down-none">
-                    <div class="btn-group" role="group" aria-label="Button group">
-                        <a class="btn" href="#">
-                            <i class="icon-speech"></i>
-                        </a>
-                        <a class="btn" href="./">
-                            <i class="icon-graph"></i> &nbsp;Dashboard</a>
-                        <a class="btn" href="#">
-                            <i class="icon-settings"></i> &nbsp;Settings</a>
-                    </div>
-                </li>
             </ol>
-            <?php var_dump($prePanel_panelContent) ?>
+            <?php echo $prePanel_panelContent ?>
         </main>
         <aside class="aside-menu">
             <ul class="nav nav-tabs" role="tablist">

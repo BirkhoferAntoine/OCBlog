@@ -1,3 +1,48 @@
 body {
     overflow-x: hidden;
 }
+
+section {
+    margin: 5%;
+}
+
+legend {
+    font-size: 1rem;
+}
+
+.container-fluid h2 {
+    margin-bottom: 100px !important;
+}
+
+.lead {
+    font-size: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.3rem;
+}
+
+.commentContainer {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+}
+
+.commentTitle {
+    padding: 10px;
+    margin: 10px;
+}
+
+.commentCol {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.commentText {
+    flex-grow: 20;
+}
+
+.commandBox {
+    flex-shrink: 10;
+}

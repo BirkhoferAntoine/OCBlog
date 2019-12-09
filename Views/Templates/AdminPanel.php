@@ -3,14 +3,27 @@
 
 class AdminPanel {
 
+    private $_postsManager;
+    private $_commentsManager;
+    private $_postslist;
+    private $_post;
+    private $_urlPost;
+    private $_controllerIntegration;
+    private $_viewIntegration;
+
     public function __construct()
     {
       echo $this->_panelBuild();
     }
 
+    use CardTemplate {
+        cardBuilder as protected;
+    }
+
     private function _mainBuild($insert)
     {
-        extract($insert, EXTR_PREFIX_ALL, 'prePanel');
+        $prePanel_panelContent = $insert;
+
 
         ob_start();
 
@@ -23,13 +36,119 @@ class AdminPanel {
     private function _panelBuild() {
 
         if ($_GET['editor']) {
-            return $this->_mainBuild($this->_tinyMCEBuild());
+            if ($_GET['editor'] !== 'new' && $_GET['post'] === 'list') {
+                $panelContent = $this->_listBuild();
+                return $this->_mainBuild($panelContent);
+            } elseif ($_GET['editor'] === 'edit' && $_GET['post'] !== 'list') {
+                $panelContent = $this->_tinyMCEBuild('edit');
+                return $this->_mainBuild($panelContent);
+            } elseif ($_GET['editor'] === 'new') {
+                $panelContent = $this->_tinyMCEBuild('new');
+                return $this->_mainBuild($panelContent);
+            }
+        } elseif ($_GET['markdown']) {
+            $panelContent = $this->_markdownBuild();
+            return $this->_mainBuild($panelContent);
+        } elseif ($_GET['comments']) {
+            if ($_GET['post'] === 'list') {
+            $panelContent = $this->_listBuild();
+            return $this->_mainBuild($panelContent);
+            } elseif (isset($_GET['post'])) {
+                $panelContent = $this->_setPost();
+                return $this->_mainBuild($panelContent);
+            } elseif ($_GET['comments'] === 'list') {
+                if ($_GET['flag'] === 'true') {
+                    $panelContent = $this->_commentsListBuild('9');
+                    return $this->_mainBuild($panelContent);
+                } else {
+                    $panelContent = $this->_commentsListBuild('0');
+                    return $this->_mainBuild($panelContent);
+                }
+            }
         } else {
-            return $this->_mainBuild($this->dashboard());
+            $panelContent = $this->_dashboard();
+            return $this->_mainBuild($panelContent);
         }
     }
 
-    private function _tinyMCEBuild() {
+    private function _listBuild() {
+
+        if ((isset($_GET['editor']) || isset($_GET['comments'])) && $_GET['post'] === 'list') {
+
+        ob_start();
+        ?>
+
+        <div class="container-fluid">
+            <div id="ui-view">
+                <div class="animated fadeIn">
+                    <div class="card">
+                        <?php  $this->_controllerIntegration = new ControllerHome(null); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <?php
+        return ob_get_clean();
+        }
+    }
+
+    private function _commentsListBuild($type) {
+        $this->_commentsManager = new PostCommentsManager();
+        $commentsList = $this->_commentsManager->getComments('`billet_id`', '`accepted` = ' . $type);
+
+
+        ob_start();
+        ?>
+
+        <div class="container-fluid">
+            <div id="ui-view">
+                <div class="animated fadeIn">
+                    <div class="card">
+                        <?php new CommentsTemplate($commentsList); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <?php
+        return ob_get_clean();
+
+    }
+
+    private function _setPost() {
+
+        if (isset($_GET['post']) && $_GET['post'] !== 'list') {
+            $this->_urlPost = $_GET['post'];
+
+            $this->_controllerIntegration = new ControllerPost($this->_urlPost);
+
+            $this->_post = $this->_controllerIntegration->getPost();
+            $this->_viewIntegration = $this->_controllerIntegration->getView();
+
+            //TODO MAKE IT WORK BITCH!
+            if (!empty($_POST['postTitle'] && $_POST['postText'])) {
+                return $this->cardBuilder(strip_tags($_POST['postText']), null, $_POST['urlImage']);
+            } else {
+                return $this->_viewIntegration->generatePost(array('Post' => $this->_post));
+            }
+        } else {
+            throw new Exception(' Erreur 404 billet introuvable');
+        }
+    }
+
+    private function _tinyMCEBuild($type) {
+
+        if ($type === 'new') {
+            $preview = $this->cardBuilder(strip_tags($_POST['postContent']), null, $_POST['urlImage']);
+            $postText = '';
+        } elseif ($type === 'edit') {
+            $preview = $this->_setPost();
+            $post = $this->_post[0];
+            $postTitle = $post->title();
+            $postText = $post->content();
+            $postImage = $post->image();
+        }
 
         ob_start();
         ?>
@@ -38,21 +157,92 @@ class AdminPanel {
 
                     <div class="animated fadeIn">
                         <div class="card">
-                            <div class="card-header">TinyMCE</div>
+                            <div class="card-header">Nouveau Billet</div>
+                            <div class="card-body">
+                                <form class="w-100" method="post" action="">
+
+                                    <div class="form-group">
+                                    <label for="postTitle">Titre</label>
+                                    <input type="text" class="form-control" id="postTitle" name="postTitle" value="<?= $postTitle ?>" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                    <label for="postContent">Contenu du billet</label>
+                                    <textarea class="form-control" id="postContent" name="postContent"><?= $postText ?></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                    <label for="urlImage">Insérer une image</label>
+                                    <input type="url" class="form-control" id="urlImage" name="urlImage" placeholder="Entrez l'url de l'image" value="<?= $postImage ?>">
+                                    </div>
+
+                                    <div class="form-group text-center">
+                                    <input type="submit" class="align-self-center justify-content-center w-50 text-center">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="animated fadeIn">
+                        <div class="card">
+                            <div class="card-header">Aperçu</div>
+                            <div class="card-body">
+                                <div id="tinyPreview">
+                                    <?php print_r($preview)?>
+                                </div>
+                            </div>
+                            <form method="post" action="">
+                                <div class="form-group text-center">
+                                <input type="submit" class="align-self-center justify-content-center w-50 text-center">
+                                </div>
+                            </form>
+                        </div>
+                    </div></div></div>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
+
+    private function _markdownBuild() {
+
+        include(ROOT_FOLDER . '/Vendor/assets/Markdown/Parsedown.php');
+        $Parsedown = new Parsedown();
+        $this->_parsedownText = $_POST['markdown'];
+
+
+        ob_start();
+        ?>
+        <div class="container-fluid">
+            <div id="ui-view"><div>
+
+                    <div class="animated fadeIn">
+                        <div class="card">
+                            <div class="card-header">Markdown</div>
                             <div class="card-body">
                                 <form method="post">
-                                    <label for="tinyEditor">Nouveau Billet</label>
-                                    <textarea id="tinyEditor" name="tinyEditor">Ca marche!</textarea>
+                                    <label for="markdown">Nouveau Billet</label>
+                                    <textarea id="markdown" name="markdown">Ca marche!</textarea>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="animated fadeIn">
+                        <div class="card">
+                            <div class="card-header">Textdown</div>
+                            <div class="card-body">
+                                <form method="post">
+                                    <label for="textdown">Result</label>
+                                    <p id="textdown" name="textdown"><?php echo $Parsedown->text($this->_parsedownText); ?></p>
                                 </form>
                             </div>
                         </div>
                     </div></div></div>
         </div>
         <?php
-        $panelContent = ob_get_clean();
+        return ob_get_clean();
     }
 
-    private function dashboard() {
+    private function _dashboard() {
 
         ob_start();
         ?>
@@ -297,6 +487,7 @@ class AdminPanel {
 
         </div>
         <?php
-        $panelContent = ob_get_clean();
+        return ob_get_clean();
+
     }
 }
