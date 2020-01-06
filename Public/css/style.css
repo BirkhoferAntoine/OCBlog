@@ -6,6 +6,10 @@ section {
     margin: 5%;
 }
 
+.formPage {
+    margin: 0;
+}
+
 legend {
     font-size: 1rem;
 }
@@ -45,4 +49,22 @@ legend {
 
 .commandBox {
     flex-shrink: 10;
+}
+
+.commandBoxButton {
+    background-color: #555555;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+.commandBoxButton:hover {
+    border: 2px solid;
+}
+
+.flagBoxText {
+    visibility: hidden;
+}
+
+.commandBoxButton:hover .flagBoxText {
+    visibility: visible;
 }

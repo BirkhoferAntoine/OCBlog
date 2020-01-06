@@ -7,4 +7,8 @@ class PostCommentsManager extends MainModel {
     public function getComments($order, $where) {
         return $this->getTableContent('Comments', 'PostComments', $order, $where);
     }
+
+    public function deleteComment($text) {
+        $this->deleteTableContent('`comment` = ' . $text, 'Comments');
+    }
 }

@@ -11,6 +11,7 @@ class CommentsTemplate extends ViewPost
         if (!isset($_GET['comments']) && isset($_GET['editor'])) {
 
         } else {
+            var_dump($_POST);
             echo $this->_postCommentsBuilder($commentsInjection);
         }
     }
@@ -125,9 +126,9 @@ class CommentsTemplate extends ViewPost
             ?>
 
                     <form class="commandBox p-2 col mr-auto text-light justify-content-between d-inline-flex flex-column" id="commentBox_<?= $id ?>" method="post" action="">
-                        <button type="submit" name="accept" value="true"><i class="far fa-check-square"></i> ACCEPTER</button>
-                        <button type="submit" name="edit" value="true"><i class="fas fa-edit"></i> EDITER</button>
-                        <button type="submit" name="delete" value="true"><i class="fas fa-ban"></i> SUPPRIMER</button>
+                        <button class="commandBoxButton text-primary" type="submit" name="accept" value="<?= $id ?>"><i class="far fa-check-square"></i> ACCEPTER</button>
+                        <button class="commandBoxButton text-primary" type="submit" name="edit" value="<?= $id ?>"><i class="fas fa-edit"></i> EDITER</button>
+                        <button class="commandBoxButton text-primary" type="submit" name="delete" value="<?= $id ?>"><i class="fas fa-ban"></i> SUPPRIMER</button>
                     </form>
 
             <?php
@@ -138,12 +139,13 @@ class CommentsTemplate extends ViewPost
             ob_start();
             ?>
 
-            <form class="commandBox p-2 col mr-auto text-light justify-content-end d-inline-flex flex-column" method="post" action="">
-                <div><i class="fas fa-bullhorn"></i> SIGNALER</div>
+            <form class="commandBox p-2 col mr-auto text-light justify-content-end d-inline-flex flex-column" id="commentBox_<?= $id ?>" method="post" action="">
+                <button class="commandBoxButton text-primary" type="submit" name="flag" value="<?= $id ?>"><i class="fas fa-bullhorn"></i> <span class="flagBoxText">SIGNALER</span></button>
             </form>
 
             <?php
             return ob_get_clean();
+            //onclick="alert('Voulez vous signaler ce message en tant que contenu indésirable?')"
         }
     }
 

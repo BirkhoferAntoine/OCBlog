@@ -72,7 +72,29 @@ abstract class MainModel {
         return $tableContent;
     }
 
-    protected function newPost() {
+    protected function deleteTableContent($text, $table) {
+        $this->getDbConnection();
+        $tableQuery = self::$_dbConnection->prepare('
+            DELETE FROM ' .
+             $table .
+             ' WHERE ' .
+             $text
+             )
+        or die(print_r(self::$_dbConnection->errorInfo()));
+        $tableQuery->execute();
+    }
+
+    protected function newPost($content) {
+
+        $this->getDbConnection();
+        $query = self::$_dbConnection->prepare('
+        INSERT INTO 
+        `Posts`
+        VALUES 
+        ( :
+        
+        )
+        ');
 
     }
 
@@ -82,7 +104,6 @@ abstract class MainModel {
 
     protected function checkUserExists($userName, $userEmail) {
         $this->getDbConnection();
-        $this->_errorLog .= 'CHECK USER EXISTS => ' . $userName . $userEmail . '<br/>';
 
         $userCheck = self::$_dbConnection->prepare('
 			SELECT
@@ -113,12 +134,10 @@ abstract class MainModel {
         }
 
         $userCheck->closeCursor();
-
-        View::addErrorLog($this->_errorLog);
         return $message;
     }
 
-    protected function checkUserInfo($username, $password) {
+    protected function checkUserLogin($username, $password) {
         $this->getDbConnection();
         $userCheck = self::$_dbConnection->prepare('
             SELECT 
@@ -164,9 +183,6 @@ abstract class MainModel {
         $insertUser->bindParam(':password', $cryptedPassword['password']);
 
         $insertUser->execute();
-
-        print_r('TODATA');
-        var_dump($insertUser);
         $insertUser->closeCursor();
     }
 

@@ -3,15 +3,20 @@
 session_start();
 //var_dump($_SESSION);
 
-define(ROOT_FOLDER, filter_var($_SERVER['DOCUMENT_ROOT']));
-define('URL', str_replace('index.php', '', (isset($_SERVER['HTTPS']) ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]"));
+define('ROOT_FOLDER', filter_var($_SERVER['DOCUMENT_ROOT'], FILTER_SANITIZE_URL));
+define('URL', str_replace('index.php', '', (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . filter_var($_SERVER['HTTP_HOST'], FILTER_SANITIZE_URL) . filter_var($_SERVER['SCRIPT_NAME'], FILTER_SANITIZE_URL)));
+require_once(ROOT_FOLDER . '/Controllers/ControllerSecurity.php');
 
 class Router
 {
-
-    private $_controller;
-    private $_view;
+    private        $_controller;
+    private        $_view;
     private static $_errorLog = [];
+
+    public function __construct()
+    {
+        $this->_routerQuery();
+    }
 
     public static function addToErrorLog() {
         $addToLog = static::$_errorLog; //html special char
@@ -21,7 +26,8 @@ class Router
         View::addErrorLog($addToLog);
     }
 
-    public function routerQuery()
+
+    private function _routerQuery()
     {
         static::$_errorLog .= '<br/>ROUTER <br/>';
 
@@ -30,7 +36,7 @@ class Router
             // Chargement automatique des models/classes
             spl_autoload_register(static function($className) {
 
-                static::$_errorLog .= 'CLASS => ' . $className . '<br/>';
+                static::$_errorLog .= 'CLASS => ' . $className . '\n';
 
                 $classTest1 = 'Model';
                 $classTest2 = 'View';
@@ -82,8 +88,40 @@ class Router
         }
     }
 }
-$mainRouter = new Router();
-$mainRouter->routerQuery();
+
+
+
+$security = new ControllerSecurity(
+    array(
+        'submit'   =>    FILTER_SANITIZE_STRING,
+        'editor'   =>    FILTER_SANITIZE_STRING,
+        'post'     =>    FILTER_SANITIZE_STRING,
+        'flag'            =>    FILTER_VALIDATE_INT,
+        'accept'            =>    FILTER_VALIDATE_INT,
+        'edit'            =>    FILTER_VALIDATE_INT,
+        'delete'            =>    FILTER_VALIDATE_INT,
+        'version'         =>    FILTER_SANITIZE_ENCODED
+    ),
+    array(
+        'commentEditor'   =>    FILTER_SANITIZE_STRING,
+        'register_user_name'   =>    FILTER_SANITIZE_EMAIL,
+        'register_user_email'   =>    FILTER_SANITIZE_EMAIL,
+        'register_password'   =>    FILTER_SANITIZE_STRING,
+        'register_confirm_password'   =>    FILTER_SANITIZE_STRING,
+        'login_identifier'   =>    FILTER_SANITIZE_EMAIL,
+        'login_password'   =>    FILTER_SANITIZE_STRING,
+        'flag'            =>    FILTER_VALIDATE_INT,
+        'accept'            =>    FILTER_VALIDATE_INT,
+        'edit'            =>    FILTER_VALIDATE_INT,
+        'delete'            =>    FILTER_VALIDATE_INT,
+        'postContent'   =>    FILTER_SANITIZE_STRING,
+        'postUrlImage'   =>    FILTER_SANITIZE_URL
+    )
+);
+
+$main = new Router();
+
+
 
 Router::addToErrorLog();
 // View::showErrorLog();

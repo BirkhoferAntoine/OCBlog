@@ -4,27 +4,43 @@
 class UsersManager extends MainModel
 {
     // Lien entre la BDD (MainModel) et le controller pour vérifier les données
-    private $_status = null;
     private $_message = '';
+    private $_userData;
 
+    public function __construct()
+    {
+        $this->_setUserData();
+    }
 
     public function getMessageText() {
         return $this->_message;
     }
 
     public function submit() {
-        if (isset($_POST['nickname'], $_POST['email'], $_POST['password'], $_POST['confirm_password'])) {
-            $this->_userDataCheck();
-            print_r($_POST);
-        } elseif (isset($_POST['user_identifier'], $_POST['user_password'])) {
-            $this->login();
+        $this->_submitUserData();
+    }
+
+    private function _submitUserData() {
+        if (isset(
+            $this->_userData['login_identifier'],
+            $this->_userData['login_password'])) {
+                $this->_login();
+            } elseif (isset(
+            $this->_userData['register_user_name'],
+            $this->_userData['register_user_email'],
+            $this->_userData['register_password'],
+            $this->_userData['register_confirm_password'])) {
+                $this->_checkUserRegister();
         }
     }
 
-    protected function userExists($userName, $userEmail) {
-        return $this->checkUserExists($userName, $userEmail);
+    // Set données $_POST filtrées
+    private function _setUserData() {
+        global $security;
+        $this->_userData = $security->getFilteredPost();
     }
 
+    // Filtre et vérifie les données envoyées par l'utilisateur
     private function _testInput($input)
     {
         $inputFilter1 = trim($input);
@@ -37,15 +53,15 @@ class UsersManager extends MainModel
         }
     }
 
-    private function login() {
-        $userData = $_POST;
-        $userIdentifier = $this->_testInput($userData['user_identifier']);
-        $userPassword = $this->_testInput($userData['user_password']);
-        $dbUser = $this->checkUserInfo($userIdentifier, $userPassword);
-        print_r('dbUser');
+    // Vérifie les données envoyées lors du formulaire de connexion
+    private function _login() {
+
+        $userIdentifier = $this->_testInput($this->_userData['login_identifier']);
+        $userPassword = $this->_testInput($this->_userData['login_password']);
+        $dbUser = $this->checkUserLogin($userIdentifier, $userPassword);
         var_dump($dbUser);
+
         if (!empty($dbUser)) {
-            print_r('LOGGED IN');
 
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $dbUser['user_name'];
@@ -54,39 +70,35 @@ class UsersManager extends MainModel
         }
     }
 
-    private function _userDataCheck (){
-        $userData = $_POST;
-        var_dump($userData);
-        $userName = $this->_testInput($userData['nickname']);
-        $userEmail = $this->_testInput($userData['email']);
-        $userPassword = $this->_testInput($userData['password']);
-        $userConfPassword = $this->_testInput($userData['confirm_password']);
-        var_dump($userConfPassword);
+    // Vérifie les données envoyées lors du formulaire inscription
+    private function _checkUserRegister (){
+
+        $userName = $this->_testInput($this->_userData['register_user_name']);
+        $userEmail = $this->_testInput($this->_userData['register_user_email']);
+        $userPassword = $this->_testInput($this->_userData['register_password']);
+        $userConfPassword = $this->_testInput($this->_userData['register_confirm_password']);
         $userExists = $this->checkUserExists($userName, $userEmail);
-        var_dump($userExists);
 
         if ($userEmail === null || !filter_var($userEmail, FILTER_VALIDATE_EMAIL)) { // check email address
-            $this->_status = "fail";
-            $this->_message = "Email invalide";
+            return $this->_message = "Email invalide";
         } elseif ($userName === null) {
-            $this->_status = "fail";
-            $this->_message = "Pseudo invalide";
+            return $this->_message = "Pseudo invalide";
         } elseif (!empty($userExists)) {
-            $this->_status = "fail";
-            $this->_message = $userExists;
+            return $this->_message = $userExists;
         } elseif ($userPassword === null || $userPassword !== $userConfPassword || (strlen($userPassword) < 8) || (strlen($userPassword)) > 128) { // check password/confirm password
-            $this->_status = "fail";
-            $this->_message = "Mot de passe invalide ou contenant moins de 8 caractères";
-        } else { // all passes so we are all good!
-            $this->_status = "ok";
-            $this->_message = 'valide';
-            // sign the user up to our site!
+            return $this->_message = "Mot de passe invalide ou contenant moins de 8 caractères";
+        } else {
+            // Si toutes les conditions sont validées nous pouvons enregistrer le nouvel utilisateur
+            $this->_message = 'Bienvenue';
             $this->registerUser($userName, $userEmail, $userPassword);
+            // Puis le connecter
+            $this->_userData['login_identifier'] = $userName;
+            $this->_userData['login_password'] = $userPassword;
+            $this->_login();
         }
-
-        var_dump($this->_message);
     }
 
+    // Set nouvel utilisateur
     private function registerUser($userName, $userEmail, $userPassword) {
         $this->newUser($userName, $userEmail, $userPassword);
     }

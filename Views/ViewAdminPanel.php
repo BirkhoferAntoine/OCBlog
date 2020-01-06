@@ -1,27 +1,11 @@
 <?php
 
 
-class AdminPanel {
-
-    private $_postsManager;
-    private $_commentsManager;
-    private $_postslist;
-    private $_post;
-    private $_urlPost;
-    private $_controllerIntegration;
-    private $_viewIntegration;
-    private $_postTitle = [];
-    private $_postId = [];
-    private $_commentText = [];
-    private $_commentId = [];
-
-    public function __construct()
-    {
-      echo $this->_panelBuild();
-    }
+class ViewAdminPanel
+{
 
     use CardTemplate {
-        cardBuilder as protected;
+        cardBuilder as public;
     }
 
     private function _mainBuild($insert)
@@ -36,61 +20,7 @@ class AdminPanel {
 
         return ob_get_clean();
     }
-
-    private function _panelBuild() {
-
-        if ($_GET['editor']) {
-            if ($_GET['editor'] !== 'new' && $_GET['post'] === 'list') {
-                $panelContent = $this->_listBuild();
-            } elseif ($_GET['editor'] === 'edit' && $_GET['post'] !== 'list') {
-                $panelContent = $this->_tinyMCEBuild('edit');
-            } elseif ($_GET['editor'] === 'new') {
-                $panelContent = $this->_tinyMCEBuild('new');
-            }
-        } elseif ($_GET['markdown']) {
-            $panelContent = $this->_markdownBuild();
-        } elseif ($_GET['comments']) {
-            if ($_GET['post'] === 'list') {
-            $panelContent = $this->_listBuild();
-            } elseif (isset($_GET['post'])) {
-                $panelContent = $this->_setPost();
-            } elseif ($_GET['comments'] === 'list') {
-                if ($_GET['flag'] === 'true') {
-                    $panelContent = $this->_commentsListBuild('9');
-                } else {
-                    $panelContent = $this->_commentsListBuild('0');
-                }
-            }
-        } elseif ($_GET['execution'] === 'board'){
-            $panelContent = $this->_executionBoard();
-
-        } else {
-            $panelContent = $this->_dashboard();
-        }
-
-        return $this->_mainBuild($panelContent);
-    }
-
     private function _executionBoard() {
-
-        $this->_postsManager = new PostsManager();
-        $this->_commentsManager = new PostCommentsManager();
-
-        $posts = $this->_postsManager->getPosts('`id` DESC ', null);
-
-        foreach ($posts['Post'] as $post) {
-            $this->_postTitle .= $post->title();
-            $this->_postId .= $post->id();
-        }
-
-        $comments = $this->_commentsManager->getComments('`id`', '`billet_id` = ' . $this->_postId);
-
-        foreach ($comments['PostComments'] as $comment) {
-            $this->_commentText .= $comment->content();
-            $this->_commentId .= $comment->id();
-        }
-
-
         ob_start();
         ?>
 
@@ -105,15 +35,15 @@ class AdminPanel {
 
                                         <legend>Supprimer de la base de données...</legend>
 
-                                    <div class="form-group"> Billet... <br/>
-                                        <select class="form-control">
+                                        <div class="form-group"> Billet... <br/>
+                                            <select class="form-control">
 
-                                            <?php foreach ($this->_postTitle as $postTitle):?>
-                                                <option name="billet" value="<?= $postTitle ?>"><?= $postTitle ?></option>
-                                            <?php endforeach; ?>
+                                                <?php foreach ($this->_postTitle as $postTitle):?>
+                                                    <option name="billet" value="<?= $postTitle ?>"><?= $postTitle ?></option>
+                                                <?php endforeach; ?>
 
-                                        </select>
-                                    </div>
+                                            </select>
+                                        </div>
 
                                         <div class="form-group"> Commentaire... <br/>
                                             <select class="form-control">
@@ -125,9 +55,9 @@ class AdminPanel {
                                             </select>
                                         </div>
 
-                                    <div class="form-group text-center">
-                                        <input type="submit" class="align-self-center justify-content-center w-50 text-center">
-                                    </div>
+                                        <div class="form-group text-center">
+                                            <input type="submit" class="align-self-center justify-content-center w-50 text-center">
+                                        </div>
 
                                     </fieldset>
                                 </form>
@@ -143,25 +73,25 @@ class AdminPanel {
 
     }
 
-    private function _listBuild() {
+    private function _listBuild($controllerIntegration) {
 
         if ((isset($_GET['editor']) || isset($_GET['comments'])) && $_GET['post'] === 'list') {
 
-        ob_start();
-        ?>
+            ob_start();
+            ?>
 
-        <div class="container-fluid">
-            <div id="ui-view">
-                <div class="animated fadeIn">
-                    <div class="card">
-                        <?php  $this->_controllerIntegration = new ControllerHome(null); ?>
+            <div class="container-fluid">
+                <div id="ui-view">
+                    <div class="animated fadeIn">
+                        <div class="card">
+                            <?php  $controllerIntegration ?>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <?php
-        return ob_get_clean();
+            <?php
+            return ob_get_clean();
         }
     }
 
@@ -187,40 +117,16 @@ class AdminPanel {
         return ob_get_clean();
 
     }
+    private function _tinyMCEBuild($preview, $post=null) {
 
-    private function _setPost() {
-
-        if (isset($_GET['post']) && $_GET['post'] !== 'list') {
-            $this->_urlPost = $_GET['post'];
-
-            $this->_controllerIntegration = new ControllerPost($this->_urlPost);
-
-            $this->_post = $this->_controllerIntegration->getPost();
-            $this->_viewIntegration = $this->_controllerIntegration->getView();
-
-            //TODO MAKE IT WORK BITCH!
-            if (!empty($_POST['postTitle'] && $_POST['postText'])) {
-                return $this->cardBuilder(strip_tags($_POST['postText']), null, $_POST['urlImage']);
-            } else {
-                return $this->_viewIntegration->generatePost(array('Post' => $this->_post));
-            }
-        } else {
-            throw new Exception(' Erreur 404 billet introuvable');
-        }
-    }
-
-    private function _tinyMCEBuild($type) {
-
-        if ($type === 'new') {
-            $preview = $this->cardBuilder(strip_tags($_POST['postContent']), null, $_POST['urlImage']);
-            $postText = '';
-        } elseif ($type === 'edit') {
-            $preview = $this->_setPost();
-            $post = $this->_post[0];
+        if ($post !== null) {
             $postTitle = $post->title();
             $postText = $post->content();
             $postImage = $post->image();
+        } else {
+            $postText = '';
         }
+
 
         ob_start();
         ?>
@@ -231,25 +137,25 @@ class AdminPanel {
                         <div class="card">
                             <div class="card-header">Nouveau Billet</div>
                             <div class="card-body">
-                                <form class="w-100" method="post" action="">
+                                <form class="w-100" method="post" action="Panel?editor=new&submit=true">
 
                                     <div class="form-group">
-                                    <label for="postTitle">Titre</label>
-                                    <input type="text" class="form-control" id="postTitle" name="postTitle" value="<?= $postTitle ?>" required>
+                                        <label for="postTitle">Titre</label>
+                                        <input type="text" class="form-control" id="postTitle" name="postTitle" value="<?= $postTitle ?>" required>
                                     </div>
 
                                     <div class="form-group">
-                                    <label for="postContent">Contenu du billet</label>
-                                    <textarea class="form-control" id="postContent" name="postContent"><?= $postText ?></textarea>
+                                        <label for="postContent">Contenu du billet</label>
+                                        <textarea class="form-control" id="postContent" name="postContent"><?= $postText ?></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                    <label for="urlImage">Insérer une image</label>
-                                    <input type="url" class="form-control" id="urlImage" name="urlImage" placeholder="Entrez l'url de l'image" value="<?= $postImage ?>">
+                                        <label for="urlImage">Insérer une image</label>
+                                        <input type="url" class="form-control" id="urlImage" name="postUrlImage" placeholder="Entrez l'url de l'image" value="<?= $postImage ?>">
                                     </div>
 
                                     <div class="form-group text-center">
-                                    <input type="submit" class="align-self-center justify-content-center w-50 text-center">
+                                        <input type="submit" class="align-self-center justify-content-center w-50 text-center">
                                     </div>
                                 </form>
                             </div>
@@ -265,7 +171,7 @@ class AdminPanel {
                             </div>
                             <form method="post" action="">
                                 <div class="form-group text-center">
-                                <input type="submit" class="align-self-center justify-content-center w-50 text-center">
+                                    <input type="submit" class="align-self-center justify-content-center w-50 text-center">
                                 </div>
                             </form>
                         </div>
@@ -274,13 +180,7 @@ class AdminPanel {
         <?php
         return ob_get_clean();
     }
-
     private function _markdownBuild() {
-
-        include(ROOT_FOLDER . '/Vendor/assets/Markdown/Parsedown.php');
-        $Parsedown = new Parsedown();
-        $this->_parsedownText = $_POST['markdown'];
-
 
         ob_start();
         ?>
@@ -562,4 +462,21 @@ class AdminPanel {
         return ob_get_clean();
 
     }
+
+    public function mainBuild($insert) {
+        return $this->_mainBuild($insert);
+    }
+
+    public function dashboard() {
+        return $this->_dashboard();
+    }
+
+    public function tinyMCEBuild($preview, $post=null) {
+        return $this->_tinyMCEBuild($preview, $post);
+    }
+
+    public function listBuild() {
+        return$this->_listBuild();
+    }
+
 }

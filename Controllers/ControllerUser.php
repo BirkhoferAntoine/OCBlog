@@ -6,58 +6,45 @@ class ControllerUser
     private $_usersManager;
     private $_view;
     private $_panel;
-    private $_errorLog = [];
+    private $_safeUri;
+    private $_safeGet;
 
     public function __construct($url)
     {
         if (empty($url) || count($url) > 1) {
             throw new Exception('404 Page ' . htmlspecialchars($url) . ' introuvable');
         } else {
-            // Decoupe et filtrage de l'url
 
-            $this->_errorLog .= 'URL => ' . $url . '<br/>';
-            View::addErrorLog($_POST);
+            $this->_setSecurity();
+            var_dump($this->_safeUri);
 
-            $query = explode('&', $url);
-
-            //TODO COOKIE
-            /*var_dump($_COOKIE);
-            var_dump($_SESSION['username']);
-            print_r('level =>');
-            var_dump($_SESSION['level']);
-            var_dump($query);*/
-
-            if ($query[0] === 'Panel' && isset($_SESSION['username'])) {
+            if ($this->_safeUri === 'Panel' && isset($_SESSION['username'])) {
 
                 if ($_SESSION['level'] === '1') {
-                    require_once(ROOT_FOLDER . '/Views/Templates/AdminPanel.php');
-                    View::addErrorLog(ROOT_FOLDER . '/Views/Templates/AdminPanel.php');
-                    $this->_panel = new AdminPanel();
+                    $this->_panel = new ControllerAdminPanel();
                 }
 
             } else {
-                $form = $query[0];
-
-                $this->_buildForm($form);
-
-                View::addErrorLog('submit => ' . $_GET['submit'] . '<br/>');
-
-                View::addErrorLog($this->_errorLog);
+                $this->_buildForm();
             }
         }
     }
 
-    //TODO GET SUBMIT = TRUE
-    private function _buildForm($form) {
+    private function _buildForm() {
         $this->_usersManager = new UsersManager();
 
-        if (isset($_GET['submit'])) {
+        if (isset($this->_safeGet['submit'])) {
             $this->_usersManager->submit();
         }
 
         $message = $this->_usersManager->getMessageText();
-
         $this->_view = new ViewUser;
-        $this->_view->generate($form, $message);
+        $this->_view->generate($this->_safeUri, $message);
+    }
+
+    private function _setSecurity() {
+        global $security;
+        $this->_safeUri = explode('?', $security->getFilteredUri(2))[0];
+        $this->_safeGet = $security->getFilteredGet();
     }
 }

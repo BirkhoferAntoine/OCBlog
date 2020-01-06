@@ -14,6 +14,7 @@ trait CardTemplate
         ob_start()
             ?>
 
+        <article class="postCard">
             <div class="py-5" style="<?= $this->_setBgImage($bgImage)?>; background-size: cover; background-attachment: fixed;">
                 <div class="container">
                     <div class="row m-0">
@@ -35,7 +36,7 @@ trait CardTemplate
                     </div>
                 </div>
             </div>
-
+        </article>
             <?php
 
         return ob_get_clean();

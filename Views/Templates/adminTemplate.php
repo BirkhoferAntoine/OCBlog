@@ -188,6 +188,11 @@
                             <i class="nav-icon fas fa-chalkboard-teacher"></i> <b>Moderation</b></a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
+                                <a class="nav-link" href="Panel?execution=board">
+                                    <i class="nav-icon fas fa-chalkboard-teacher"></i> Tableau d'execution
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="Panel?comments=true&post=list">
                                     <i class="nav-icon far fa-comments"></i> Commentaires billet
                                 </a>
