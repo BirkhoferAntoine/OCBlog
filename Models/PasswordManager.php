@@ -18,15 +18,12 @@ trait PasswordManager
 
     protected function passwordBuilder($password, $salt, $iteration) {
 
-        $iteration ?? $this->_iteration;
-        $salt ?? $this->_salter();
-        print_r($iteration);
-        print_r($salt);
-        $hash = hash($this->_algorithm, $password, false);
-        $finalPassword = hash_pbkdf2($this->_algorithm, $hash, $salt, $iteration);
+        $hashSalt = $salt ?? $this->_salter();
+        $hashIteration = $iteration ?? $this->_iteration;
+        $hashPassword = hash($this->_algorithm, $password, false);
+        $finalPassword = hash_pbkdf2($this->_algorithm, $hashPassword, $hashSalt, $hashIteration);
 
-        $passStorage = array('iteration' => $iteration, 'salt' => $salt, 'password' => $finalPassword);
-        var_dump($passStorage);
+        $passStorage = array('iteration' => $hashIteration, 'salt' => $hashSalt, 'password' => $finalPassword);
 
         return $passStorage;
     }

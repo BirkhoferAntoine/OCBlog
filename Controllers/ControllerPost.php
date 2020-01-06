@@ -14,6 +14,8 @@ class ControllerPost
         } else {
                 // Recherche les posts
             $this->_selectedPost($urlPost);
+
+
         }
     }
 
@@ -44,7 +46,7 @@ class ControllerPost
 
     private function _selectedPostComments($idPost) {
         $this->_commentsManager = new PostCommentsManager();
-        $comments = $this->_commentsManager->getComments('`id`', '`billet_id` = ' . $idPost);
+        $comments = $this->_commentsManager->getComments('`id`', '`billet_id` = ' . $idPost . ' AND `accepted` >= 1 ');
         return $comments;
     }
 

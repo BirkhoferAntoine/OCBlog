@@ -6,4 +6,13 @@ class PostsManager extends MainModel {
     public function getPosts($order, $where) {
         return $this->getTableContent('Posts', 'Post', $order, $where);
     }
+
+    public function deletePost($text) {
+        $this->deleteTableContent('`Content` = ' . $text, 'Posts');
+    }
+
+    public function insertNewPost($content) {
+        $this->newPost($content);
+    }
 }
+
