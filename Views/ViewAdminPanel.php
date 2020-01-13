@@ -8,6 +8,7 @@ class ViewAdminPanel
         cardBuilder as public;
     }
 
+
     private function _mainBuild($insert)
     {
         $prePanel_panelContent = $insert;
@@ -20,49 +21,18 @@ class ViewAdminPanel
 
         return ob_get_clean();
     }
-    private function _executionBoard() {
+
+
+    private function _listBuild() {
+
         ob_start();
         ?>
 
         <div class="container-fluid">
             <div id="ui-view">
                 <div class="animated fadeIn">
-                    <div class="card"><div class="card">
-                            <div class="card-header">Tableau d'execution</div>
-                            <div class="card-body">
-                                <form class="w-100" id="executeForm" method="post" action="">
-                                    <fieldset id="executeBoard">
-
-                                        <legend>Supprimer de la base de données...</legend>
-
-                                        <div class="form-group"> Billet... <br/>
-                                            <select class="form-control">
-
-                                                <?php foreach ($this->_postTitle as $postTitle):?>
-                                                    <option name="billet" value="<?= $postTitle ?>"><?= $postTitle ?></option>
-                                                <?php endforeach; ?>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group"> Commentaire... <br/>
-                                            <select class="form-control">
-
-                                                <?php foreach ($this->_commentText as $commentText):?>
-                                                    <option name="commentaire" value="<?= $commentText ?>"><?= $commentText ?></option>
-                                                <?php endforeach; ?>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group text-center">
-                                            <input type="submit" class="align-self-center justify-content-center w-50 text-center">
-                                        </div>
-
-                                    </fieldset>
-                                </form>
-                            </div>
-                        </div>
+                    <div class="card">
+                        <?php new ControllerHome() ?>
                     </div>
                 </div>
             </div>
@@ -70,29 +40,6 @@ class ViewAdminPanel
 
         <?php
         return ob_get_clean();
-
-    }
-
-    private function _listBuild($controllerIntegration) {
-
-        if ((isset($_GET['editor']) || isset($_GET['comments'])) && $_GET['post'] === 'list') {
-
-            ob_start();
-            ?>
-
-            <div class="container-fluid">
-                <div id="ui-view">
-                    <div class="animated fadeIn">
-                        <div class="card">
-                            <?php  $controllerIntegration ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <?php
-            return ob_get_clean();
-        }
     }
 
     private function _commentsListBuild($type) {
@@ -117,16 +64,19 @@ class ViewAdminPanel
         return ob_get_clean();
 
     }
-    private function _tinyMCEBuild($preview, $post=null) {
+    private function _tinyMCEBuild($preview, $post=null, $uri) {
 
+        $uri === 'new' ? $cardHeader = 'Nouveau Billet' : $cardHeader = 'Editer Billet';
         if ($post !== null) {
-            $postTitle = $post->title();
-            $postText = $post->content();
-            $postImage = $post->image();
+            $postTitle = $post['postTitle'];
+            $postText = $post['postContent'];
+            $postImage = $post['postUrlImage'];
+            $postId = $post['postId'];
+            $postDate = $post['postDate'];
         } else {
             $postText = '';
         }
-
+            //TODO NV BILLET / EDIT CARDHEADER , IF SUBMIT = PREVIEW SHOw 2ND SUBMIT BUTTON
 
         ob_start();
         ?>
@@ -135,9 +85,9 @@ class ViewAdminPanel
 
                     <div class="animated fadeIn">
                         <div class="card">
-                            <div class="card-header">Nouveau Billet</div>
+                            <div class="card-header"><?= $cardHeader ?></div>
                             <div class="card-body">
-                                <form class="w-100" method="post" action="Panel?editor=new&submit=true">
+                                <form class="w-100" method="post" action="Panel?editor=<?= $uri ?>&submit=preview">
 
                                     <div class="form-group">
                                         <label for="postTitle">Titre</label>
@@ -154,6 +104,9 @@ class ViewAdminPanel
                                         <input type="url" class="form-control" id="urlImage" name="postUrlImage" placeholder="Entrez l'url de l'image" value="<?= $postImage ?>">
                                     </div>
 
+                                    <input type="text" name="postId" value="<?= $postId ?>" hidden>
+                                    <input type="text" name="postTime" value="<?= $postDate ?>" hidden>
+
                                     <div class="form-group text-center">
                                         <input type="submit" class="align-self-center justify-content-center w-50 text-center">
                                     </div>
@@ -166,11 +119,15 @@ class ViewAdminPanel
                             <div class="card-header">Aperçu</div>
                             <div class="card-body">
                                 <div id="tinyPreview">
-                                    <?php print_r($preview)?>
+                                    <?php echo $preview ?>
                                 </div>
                             </div>
-                            <form method="post" action="">
+                            <form method="post" action="Panel?editor=<?= $uri ?>&submit=true">
                                 <div class="form-group text-center">
+                                    <input type="text" name="postTitle" value="<?= $postTitle ?>" required hidden>
+                                    <input type="text" name="postContent" value="<?= $postText ?>" required hidden>
+                                    <input type="url"  name="postUrlImage" value="<?= $postImage ?>" hidden>
+                                    <input type="text" name="postId" value="<?= $postId ?>" hidden>
                                     <input type="submit" class="align-self-center justify-content-center w-50 text-center">
                                 </div>
                             </form>
@@ -471,12 +428,15 @@ class ViewAdminPanel
         return $this->_dashboard();
     }
 
-    public function tinyMCEBuild($preview, $post=null) {
-        return $this->_tinyMCEBuild($preview, $post);
+    public function tinyMCEBuild($preview, $post=null, $uri) {
+        return $this->_tinyMCEBuild($preview, $post, $uri);
     }
 
     public function listBuild() {
-        return$this->_listBuild();
+        return $this->_listBuild();
     }
 
+    public function commentsListBuild($type) {
+        return $this->_commentsListBuild($type);
+    }
 }

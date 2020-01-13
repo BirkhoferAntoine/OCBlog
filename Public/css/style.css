@@ -18,6 +18,12 @@ legend {
     margin-bottom: 100px !important;
 }
 
+#heroDiv {
+    background-color: antiquewhite; opacity: 0.5; height: 60%;
+    color: black;
+    text-shadow: 1px 1px;
+}
+
 .lead {
     font-size: 1.5rem;
 }
@@ -67,4 +73,74 @@ legend {
 
 .commandBoxButton:hover .flagBoxText {
     visibility: visible;
+}
+
+.fa-home {
+    font-size: large;
+}
+
+#navDrop {
+    left: -70px;
+}
+
+.tox {
+    display: none;
+}
+
+@media all and (max-width: 1239px) {
+
+    section {
+        margin: 2%;
+    }
+
+    .app-body {
+        margin: 0!important;
+    }
+
+    #homeTxt {
+        display: none;
+    }
+
+    .commentContainer {
+        width: 100%;
+    }
+
+    .commentContainer .row {
+        padding: 0 !important;
+    }
+
+    .commentCol {
+        flex-direction: column;
+        margin: 0 !important;
+        height: 200px;
+    }
+
+    .cardComm {
+        width: 100% !important;
+        height: 25%;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .flagBoxText {
+        visibility: visible;
+    }
+
+    .avatarComm {
+        margin: 0 !important;
+        height: 100% !important;
+        width: 15% !important;
+    }
+
+    .commCardBody {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100%;
+        text-align: center;
+    }
+
+    .commCardTitle {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
 }

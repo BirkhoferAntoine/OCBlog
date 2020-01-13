@@ -8,10 +8,9 @@
                         <div class="col-md-12">
                             <div class="row"
                                  style="	background-image: url(../../Vendor/assets/accueil.jpg);	 background-size: cover;">
-                                <div class="mx-auto p-5 my-5 col-md-12 bg-transparent" style="">
-                                    <h1 class="display-4">Blog de Jean Forteroche</h1>
-                                    <p class="lead">"J'aime lire, surtout ce que j'écris!"</p>
-                                    <a class="btn btn-outline-dark" href="#">Lâchez vos comms wesh!</a>
+                                <div class="mx-auto p-5 my-5 col-md-12" id="heroDiv">
+                                        <h1 class="display-4">Blog de Jean Forteroche</h1>
+                                        <p class="lead">"J'aime lire, surtout ce que j'écris!"</p>
                                 </div>
                             </div>
                         </div>

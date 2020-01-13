@@ -1,0 +1,1 @@
+//document.getElementsByClassName('flagBox').addEventListener('mouseover').

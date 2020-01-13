@@ -4,29 +4,33 @@
     <option name="GROUP_BY_SEVERITY" value="true" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d303c589-e3e4-495a-a694-98c800087c98" name="Default Changelist" comment="Patch08 19/11/2019&#10;//TODO REGISTER, LOGIN, ADMIN, LINK USERSMANAGER AND START JS">
-      <change afterPath="$PROJECT_DIR$/Controllers/ControllerAdminPanel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Controllers/ControllerSecurity.php" afterDir="false" />
+    <list default="true" id="d303c589-e3e4-495a-a694-98c800087c98" name="Default Changelist" comment="Patch09 06/01/2019&#10;//TODO REGISTER, LOGIN, ADMIN, LINK USERSMANAGER AND START JS">
       <change afterPath="$PROJECT_DIR$/Public/js/commandBoxes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Views/ViewAdminPanel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ControllerAdminPanel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ControllerAdminPanel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ControllerHome.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ControllerHome.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/ControllerPost.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ControllerPost.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ControllerSecurity.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ControllerSecurity.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/ControllerUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ControllerUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/FormChecker.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/MainModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/MainModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/PasswordManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/PasswordManager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/PostCommentsManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/PostCommentsManager.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/PostsManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/PostsManager.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/UsersManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/Models/UsersManager.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Public/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vendor/assets/_______________________________.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Templates/AdminPanel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/AdminPanel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Templates/AdminPanel.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Views/Templates/CardTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/CardTemplate.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Views/Templates/CommentsTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/CommentsTemplate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Templates/LoginFormTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/LoginFormTemplate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Templates/RegisterFormTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/RegisterFormTemplate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Templates/ListedPostTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/ListedPostTemplate.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Views/Templates/adminTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/adminTemplate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Templates/footerTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/footerTemplate.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Views/Templates/headerTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/headerTemplate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Templates/navbarTemplate.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Templates/navbarTemplate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/View.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/View.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/ViewAdminPanel.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/ViewAdminPanel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/ViewHome.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/ViewHome.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/ViewPost.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/ViewPost.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/ViewUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/Views/ViewUser.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -126,15 +130,15 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\AntonBirkh\.PhpStorm2019.3\config\scratches" />
       <recent name="C:\wamp64\www\OCBlog\Views" />
       <recent name="C:\Users\AntonBirkh\.PhpStorm2019.1\config\scratches" />
       <recent name="C:\wamp64\www\OCBlog" />
       <recent name="C:\wamp64\www\OCBlog\View" />
-      <recent name="C:\wamp64\www\OCBlog\View\Templates" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -262,7 +266,17 @@
       <workItem from="1577435034452" duration="11384000" />
       <workItem from="1578247846513" duration="148000" />
       <workItem from="1578248012906" duration="1869000" />
-      <workItem from="1578304296491" duration="2587000" />
+      <workItem from="1578304296491" duration="2868000" />
+      <workItem from="1578330177490" duration="4010000" />
+      <workItem from="1578336298060" duration="7540000" />
+      <workItem from="1578560933101" duration="3437000" />
+      <workItem from="1578564433290" duration="10000" />
+      <workItem from="1578675285955" duration="779000" />
+      <workItem from="1578760722035" duration="25000" />
+      <workItem from="1578761257019" duration="7791000" />
+      <workItem from="1578846989527" duration="17185000" />
+      <workItem from="1578906242745" duration="19417000" />
+      <workItem from="1578951351433" duration="44000" />
     </task>
     <task id="LOCAL-00001" summary="Base">
       <created>1568854791242</created>
@@ -418,17 +432,15 @@
       <option name="project" value="LOCAL" />
       <updated>1575886312247</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Patch09 06/01/2019&#10;//TODO REGISTER, LOGIN, ADMIN, LINK USERSMANAGER AND START JS">
+      <created>1578307752398</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1578307752398</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -472,28 +484,37 @@
     <MESSAGE value="Patch08 19/11/2019&#10;//TODO REGISTER, LOGIN, ADMIN, LINK USERSMANAGER AND START JS" />
     <MESSAGE value="Patch09 04/12/2019&#10;//TODO POSTS" />
     <MESSAGE value="Patch10 09/12/2019" />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch10 09/12/2019" />
+    <MESSAGE value="Patch09 06/01/2019&#10;//TODO REGISTER, LOGIN, ADMIN, LINK USERSMANAGER AND START JS" />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch09 06/01/2019&#10;//TODO REGISTER, LOGIN, ADMIN, LINK USERSMANAGER AND START JS" />
   </component>
   <component name="WindowStateProjectService">
     <state x="530" y="203" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1578248875923">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="530" y="203" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1578248875923" />
-    <state x="384" y="0" key="CommitChangelistDialog2" timestamp="1578307645166">
+    <state x="384" y="0" key="CommitChangelistDialog2" timestamp="1578307751322">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="384" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1578307645166" />
-    <state x="277" y="56" key="SettingsEditor" timestamp="1578248189047">
+    <state x="384" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1578307751322" />
+    <state x="277" y="56" key="SettingsEditor" timestamp="1578336242594">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="56" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1578248189047" />
-    <state x="465" y="238" key="com.intellij.ide.util.TipDialog" timestamp="1578248052390">
+    <state x="277" y="56" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1578336242594" />
+    <state x="361" y="128" key="Vcs.Push.Dialog.v2" timestamp="1578307770653">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="238" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1578248052390" />
-    <state x="640" y="326" key="publish.login" timestamp="1578304347693">
+    <state x="361" y="128" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1578307770653" />
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1578853363963">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="640" y="326" key="publish.login/0.0.1536.824@0.0.1536.824" timestamp="1578304347693" />
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1578853363963" />
+    <state x="465" y="238" key="com.intellij.ide.util.TipDialog" timestamp="1578951360906">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="465" y="238" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1578951360906" />
+    <state x="640" y="326" key="publish.login" timestamp="1578951388246">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="640" y="326" key="publish.login/0.0.1536.824@0.0.1536.824" timestamp="1578951388246" />
   </component>
 </project>

@@ -46,7 +46,7 @@
                 <a class="nav-link" href="<?= URL ?>"><i class="nav-icon fas fa-home"></i> <b>Retour au site</b></a>
             </li>
             <li class="nav-item px-3">
-                <a class="nav-link" href="#">Dashboard</a>
+                <a class="nav-link" href="<?= URL . 'User/Panel'?>">Dashboard</a>
             </li>
             <li class="nav-item px-3">
                 <a class="nav-link" href="#">Users</a>
@@ -306,11 +306,15 @@
         <main class="main">
 
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">Home</li>
+                <li class="breadcrumb-item">
+                    <a href="<?= URL ?>">Home</a>
+                </li>
                 <li class="breadcrumb-item">
                     <a href="#">Admin</a>
                 </li>
-                <li class="breadcrumb-item active">Dashboard</li>
+                <li class="breadcrumb-item active">
+                    <a href="<?= URL . 'User/Panel'?>">Dashboard</a>
+                </li>
             </ol>
             <?php echo $prePanel_panelContent ?>
         </main>

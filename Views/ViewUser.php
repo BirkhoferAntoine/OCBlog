@@ -42,7 +42,6 @@ class ViewUser extends View
 
         // Récupère le contenu
         $this->_message = $message;
-        //Router::$_errorLog .= '_message => ' . $message . '<br/>';
 
         $viewContent = $this->generateContent($form);
 
