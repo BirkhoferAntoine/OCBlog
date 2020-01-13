@@ -59,14 +59,14 @@ class UsersManager extends MainModel
         $userIdentifier = $this->_testInput($this->_userData['login_identifier']);
         $userPassword = $this->_testInput($this->_userData['login_password']);
         $dbUser = $this->checkUserLogin($userIdentifier, $userPassword);
-        var_dump($dbUser);
 
         if (!empty($dbUser)) {
 
-            $_SESSION['loggedin'] = true;
+            $_SESSION['logedin'] = true;
             $_SESSION['username'] = $dbUser['user_name'];
             $_SESSION['level'] = $dbUser['user_level'];
-            var_dump($_SESSION);
+
+            header('Location: ' . URL);
         }
     }
 

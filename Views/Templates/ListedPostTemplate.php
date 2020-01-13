@@ -6,9 +6,13 @@ class ListedPostTemplate
     private $_postNumber = 0;
     private $_postPair = [];
     private $_postEnd;
+    private $_safeGet;
 
     public function __construct($postsInjection)
     {
+
+        $this->_setSecurity();
+
         if (!empty($postsInjection['posts'])) {
             $posts = $postsInjection['posts'];
             $this->_postEnd = count($posts);
@@ -18,6 +22,11 @@ class ListedPostTemplate
         echo $this->_listIndex();
 
 
+    }
+
+    private function _setSecurity() {
+        global $security;
+        $this->_safeGet = $security->getFilteredGet();
     }
 
     private function _postListBuilder($postsInjection) {
@@ -92,23 +101,25 @@ class ListedPostTemplate
             $postTitle = $post->title();
             $postContent = $post->content();
             $postImg = $post->image();
+            $postId = $post->id();
 
-            if($_GET['post'] === 'list') {
-                if (isset($_GET['editor'])) {
-                    $postUrl = 'Panel?editor=' . $_GET['editor'] . '&post=' . $postTitle;
-                } elseif (isset($_GET['comments'])) {
-                    $postUrl = 'Panel?comments=' . $_GET['comments'] . '&post=' . $postTitle;
+            if($this->_safeGet['post'] === 'list') {
+                if ($this->_safeGet['editor'] === 'edit') {
+                    $postUrl = 'Panel?editor=edit&post=' . $postTitle;
+                } elseif ($this->_safeGet['editor'] === 'delete') {
+                    $postUrl = 'Panel?editor=delete&post=list&submit=' . $postId;
+                } elseif (isset($this->_safeGet['comments'])) {
+                    $postUrl = 'Panel?comments=' . $this->_safeGet['comments'] . '&post=' . $postTitle;
                 }
             } else {
                 $postUrl = 'Post/' . $postTitle;
             }
-            //$_GET['editor'] === 'delete' ? $trashBox = $post->id() : null;
 
             ob_start();
 
             if ($postImg !== null) {
                 ?>
-                    <div class="col mx-2 pt-5 px-5 mb-3 d-flex flex-column align-items-center" style="background-image: url(<?= $postImg ?>); background-size: cover;">
+                    <div class="col d-flex flex-column align-items-center pt-5 px-5 mb-3" style="background-image: url(<?= $postImg ?>); background-size: cover;">
                 <?php
             } else {
                 ?>
@@ -116,14 +127,14 @@ class ListedPostTemplate
                 <?php
             }
             ?>
-                        <div class="col-md-4">
-                            <h3 class="mt-3 bg-light">
+                        <div class="col-md-4 d-flex justify-content-center">
+                            <h3 class="mt-3 bg-light p-2 align-self-center">
                                 <a href='<?= $postUrl ?>' class="text-decoration-none text-dark">
                                     <b><?= $postTitle ?></b>
                                 </a>
                             </h3>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 d-flex justify-content-center">
                         <p class="lead mb-5 text-white"><?= $postContent ?></p>
                         </div>
                     </div>
@@ -136,9 +147,11 @@ class ListedPostTemplate
 
     private function _listIndex() {
 
-        $_GET['editor'] === 'edit' && $_GET['post'] === 'list' ? $urlRange = 'Panel?editor=edit&post=list&listrange=' : $urlRange = '?listrange=';
-        $prev = $_GET['listrange'] - 1;
-        $next = $_GET['listrange'] + 1;
+        $this->_safeGet['post'] === 'list' ? $urlRange = 'Panel?editor=' . $this->_safeGet['editor'] . '&post=list&listrange='
+        : $urlRange = '?listrange=';
+        $prev = $this->_safeGet['listrange'] - 1;
+        $prev <= 1 ? $disabledFlag = 'disabled' : $disabledFlag = '';
+        $next = $this->_safeGet['listrange'] + 1;
 
 
 
@@ -147,7 +160,7 @@ class ListedPostTemplate
             <div class="row">
                 <div class="col-md-12">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item"> <a class="page-link" href="<?= $urlRange . $prev ?>">Prev</a> </li>
+                        <li class="page-item <?= $disabledFlag ?> "> <a class="page-link" href="<?= $urlRange . $prev ?>">Prev</a> </li>
                         <li class="page-item"> <a class="page-link" href="<?= $urlRange ?>1">1</a> </li>
                         <li class="page-item"> <a class="page-link" href="<?= $urlRange ?>2">2</a> </li>
                         <li class="page-item"> <a class="page-link" href="<?= $urlRange ?>3">3</a> </li>

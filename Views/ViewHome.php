@@ -35,7 +35,7 @@ class ViewHome extends View {
         ob_start();
 
         $this->generateHeader();
-        print_r($this->generateCard());
+        echo $this->generateCard();
         $this->generatePostsList($injectContent);
 
         return ob_get_clean();
@@ -57,7 +57,3 @@ class ViewHome extends View {
         echo $view;
     }
 }
-//TODO CLEAN CODE
-/*foreach ($posts as $post) : ?>
-
-<?php endforeach; ?>*/

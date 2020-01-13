@@ -27,7 +27,7 @@ trait CardTemplate
                             </div>
                         </div>
                         <div class="p-3 col-md-7 mr-auto bg-white text-dark justify-content-between d-inline-flex border border-left-0 border-dark">
-                            <div class="blockquote mb-0 flex-column align-items-end justify-content-center d-inline-flex bg-primary" style="width: 100%">
+                            <div class="blockquote mb-0 p-2 flex-column align-items-end justify-content-center d-inline-flex bg-primary" style="width: 100%">
                                 <p class="bg-primary align-self-center"><?= htmlspecialchars($cardTextContent) ?></p>
                                 <p class="justify-content-end"><?= htmlspecialchars($cardDate) ?></p>
                                 <div class="blockquote-footer"><b>Jean Forteroche</b>, écrivain d'intérieur.</div>

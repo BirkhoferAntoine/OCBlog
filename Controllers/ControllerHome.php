@@ -4,14 +4,19 @@ class ControllerHome
 {
     private $_postsManager;
     private $_view;
+    private $_safeGet;
 
 
-    public function __construct($url)
+    public function __construct($url=null)
     {
         if (!empty($url)) {
             throw new Exception('404 Page introuvable');
         }
         else {
+            $this->_setSecurity();
+            if ($this->_safeGet['logout'] === 'true') {
+                session_destroy();
+            }
             $this->_posts();
         }
     }
@@ -21,9 +26,8 @@ class ControllerHome
         $this->_postsManager = new PostsManager();
         $postsRange = $this->_postsRange();
         $posts = $this->_postsManager->getPosts('`id` DESC LIMIT ' . $postsRange , null);
-        View::addErrorLog($posts);
 
-        if ((isset($_GET['editor']) || isset($_GET['comments'])) && $_GET['post'] === 'list') {
+        if ((isset($this->_safeGet['editor']) || isset($this->_safeGet['comments'])) && $this->_safeGet['post'] === 'list') {
             $this->_view = new ListedPostTemplate(array('posts' => $posts));
         } else {
             $this->_view = new ViewHome;
@@ -33,16 +37,20 @@ class ControllerHome
 
     private function _postsRange()
     {
-        if (isset($_GET['listrange'])) {
+        if (isset($this->_safeGet['listrange'])) {
 
-            $maxRange = $_GET['listrange'] * 10;
+            $maxRange = $this->_safeGet['listrange'] * 10;
             $minRange = $maxRange - 10;
             return $minRange . ', ' . $maxRange;
         } else {
             return '0, 10';
         }
     }
-    // TODO GET POSTS AFTER 10 FROM DATABASE
+
+    private function _setSecurity() {
+        global $security;
+        $this->_safeGet = $security->getFilteredGet();
+    }
 }
 
 

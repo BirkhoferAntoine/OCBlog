@@ -16,7 +16,6 @@ class ControllerUser
         } else {
 
             $this->_setSecurity();
-            var_dump($this->_safeUri);
 
             if ($this->_safeUri === 'Panel' && isset($_SESSION['username'])) {
 

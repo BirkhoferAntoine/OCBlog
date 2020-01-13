@@ -10,6 +10,7 @@ class ViewPost extends View
     private $_postComments;
     private $_postImage;
 
+
     public function generate($injectContent)
     {
         parent::generate($injectContent);
@@ -19,22 +20,33 @@ class ViewPost extends View
         $this->_postComments = $comments;
     }
 
-    // TODO CHANGER VIEW
     // Génère les cartes pour les billets si un texte est trouvé dans le fichier
     protected function generateCard() {
         if ($this->_cardTextContent !== null) {
-            return $this->cardBuilder($this->_cardTextContent, $this->_postDate, $this->_postImage);
+            return $this->cardBuilder($this->_cardTextContent,
+                $this->_postDate,
+                $this->_postImage);
         } else {
             return null;
         }
     }
     protected function generateSelectedPost($injectedPost)
     {
-        $this->_post = $injectedPost['Post'][0];
-        $this->_fileTitle = $this->_post->title();
-        $this->_cardTextContent = $this->_post->content();
-        $this->_postDate = $this->_post->date_creation();
-        $this->_postImage = $this->_post->image();
+        if (empty($injectedPost['preview'])) {
+
+            $this->_post = $injectedPost['Post'][0];
+            $this->_fileTitle = $this->_post->title();
+            $this->_cardTextContent = $this->_post->content();
+            $this->_postDate = $this->_post->date_creation();
+            $this->_postImage = $this->_post->image();
+        } else {
+
+            $this->_post = $injectedPost['preview'];
+            $this->_fileTitle = $this->_post['postTitle'];
+            $this->_cardTextContent = $this->_post['postContent'];
+            $this->_postImage = $this->_post['postUrlImage'];
+            $this->_postDate = $injectedPost['Post'][0]->date_creation();
+        }
     }
 
     // TODO COMMENTS FORM
@@ -43,13 +55,13 @@ class ViewPost extends View
     }
 
     protected function generateContent($injectContent) {
+        $this->generateSelectedPost($injectContent);
 
         if ($injectContent['Post']) {
-            $this->generateSelectedPost($injectContent);
 
             ob_start();
 
-            print_r($this->generateCard());
+            echo $this->generateCard();
             $this->generatePostComments();
 
             return ob_get_clean();

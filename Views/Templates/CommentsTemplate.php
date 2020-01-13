@@ -4,16 +4,21 @@
 class CommentsTemplate extends ViewPost
 {
 
+    private $_safeGet;
+
     public function __construct($commentsInjection)
     {
-        parent::__construct();
 
-        if (!isset($_GET['comments']) && isset($_GET['editor'])) {
-
+        $this->_setSecurity();
+        if (!isset($this->_safeGet['comments']) && isset($this->_safeGet['editor'])) {
         } else {
-            var_dump($_POST);
             echo $this->_postCommentsBuilder($commentsInjection);
         }
+    }
+
+    private function _setSecurity() {
+        global $security;
+        $this->_safeGet = $security->getFilteredGet();
     }
 
     private function _postCommentsBuilder($commentsInjection) {
@@ -83,11 +88,10 @@ class CommentsTemplate extends ViewPost
     private function _commentBuilder($comment) {
         $commentId = $comment->id();
         $commentUser = $comment->user();
-        $commentAvatar;
         $commentContent = $comment->comment();
         $commentDate = $comment->comment_date();
 
-        if ($_GET['comments'] === 'list') {
+        if ($this->_safeGet['comments'] === 'list') {
             $commentPostId = $comment->billet_id();
             $commentInfo = 'Publié le ' . $commentDate . ' pour le billet id #' . $commentPostId;
 
@@ -101,9 +105,9 @@ class CommentsTemplate extends ViewPost
         ob_start();
         ?>
             <div class="commentCol col mx-2 bg-dark p-2 mb-1">
-                <div class="bg-primary card w-25"> <img class="img-fluid rounded-circle w-50 mx-auto mt-3" src="../../Vendor/assets/wright.jfif" alt="Card image">
-                    <div class="card-body">
-                        <p class="card-title font-weight-light text-center"><?= $commentUser ?></p>
+                <div class="bg-primary card w-25 cardComm"> <img class="img-fluid rounded-circle w-50 mx-auto mt-3 avatarComm" src="../../Vendor/assets/wright.jfif" alt="Card image">
+                    <div class="card-body commCardBody">
+                        <p class="card-title commCardTitle font-weight-light text-center"><?= $commentUser ?></p>
                     </div>
                 </div>
                 <div class="commentText p-2 col mr-auto text-light justify-content-between d-inline-flex flex-column">
@@ -151,7 +155,7 @@ class CommentsTemplate extends ViewPost
 
     private function _commentForm() {
 
-        if ($_GET['comments'] !== 'list') {
+        if ($this->_safeGet['comments'] !== 'list') {
 
             if (isset($_SESSION['level'])) {
 

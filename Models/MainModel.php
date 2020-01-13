@@ -14,7 +14,6 @@ abstract class MainModel {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ];
 
-    private $_errorLog = [];
 
     use PasswordManager;
 
@@ -72,34 +71,56 @@ abstract class MainModel {
         return $tableContent;
     }
 
-    protected function deleteTableContent($text, $table) {
+    protected function dropPost($id) {
         $this->getDbConnection();
-        $tableQuery = self::$_dbConnection->prepare('
-            DELETE FROM ' .
-             $table .
-             ' WHERE ' .
-             $text
-             )
-        or die(print_r(self::$_dbConnection->errorInfo()));
-        $tableQuery->execute();
+
+        $deletePost = self::$_dbConnection->prepare('
+            DELETE FROM 
+                `Posts`
+            WHERE 
+                `id` = :id
+        ') or die(print_r(self::$_dbConnection->errorInfo()));
+        $deletePost->bindParam(':id', $id);
+
+        $deletePost->execute();
+        $deletePost->closeCursor();
     }
 
-    protected function newPost($content) {
-
+    protected function newPost($title, $content, $urlImage) {
         $this->getDbConnection();
-        $query = self::$_dbConnection->prepare('
-        INSERT INTO 
-        `Posts`
-        VALUES 
-        ( :
-        
-        )
+
+        $insertPost = self::$_dbConnection->prepare('
+            INSERT INTO 
+                `Posts` (`id`, `title`, `content`, `date_creation`, `image`)
+            VALUES 
+                (NULL, :title, :content, NOW(), :image)
         ');
+        $insertPost->bindParam(':title', $title);
+        $insertPost->bindParam(':content', $content);
+        $insertPost->bindParam(':image', $urlImage);
 
+        $insertPost->execute();
+        $insertPost->closeCursor();
     }
 
-    protected function updatePost() {
+    protected function updatePost($title, $content, $urlImage, $id) {
+        $this->getDbConnection();
 
+        $updatePost = self::$_dbConnection->prepare('
+            UPDATE 
+                `Posts` 
+            SET 
+                `title` = :title, `content` = :content, `image` = :image 
+            WHERE 
+                `id` = :id
+        ');
+        $updatePost->bindParam(':title', $title);
+        $updatePost->bindParam(':content', $content);
+        $updatePost->bindParam(':image', $urlImage);
+        $updatePost->bindParam(':id', $id);
+
+        $updatePost->execute();
+        $updatePost->closeCursor();
     }
 
     protected function checkUserExists($userName, $userEmail) {

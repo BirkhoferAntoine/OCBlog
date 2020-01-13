@@ -11,7 +11,7 @@ ob_start();
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="mx-auto col-md-4">
-                                        <p class="lead mb-2"><b>Follow us</b></p>
+                                        <p class="lead mb-2"><b>Suivez-nous</b></p>
                                         <div class="row">
                                             <div class="col-md-12 d-flex align-items-center justify-content-between"> <a href="#">
                                                     <span class="d-block fab fa-twitter text-muted fa-2x"></span>
