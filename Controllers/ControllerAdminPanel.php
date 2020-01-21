@@ -3,8 +3,6 @@
 
 class ControllerAdminPanel
 {
-
-    //TODO CLEAN VARS!
     private $_view;
     private $_postsManager;
     private $_commentsManager;
@@ -12,11 +10,6 @@ class ControllerAdminPanel
     private $_urlPost;
     private $_controllerIntegration;
     private $_viewIntegration;
-    private $_postTitle = [];
-    private $_postId;
-    private $_postIdArray = [];
-    private $_commentText = [];
-    private $_commentId = [];
     private $_safeUri;
     private $_safeGet;
     private $_safePost;
@@ -29,7 +22,7 @@ class ControllerAdminPanel
 
     private function _setSecurity() {
         global $security;
-        $this->_safeUri = array_slice($security->getFilteredUri(2), 0);
+        $this->_safeUri = $security->getFilteredUri(2);
         $this->_safeGet = $security->getFilteredGet();
         $this->_safePost = $security->getFilteredPost();
     }
@@ -46,35 +39,9 @@ class ControllerAdminPanel
     private function _panelBuild() {
 
         if ($this->_safeGet['editor']) {
-
-            if ($this->_safeGet['post'] === 'list') {
-                $panelContent = $this->_listBuild();
-                if ($this->_safeGet['editor'] === 'delete' && isset($this->_safeGet['submit'])) {
-                    $this->_deletePost($this->_safeGet['submit']);
-                }
-            } elseif ($this->_safeGet['editor'] === 'edit' && $this->_safeGet['post'] !== 'list') {
-                $panelContent = $this->_tinyMCEBuild('edit');
-                if ($this->_safeGet['submit'] === 'true') {
-                    $this->_editPost();
-                }
-            } elseif ($this->_safeGet['editor'] === 'new') {
-                $panelContent = $this->_tinyMCEBuild('new');
-                if ($this->_safeGet['submit'] === 'true') {
-                    $this->_newPost();
-                }
-            }
+            $panelContent = $this->_editorPanel();
         } elseif ($this->_safeGet['comments']) {
-            if ($this->_safeGet['post'] === 'list') {
-                $panelContent = $this->_listBuild();
-            } elseif (isset($this->_safeGet['post'])) {
-                $panelContent = $this->_setPost();
-            } elseif ($this->_safeGet['comments'] === 'list') {
-                if ($this->_safeGet['flag'] === 'true') {
-                    $panelContent = $this->_commentsListBuild('9');
-                } else {
-                    $panelContent = $this->_commentsListBuild('0');
-                }
-            }
+            $panelContent = $this->_commentsPanel();
         } else {
             $panelContent = $this->_view->dashboard();
         }
@@ -82,17 +49,61 @@ class ControllerAdminPanel
         return $this->_view->mainBuild($panelContent);
     }
 
+    private function _editorPanel() {
+
+        $this->_postsManager = new PostsManager();
+        if (isset($this->_safeGet['submit']) && $this->_safeGet['submit'] !== 'preview') {
+            $this->_submitPostOrder();
+        } else {
+
+            if ($this->_safeGet['post'] === 'list') {
+                $panelContent = $this->_listBuild();
+
+            } elseif ($this->_safeGet['editor'] === 'edit' && $this->_safeGet['post'] !== 'list') {
+                $panelContent = $this->_tinyMCEBuild('edit');
+
+            } elseif ($this->_safeGet['editor'] === 'new') {
+                $panelContent = $this->_tinyMCEBuild('new');
+            }
+            return $panelContent;
+        }
+    }
+
+    private function _commentsPanel() {
+
+        $this->_commentsManager = new PostCommentsManager();
+        if ($this->_safeGet['submit'] === 'true') {
+            $this->_submitCommentOrder();
+        }
+
+        if ($this->_safeGet['post'] === 'list') {
+            $panelContent = $this->_listBuild();
+
+        } elseif (isset($this->_safeGet['post'])) {
+            $panelContent = $this->_setPost();
+
+        } elseif ($this->_safeGet['comments'] === 'list') {
+
+            if ($this->_safeGet['flag'] === 'true') {
+                $panelContent = $this->_commentsListBuild('1');
+            } else {
+                $panelContent = $this->_commentsListBuild('0');
+            }
+        }
+        return $panelContent;
+    }
+
     private function _listBuild() {
        return $this->_view->listBuild();
     }
 
-    private function _commentsListBuild($type)
-    {
-        $this->_commentsManager = new PostCommentsManager();
-        $commentsList = $this->_commentsManager->getComments('`billet_id`', '`accepted` = ' . $type);
+    private function _commentsListBuild($type) {
 
-        return $this->_view->commentsListBuild($type);
+        $commentsList = $this->_commentsManager->getComments('`billet_id`', '`accepted` = ' . $type);
+        return $this->_view->commentsListBuild($type, $commentsList);
+
     }
+
     private function _setPost($postPreview=null) {
 
         if (isset($this->_safeGet['post']) && $this->_safeGet['post'] !== 'list') {
@@ -131,7 +142,9 @@ class ControllerAdminPanel
                 null,
                 $this->_safePost['postUrlImage']);
 
-            return $this->_view->tinyMCEBuild($preview, $post, $type);
+            $this->_safeGet['submit'] === 'preview' ? $token = true : $token = false;
+
+            return $this->_view->tinyMCEBuild($preview, $post, $type, $token);
 
         } elseif ($type === 'edit') {
 
@@ -160,7 +173,9 @@ class ControllerAdminPanel
                 $edit = $type . '&post=' . $postData->title();
             }
 
-            return $this->_view->tinyMCEBuild($preview, $post, $edit);
+            $this->_safeGet['submit'] === 'preview' ? $token = true : $token = false;
+
+            return $this->_view->tinyMCEBuild($preview, $post, $edit, $token);
         }
 
     }
@@ -175,7 +190,6 @@ class ControllerAdminPanel
     }
 
     private function _newPost() {
-        $this->_postsManager = new PostsManager();
 
         $postTitle = $this->_safePost['postTitle'];
         $postContent = $this->_safePost['postContent'];
@@ -185,7 +199,6 @@ class ControllerAdminPanel
     }
 
     private function _editPost() {
-        $this->_postsManager = new PostsManager();
 
         $postTitle = $this->_safePost['postTitle'];
         $postContent = $this->_safePost['postContent'];
@@ -198,7 +211,54 @@ class ControllerAdminPanel
 
     private function _deletePost($id)
     {
-        $this->_postsManager = new PostsManager();
         $this->_postsManager->deletePost($id);
+    }
+
+    private function _submitPostOrder()
+    {
+        if ($this->_safeGet['editor'] === 'delete' && isset($this->_safeGet['submit'])) {
+
+            $this->_deletePost($this->_safeGet['submit']);
+
+        } elseif ($this->_safeGet['editor'] === 'edit' && $this->_safeGet['post'] !== 'list' && $this->_safeGet['submit'] === 'true') {
+
+            $this->_editPost();
+
+        } elseif ($this->_safeGet['editor'] === 'new' && $this->_safeGet['submit'] === 'true') {
+
+            $this->_newPost();
+        }
+
+        $this->_redirect();
+    }
+
+    private function _submitCommentOrder() {
+
+        if ($this->_safePost['accept']) {
+
+            $this->_commentsManager->acceptComment($this->_safePost['accept']);
+
+        } elseif ($this->_safePost['delete']) {
+
+            $this->_commentsManager->deleteComment($this->_safePost['delete']);
+        }
+
+        $this->_redirect();
+    }
+
+    private function _redirect() {
+
+        if ($this->_safeGet['editor'] === 'edit' && $this->_safeGet['post'] !== 'list' && $this->_safeGet['submit'] === 'true') {
+            $submitExplode = explode('&post=', $this->_safeUri);
+            $redirectUri = $submitExplode[0] . '&post=list';
+        } else {
+            $submitExplode = explode('&submit=', $this->_safeUri);
+            $redirectUri = $submitExplode[0];
+        }
+
+        $redirection = URL . 'User/' . $redirectUri;
+
+        require_once(ROOT_FOLDER . '/Views/Templates/redirect.php');
+
     }
 }

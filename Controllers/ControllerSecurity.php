@@ -19,7 +19,12 @@ class ControllerSecurity
 
         $this->_argsGet = $argsGet;
         $this->_argsPost = $argsPost;
-        $this->_filteredUri = array_slice(explode('/', filter_var($_SERVER['REQUEST_URI'],FILTER_SANITIZE_URL)), 0);
+        //TODO REMOVE
+       /* print_r($_SERVER['REQUEST_URI']);
+        $testUri = urlencode($_SERVER['REQUEST_URI']);
+        print_r('n1' . $testUri);
+        print_r('n2' . urldecode($testUri));*/
+        $this->_filteredUri = array_slice(explode('/', urldecode(filter_var(urlencode($_SERVER['REQUEST_URI']),FILTER_SANITIZE_URL))), 0);
 
     }
     // $key = int , @param, if is_int filtered[0]

@@ -49,7 +49,6 @@ class ViewPost extends View
         }
     }
 
-    // TODO COMMENTS FORM
     protected function generatePostComments() {
         return new CommentsTemplate($this->_postComments);
     }
@@ -71,5 +70,6 @@ class ViewPost extends View
     public function generatePost($injectContent) {
         return $this->generateContent($injectContent);
     }
+
 
 }

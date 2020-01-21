@@ -5,6 +5,8 @@ class CommentsTemplate extends ViewPost
 {
 
     private $_safeGet;
+    private $_safeUri;
+    private $_submitUri;
 
     public function __construct($commentsInjection)
     {
@@ -19,7 +21,9 @@ class CommentsTemplate extends ViewPost
     private function _setSecurity() {
         global $security;
         $this->_safeGet = $security->getFilteredGet();
-    }
+        $this->_safeUri = $security->getFilteredUri(2);
+        $this->_safeGet['submit'] === 'true' ? $this->_submitUri = $this->_safeUri : $this->_submitUri = $this->_safeUri . '&submit=true';
+        }
 
     private function _postCommentsBuilder($commentsInjection) {
         ob_start();
@@ -39,31 +43,6 @@ class CommentsTemplate extends ViewPost
                     }
 
                     echo $this->_commentForm();
-                    ?>
-
-                </div>
-            </div>
-        </section>
-        <?php
-        return ob_get_clean();
-    }
-
-    private function _listCommentsBuilder($commentsInjection) {
-        ob_start();
-        ?>
-
-        <section id="comments">
-            <div class="text-center bg-light">
-                <div class="container-fluid bg-primary commentContainer">
-
-                    <div>
-                        <h2 class="lead p-4 m-4 bg-dark commentTitle">Commentaires</h2>
-                    </div>
-
-                    <?php
-                    foreach ($commentsInjection as $commentContent) {
-                        echo $this->_rowBuilder($commentContent);
-                    }
                     ?>
 
                 </div>
@@ -107,10 +86,10 @@ class CommentsTemplate extends ViewPost
             <div class="commentCol col mx-2 bg-dark p-2 mb-1">
                 <div class="bg-primary card w-25 cardComm"> <img class="img-fluid rounded-circle w-50 mx-auto mt-3 avatarComm" src="../../Vendor/assets/wright.jfif" alt="Card image">
                     <div class="card-body commCardBody">
-                        <p class="card-title commCardTitle font-weight-light text-center"><?= $commentUser ?></p>
+                        <span class="card-title commCardTitle font-weight-light text-center"><?= $commentUser ?></span>
                     </div>
                 </div>
-                <div class="commentText p-2 col mr-auto text-light justify-content-between d-inline-flex flex-column">
+                <div class="commentText px-2 col mr-auto text-light justify-content-between d-inline-flex flex-column">
                     <div class="blockquote w-100 h-100 mb-0 justify-content-center d-inline-flex">
                         <p class="lead font-weight-light m-auto d-inline-flex align-items-center h-100 text-light"><?= $commentContent ?></p>
                     </div>
@@ -129,7 +108,7 @@ class CommentsTemplate extends ViewPost
             ob_start();
             ?>
 
-                    <form class="commandBox p-2 col mr-auto text-light justify-content-between d-inline-flex flex-column" id="commentBox_<?= $id ?>" method="post" action="">
+                    <form class="commandBox p-2 col mr-auto text-light justify-content-between d-inline-flex flex-column" id="commentBox_<?= $id ?>" method="post" action="<?= $this->_submitUri?>">
                         <button class="commandBoxButton text-primary" type="submit" name="accept" value="<?= $id ?>"><i class="far fa-check-square"></i> ACCEPTER</button>
                         <button class="commandBoxButton text-primary" type="submit" name="edit" value="<?= $id ?>"><i class="fas fa-edit"></i> EDITER</button>
                         <button class="commandBoxButton text-primary" type="submit" name="delete" value="<?= $id ?>"><i class="fas fa-ban"></i> SUPPRIMER</button>
@@ -138,13 +117,16 @@ class CommentsTemplate extends ViewPost
             <?php
             return ob_get_clean();
 
-        } elseif ($type === 'user') {
+        } elseif ($type === 'user' && isset($_SESSION['level'])) {
 
             ob_start();
             ?>
 
-            <form class="commandBox p-2 col mr-auto text-light justify-content-end d-inline-flex flex-column" id="commentBox_<?= $id ?>" method="post" action="">
-                <button class="commandBoxButton text-primary" type="submit" name="flag" value="<?= $id ?>"><i class="fas fa-bullhorn"></i> <span class="flagBoxText">SIGNALER</span></button>
+
+            <form class="commandBox p-2 col mr-auto text-light justify-content-end d-inline-flex flex-column" id="commentBox_<?= $id ?>" method="post" action="?flag=submit">
+                <div class="form-group flagBoxDiv">
+                    <button class="commandBoxButton text-primary" type="submit" name="flag" value="<?= $id ?>"><i class="fas fa-bullhorn"></i> <span class="flagBoxText">SIGNALER</span></button>
+                </div>
             </form>
 
             <?php
@@ -157,7 +139,7 @@ class CommentsTemplate extends ViewPost
 
         if ($this->_safeGet['comments'] !== 'list') {
 
-            if (isset($_SESSION['level'])) {
+            if (isset($_SESSION['logedin'])) {
 
                 ob_start();
                 ?>
@@ -176,14 +158,16 @@ class CommentsTemplate extends ViewPost
                 </div>
 
                 <div>
-                    <form class="w-100" method="post" action="?comment=submit">
+                    <form class="w-100" method="post" action=?comment=submit>
                         <fieldset>
 
                             <legend>Nouveau message</legend>
                             <div class="form-group">
                                 <label for="commentEditor"></label>
-                                <textarea class="form-control" id="commentEditor" name="commentEditor"></textarea>
+                                <textarea class="form-control" id="commentEditor" name="commentUser"></textarea>
                             </div>
+
+                            <input type="text" name="user" value="<?= $_SESSION['username'] ?>" hidden>
 
                             <div class="form-group text-center">
                                 <input type="submit" class="align-self-center justify-content-center w-50 text-center">
@@ -202,10 +186,10 @@ class CommentsTemplate extends ViewPost
                 ?>
 
                 <div class="my-4">
-                    <h3 class="lead p-4 m-4 bg-dark commentTitle">Veuillez vous <a class="text-danger"
-                                                                                   href="<?= URL ?>User/Login"><u>"
-                                connecter "</u></a> ou vous <a class="text-danger" href="<?= URL ?>User/Register"><u>"
-                                inscrire "</u></a> pour laisser un commentaire</h3>
+                    <h3 class="lead p-4 m-4 bg-dark commentTitle">
+                        Veuillez vous <a class="text-danger" href="<?= URL ?>User/Login"><u>connecter</u></a>
+                        ou vous <a class="text-danger" href="<?= URL ?>User/Register"><u>inscrire</u></a>
+                        pour laisser un commentaire</h3>
                 </div>
 
                 <?php

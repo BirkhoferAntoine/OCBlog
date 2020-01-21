@@ -123,6 +123,57 @@ abstract class MainModel {
         $updatePost->closeCursor();
     }
 
+    protected function newComment($comment, $user, $postId) {
+        $this->getDbConnection();
+
+        $insertComment = self::$_dbConnection->prepare('
+            INSERT INTO 
+                `Comments` 
+                (`billet_id`, `user`, `comment`, `comment_date`) 
+            VALUES 
+                (:billet_id, :user, :comment, UTC_TIMESTAMP())
+        ');
+        $insertComment->bindParam(':billet_id', $postId);
+        $insertComment->bindParam(':user', $user);
+        $insertComment->bindParam(':comment', $comment);
+
+        $insertComment->execute();
+        $insertComment->closeCursor();
+    }
+
+    protected function levelComment($id, $level) {
+        $this->getDbConnection();
+
+        $updateLevel = self::$_dbConnection->prepare('
+            UPDATE 
+                `Comments` 
+            SET 
+                `accepted` = :level 
+            WHERE 
+                `id` = :id
+        ');
+        $updateLevel->bindParam(':level', $level);
+        $updateLevel->bindParam(':id', $id);
+
+        $updateLevel->execute();
+        $updateLevel->closeCursor();
+    }
+
+    protected function dropComment($id) {
+        $this->getDbConnection();
+
+        $deleteComment = self::$_dbConnection->prepare('
+            DELETE FROM 
+                `Comments`
+            WHERE 
+                `id` = :id
+        ') or die(print_r(self::$_dbConnection->errorInfo()));
+        $deleteComment->bindParam(':id', $id);
+
+        $deleteComment->execute();
+        $deleteComment->closeCursor();
+    }
+
     protected function checkUserExists($userName, $userEmail) {
         $this->getDbConnection();
 

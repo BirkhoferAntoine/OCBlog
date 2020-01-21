@@ -42,10 +42,7 @@ class ViewAdminPanel
         return ob_get_clean();
     }
 
-    private function _commentsListBuild($type) {
-        $this->_commentsManager = new PostCommentsManager();
-        $commentsList = $this->_commentsManager->getComments('`billet_id`', '`accepted` = ' . $type);
-
+    private function _commentsListBuild($type, $commentsList) {
 
         ob_start();
         ?>
@@ -64,9 +61,10 @@ class ViewAdminPanel
         return ob_get_clean();
 
     }
-    private function _tinyMCEBuild($preview, $post=null, $uri) {
+    private function _tinyMCEBuild($preview, $post, $uri, $token) {
 
         $uri === 'new' ? $cardHeader = 'Nouveau Billet' : $cardHeader = 'Editer Billet';
+        $token === true ? $disabledFlag = null : $disabledFlag = 'disabled';
         if ($post !== null) {
             $postTitle = $post['postTitle'];
             $postText = $post['postContent'];
@@ -76,7 +74,6 @@ class ViewAdminPanel
         } else {
             $postText = '';
         }
-            //TODO NV BILLET / EDIT CARDHEADER , IF SUBMIT = PREVIEW SHOw 2ND SUBMIT BUTTON
 
         ob_start();
         ?>
@@ -87,6 +84,7 @@ class ViewAdminPanel
                         <div class="card">
                             <div class="card-header"><?= $cardHeader ?></div>
                             <div class="card-body">
+
                                 <form class="w-100" method="post" action="Panel?editor=<?= $uri ?>&submit=preview">
 
                                     <div class="form-group">
@@ -128,7 +126,7 @@ class ViewAdminPanel
                                     <input type="text" name="postContent" value="<?= $postText ?>" required hidden>
                                     <input type="url"  name="postUrlImage" value="<?= $postImage ?>" hidden>
                                     <input type="text" name="postId" value="<?= $postId ?>" hidden>
-                                    <input type="submit" class="align-self-center justify-content-center w-50 text-center">
+                                    <input type="submit" class="align-self-center justify-content-center w-50 text-center <?= $disabledFlag ?>">
                                 </div>
                             </form>
                         </div>
@@ -428,15 +426,15 @@ class ViewAdminPanel
         return $this->_dashboard();
     }
 
-    public function tinyMCEBuild($preview, $post=null, $uri) {
-        return $this->_tinyMCEBuild($preview, $post, $uri);
+    public function tinyMCEBuild($preview, $post, $uri, $token) {
+        return $this->_tinyMCEBuild($preview, $post, $uri, $token);
     }
 
     public function listBuild() {
         return $this->_listBuild();
     }
 
-    public function commentsListBuild($type) {
-        return $this->_commentsListBuild($type);
+    public function commentsListBuild($type, $commentsList) {
+        return $this->_commentsListBuild($type, $commentsList);
     }
 }

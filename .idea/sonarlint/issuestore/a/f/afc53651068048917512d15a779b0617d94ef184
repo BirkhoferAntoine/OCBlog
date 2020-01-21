@@ -1,0 +1,19 @@
+
+njavascript:S2589œ"LRefactor this code so that this expression does not always evaluate to true.(ç»š¶úÿÿÿÿ
+sjavascript:S2873ˆ"VThis expression might have a value which cannot be called; it might not be a function.(ôğåõ
+xjavascript:S2873Â"VThis expression might have a value which cannot be called; it might not be a function.(íË½°ûÿÿÿÿ
+zjavascript:S1117¾"X"padding" hides or potentially hides a variable declared in an outer scope at line 2508.(ÇÖ¥µùÿÿÿÿ
+pjavascript:S1117“"T"len" hides or potentially hides a variable declared in an outer scope at line 2725.(×Ë‘~
+wjavascript:S1117Ê"U"event" hides or potentially hides a variable declared in an outer scope at line 821.(Ÿß³ûÿÿÿÿ
+„javascript:S1117¨"b"calculatedPadding" hides or potentially hides a variable declared in an outer scope at line 2483.(ºÁÏ÷ùÿÿÿÿ
+sjavascript:S2873†"VThis expression might have a value which cannot be called; it might not be a function.(şÙ¦‚
+xjavascript:S2873ø"VThis expression might have a value which cannot be called; it might not be a function.(µ†£àøÿÿÿÿ
+xjavascript:S1117˜"V"event" hides or potentially hides a variable declared in an outer scope at line 2164.(òœ¯êüÿÿÿÿ
+sjavascript:S2873á"VThis expression might have a value which cannot be called; it might not be a function.(İŸå¤
+xjavascript:S2873â"VThis expression might have a value which cannot be called; it might not be a function.(­‡ãÉşÿÿÿÿ
+Bjavascript:S878	""Remove use of this comma operator.(ÕÊÚıÿÿÿÿ
+xjavascript:S2873Ñ"VThis expression might have a value which cannot be called; it might not be a function.(»¼è­úÿÿÿÿ
+njavascript:S1117“"R"i" hides or potentially hides a variable declared in an outer scope at line 2725.(×Ë‘~
+{javascript:S1117§"^"actualPadding" hides or potentially hides a variable declared in an outer scope at line 2482.(¡îĞ±
+sjavascript:S2873Á "VThis expression might have a value which cannot be called; it might not be a function.(ê¥Šƒ
+xjavascript:S2873Ù"VThis expression might have a value which cannot be called; it might not be a function.(‹İ…úûÿÿÿÿ
