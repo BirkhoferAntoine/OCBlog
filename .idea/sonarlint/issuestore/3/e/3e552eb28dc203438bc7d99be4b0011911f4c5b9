@@ -1,0 +1,18 @@
+
+KWeb:BoldAndItalicTagsCheckø"Replace this <i> tag by <em>.(‘¦© 8ş¹ä÷-
+PWeb:BoldAndItalicTagsCheck"Replace this <i> tag by <em>.(³²ùÏüÿÿÿÿ8ş¹ä÷-
+KWeb:BoldAndItalicTagsCheckÓ"Replace this <i> tag by <em>.(ƒº±ë8ş¹ä÷-
+PWeb:BoldAndItalicTagsCheck·"Replace this <i> tag by <em>.(Ïó½Úûÿÿÿÿ8ş¹ä÷-
+t Web:TableHeaderHasIdOrScopeCheck×";Add either an 'id' or a 'scope' attribute to this <th> tag.(²ÂÕ´øÿÿÿÿ8ş¹ä÷-
+I	php:S1172-"-Remove the unused function parameter "$type".(™µ—½8Ìåè ú-
+W	php:S1481";Remove this unused "$prePanel_panelContent" local variable.(¿ùÀÆ8†ê“ï-
+KWeb:BoldAndItalicTagsCheck½"Replace this <i> tag by <em>.(À™¶´8ş¹ä÷-
+t	php:S1848#"SEither remove this useless object instantiation of class "ControllerHome" or use it(éÓ¦æıÿÿÿÿ8Ì²ÏÍø-
+o Web:TableHeaderHasIdOrScopeCheckÖ";Add either an 'id' or a 'scope' attribute to this <th> tag.(½ˆ¯8ş¹ä÷-
+q	php:S18486"UEither remove this useless object instantiation of class "CommentsTemplate" or use it(‚–çß8Öî“ï-
+o Web:TableHeaderHasIdOrScopeCheckÒ";Add either an 'id' or a 'scope' attribute to this <th> tag.(ıÆ¿Ú8ş¹ä÷-
+UWeb:TableWithoutCaptionCheckÏ" Add a description to this table.(›çƒÿøÿÿÿÿ8ş¹ä÷-
+Sphp:S836¢"2Review the data-flow - use of uninitialized value.(ÎôÑÆúÿÿÿÿ8‚ûò“ï-
+PWeb:BoldAndItalicTagsCheck¢"Replace this <i> tag by <em>.(ÉúÎ÷şÿÿÿÿ8ş¹ä÷-
+o Web:TableHeaderHasIdOrScopeCheckÕ";Add either an 'id' or a 'scope' attribute to this <th> tag.(§»±8ş¹ä÷-
+U	php:S1144Š"3Remove this unused private "_markdownbuild" method.(ß™İâûÿÿÿÿ8«Ÿ«ï-

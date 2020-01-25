@@ -24,6 +24,7 @@
     require_once('Templates/navbarTemplate.php');
 
     require_once('Templates/footerTemplate.php');
+
     ?>
 
 </head>

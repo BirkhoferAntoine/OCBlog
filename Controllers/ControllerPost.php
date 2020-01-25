@@ -8,6 +8,7 @@ class ControllerPost
     private $_post;
     private $_safeGet;
     private $_safePost;
+    private $_safeUri;
 
     public function __construct($urlPost)
     {
@@ -17,18 +18,34 @@ class ControllerPost
 
             $this->_setSecurity();
                 // Recherche les posts
-            $this->_selectedPost($urlPost);
+            $this->_selectedPost();
         }
     }
 
     // Récupère le Post du Postmanager, intègre les éléments du template
-    private function _selectedPost($urlPost) {
+    private function _selectedPost() {
         $this->_postsManager = new PostsManager();
+        $this->_commentsManager = new PostCommentsManager();
+
+        isset($this->_safeGet['post']) ?
+            $urlPost = $this->_safeGet['post'] : $urlPost = explode('?', $this->_safeUri)[0];
         $this->_post = $this->_postsManager->getPosts(null, '`title` = \'' . $urlPost . '\'');
         $postCheck = $this->_post[0];
 
+
         if (!empty($postCheck)) {
             $postId = $postCheck->id();
+
+            if ($this->_safeGet['flag'] === 'submit') {
+                $this->_commentsManager->flagComment($this->_safePost['flag']);
+                header('Location: '. URL . 'Post/' . $urlPost);
+            }
+
+            if ($this->_safeGet['comment'] === 'submit') {
+                $this->_commentsManager->addComment($this->_safePost['commentUser'], $this->_safePost['user'], $postId);
+                header('Location: '. URL . 'Post/' . $urlPost);
+            }
+
 
             $postComments = $this->_selectedPostComments($postId);
 
@@ -59,7 +76,6 @@ class ControllerPost
     }
 
     private function _selectedPostComments($idPost) {
-        $this->_commentsManager = new PostCommentsManager();
         return $this->_commentsManager->getComments('`id`', '`billet_id` = ' . $idPost . ' AND `accepted` >= 1 ');
     }
 
@@ -67,7 +83,7 @@ class ControllerPost
         global $security;
         $this->_safeGet = $security->getFilteredGet();
         $this->_safePost = $security->getFilteredPost();
-
+        $this->_safeUri = $security->getFilteredUri(2);
     }
 
     public function getPost() {

@@ -1,19 +1,29 @@
 <?php
 session_start();
-// u95785354
+// u95785354 access764386720.webspace-data.io
 
-define('ROOT_FOLDER', filter_var($_SERVER['DOCUMENT_ROOT'], FILTER_SANITIZE_URL));
+// Préparation des constantes contenant les addresses du fichier principal et de l'url de l'index
+define('ROOT_FOLDER', __DIR__);
 define('URL', str_replace('index.php', '', (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . filter_var($_SERVER['HTTP_HOST'], FILTER_SANITIZE_URL) . filter_var($_SERVER['SCRIPT_NAME'], FILTER_SANITIZE_URL)));
 
+
 require_once(ROOT_FOLDER . '/Controllers/ControllerSecurity.php');
+// Instantiation de la global $security et insértions des arguments contenant les filtres des globals $_GET et $_POST
+
+/**
+ * @global $security
+ * @param array $argsGet
+ * @param array $argsPost
+ */
 $security = new ControllerSecurity(
     array(
         'url'           =>    FILTER_SANITIZE_URL,
         'submit'        =>    FILTER_SANITIZE_STRING | FILTER_FLAG_NO_ENCODE_QUOTES,
         'editor'        =>    FILTER_SANITIZE_STRING | FILTER_FLAG_NO_ENCODE_QUOTES,
         'post'          =>    FILTER_SANITIZE_STRING | FILTER_FLAG_NO_ENCODE_QUOTES,
+        'comment'      =>    FILTER_SANITIZE_STRING,
         'comments'      =>    FILTER_SANITIZE_STRING | FILTER_FLAG_NO_ENCODE_QUOTES,
-        'flag'          =>    FILTER_VALIDATE_INT,
+        'flag'          =>    FILTER_SANITIZE_STRING,
         'accept'        =>    FILTER_VALIDATE_INT,
         'edit'          =>    FILTER_VALIDATE_INT,
         'delete'        =>    FILTER_VALIDATE_INT,
@@ -22,13 +32,15 @@ $security = new ControllerSecurity(
         'logedin'       =>    FILTER_SANITIZE_STRING
     ),
     array(
-        'commentEditor'                 =>    FILTER_SANITIZE_STRING,
-        'register_user_name'            =>    FILTER_SANITIZE_EMAIL,
+        'commentEditor'                 =>    FILTER_SANITIZE_STRING | FILTER_FLAG_NO_ENCODE_QUOTES,
+        'register_user_name'            =>    FILTER_SANITIZE_STRING,
         'register_user_email'           =>    FILTER_SANITIZE_EMAIL,
         'register_password'             =>    FILTER_SANITIZE_STRING,
         'register_confirm_password'     =>    FILTER_SANITIZE_STRING,
         'login_identifier'              =>    FILTER_SANITIZE_EMAIL,
         'login_password'                =>    FILTER_SANITIZE_STRING,
+        'user'                          =>    FILTER_SANITIZE_STRING,
+        'commentUser'                   =>    FILTER_SANITIZE_STRING,
         'flag'                          =>    FILTER_VALIDATE_INT,
         'accept'                        =>    FILTER_VALIDATE_INT,
         'edit'                          =>    FILTER_VALIDATE_INT,
@@ -41,29 +53,45 @@ $security = new ControllerSecurity(
     )
 );
 
+/**
+ * Class Router
+ */
 class Router
 {
     private        $_controller;
     private        $_view;
     private        $_safeGet;
+    private        $_safeUri;
 
+    /**
+     * Router constructor.
+     *
+     */
     public function __construct()
     {
         $this->_setSecurity();
         $this->_routerQuery();
     }
 
+    /**
+     *  Appel de la global $security
+     *  @return void
+     */
     private function _setSecurity() {
         global $security;
         $this->_safeGet = $security->getFilteredGet();
+        $this->_safeUri = $security->getFilteredUri();
     }
 
-
+    /**
+     *  Lancement du routeur
+     *
+     */
     private function _routerQuery()
     {
 
         try {
-            // Chargement automatique des models/classes
+            // Chargement automatique des classes et fichiers correspondants
             spl_autoload_register(static function($className) {
 
                 $classTest1 = 'Model';
@@ -94,7 +122,7 @@ class Router
 
             if (isset($this->_safeGet['url'])) {
                 // Decoupe et filtrage de l'url / des actions
-                $url = explode('/', filter_var($this->_safeGet['url'], FILTER_SANITIZE_URL));
+                $url = explode('/', $this->_safeGet['url']);
                 [$mainFolder, $subFolder] = $url;
 
                 $controllerName = 'Controller' . $mainFolder;
@@ -113,6 +141,5 @@ class Router
 
 $main = new Router();
 
-//TODO DEL ERRORLOG, DEL OLD FILES
 
 

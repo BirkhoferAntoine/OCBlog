@@ -99,17 +99,17 @@ class ListedPostTemplate
         if ($post !== null) {
             $postColor = $this->_setColor(random_int(1, 3));
             $postTitle = $post->title();
-            $postContent = $post->content();
+            $postContent = substr($post->content(), 0, 100);
             $postImg = $post->image();
             $postId = $post->id();
 
             if($this->_safeGet['post'] === 'list') {
                 if ($this->_safeGet['editor'] === 'edit') {
-                    $postUrl = 'Panel?editor=edit&post=' . $postTitle;
+                    $postUrl = 'Panel?editor=edit&post=' . urlencode($postTitle);
                 } elseif ($this->_safeGet['editor'] === 'delete') {
                     $postUrl = 'Panel?editor=delete&post=list&submit=' . $postId;
                 } elseif (isset($this->_safeGet['comments'])) {
-                    $postUrl = 'Panel?comments=' . $this->_safeGet['comments'] . '&post=' . $postTitle;
+                    $postUrl = 'Panel?comments=' . $this->_safeGet['comments'] . '&post=' . urlencode($postTitle);
                 }
             } else {
                 $postUrl = 'Post/' . $postTitle;
@@ -119,22 +119,22 @@ class ListedPostTemplate
 
             if ($postImg !== null) {
                 ?>
-                    <div class="col d-flex flex-column align-items-center pt-5 px-5 mb-3" style="background-image: url(<?= $postImg ?>); background-size: cover;">
+                    <div class="postCol col d-flex flex-column align-items-center mx-1 pt-5 mb-3" style="background-image: url(<?= $postImg ?>); background-size: cover;">
                 <?php
             } else {
                 ?>
-                    <div class="col d-flex flex-column align-items-center bg-<?= $postColor ?> pt-5 px-5 mb-3">
+                    <div class="postCol col d-flex flex-column align-items-center mx-1 bg-<?= $postColor ?> pt-5 mb-3">
                 <?php
             }
             ?>
-                        <div class="col-md-4 d-flex justify-content-center">
+                        <div class="col-md-4 mw-100 d-flex justify-content-center">
                             <h3 class="mt-3 bg-light p-2 align-self-center">
                                 <a href='<?= $postUrl ?>' class="text-decoration-none text-dark">
                                     <b><?= $postTitle ?></b>
                                 </a>
                             </h3>
                         </div>
-                        <div class="col-md-4 d-flex justify-content-center">
+                        <div class="col-md-4 mw-100 d-flex justify-content-center">
                         <p class="lead mb-5 text-white"><?= $postContent ?></p>
                         </div>
                     </div>

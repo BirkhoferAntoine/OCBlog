@@ -1,0 +1,115 @@
+
+z	php:S1488é"_Immediately return this expression instead of assigning it to the temporary variable "$markup".(ªã²øùÿÿÿÿ
+.	php:S2010Â"Replace "and" with "&&".(ˆÔ«ë
+-	php:S2010ı
+"Replace "or" with "||".(âíÆ˜
+3	php:S2010‚"Replace "and" with "&&".(•“ã¾ÿÿÿÿÿ
+]	php:S1192¼"GDefine a constant instead of duplicating this literal "indent" 8 times.(©µ‚—
+3	php:S2010¿	"Replace "and" with "&&".(ı—¥±ûÿÿÿÿ
+c	php:S1192Î"MDefine a constant instead of duplicating this literal "nonNestables" 5 times.(Š§‘÷
+]	php:S1192Û"HDefine a constant instead of duplicating this literal "extent" 16 times.(¨áÙ
+j	php:S1142İ"OReduce the number of returns of this function 4, down to the maximum allowed 3.(óóÏÓÿÿÿÿÿ
+2	php:S2010Í"Replace "or" with "||".(âƒ¸õøÿÿÿÿ
+2	php:S2010Í"Replace "or" with "||".(âƒ¸õøÿÿÿÿ
+.	php:S2010°"Replace "and" with "&&".(Ìª„
+O	php:S3801û"4Refactor this function to use "return" consistently.(ñúïÒşÿÿÿÿ
+2	php:S2010Ê	"Replace "or" with "||".(˜•üéøÿÿÿÿ
+]	php:S1192Š"GDefine a constant instead of duplicating this literal "closed" 7 times.(à¦ÔĞ
+d	php:S1192„"IDefine a constant instead of duplicating this literal "element" 52 times.(ÿí·Ùÿÿÿÿÿ
+g	php:S1192À"LDefine a constant instead of duplicating this literal "continuable" 3 times.(¡Ìäúÿÿÿÿ
+[	php:S1192À"FDefine a constant instead of duplicating this literal "title" 6 times.(ïÏ²
+O	php:S3801‘"4Refactor this function to use "return" consistently.(º¼¿íúÿÿÿÿ
+.	php:S2010É
+"Replace "and" with "&&".(Üô÷ß
+.	php:S2010‚"Replace "and" with "&&".(ÜáØ†
+j	php:S3776Õ"TRefactor this function to reduce its Cognitive Complexity from 22 to the 15 allowed.(òÂãÈ
+t	php:S1488ø"^Immediately return this expression instead of assigning it to the temporary variable "$Block".(ùİâ—
+o	php:S3776İ"TRefactor this function to reduce its Cognitive Complexity from 16 to the 15 allowed.(óóÏÓÿÿÿÿÿ
+J	php:S3801ú"4Refactor this function to use "return" consistently.(§¥Ü²
+u	php:S1488™"_Immediately return this expression instead of assigning it to the temporary variable "$markup".(Œç¸Î
+[	php:S1192p"FDefine a constant instead of duplicating this literal "Table" 3 times.(êŞ²‰
+z	php:S1448"eClass "Parsedown" has 52 methods, which is greater than 20 authorized. Split it into smaller classes.(ÊÀ
+_	php:S1192"JDefine a constant instead of duplicating this literal "Reference" 4 times.(Ää£·
+t	php:S1488Ê"^Immediately return this expression instead of assigning it to the temporary variable "$Block".(ùİâ—
+O	php:S3801	"4Refactor this function to use "return" consistently.(‡ºÍúÿÿÿÿ
+y	php:S1488*"_Immediately return this expression instead of assigning it to the temporary variable "$markup".(…ªºŒøÿÿÿÿ
+l	php:S1192ˆ"QDefine a constant instead of duplicating this literal "SpecialCharacter" 4 times.(ÏÓ…úÿÿÿÿ
+.	php:S2010Â"Replace "and" with "&&".(ˆÔ«ë
+\	php:S1192Â"FDefine a constant instead of duplicating this literal "block" 6 times.(ƒ«ß
+-	php:S2010Ç"Replace "or" with "||".(Ä‰ßî
+.	php:S2010‚"Replace "and" with "&&".(ÜáØ†
+.	php:S2010¹
+"Replace "and" with "&&".(ôòéğ
+t	php:S1488¾"^Immediately return this expression instead of assigning it to the temporary variable "$Block".(ùİâ—
+.	php:S2010‡	"Replace "and" with "&&".(·¤Î€
+3	php:S2010€"Replace "and" with "&&".(ª”·ÿÿÿÿÿ
+c	php:S1192š"MDefine a constant instead of duplicating this literal "interrupted" 19 times.(Ó–ÖÊ
+O	php:S3801ê	"4Refactor this function to use "return" consistently.(šıÚùÿÿÿÿ
+O	php:S3801À"4Refactor this function to use "return" consistently.(›¶Øµúÿÿÿÿ
+J	php:S3801Ë"4Refactor this function to use "return" consistently.(µäÊà
+-	php:S2010ß"Replace "or" with "||".(àÖ¦×
+a	php:S1192ï"FDefine a constant instead of duplicating this literal "depth" 4 times.(­Íïèøÿÿÿÿ
+2	php:S2010‚"Replace "or" with "||".(¸Òıÿÿÿÿ
+J	php:S3801²
+"4Refactor this function to use "return" consistently.(ÇÚŒË
+J	php:S3801Õ"4Refactor this function to use "return" consistently.(òÂãÈ
+e	php:S1142²
+"OReduce the number of returns of this function 4, down to the maximum allowed 3.(ÇÚŒË
+u	php:S1488†"_Immediately return this expression instead of assigning it to the temporary variable "$Inline".(—¤ ÷
+3	php:S2010’"Replace "and" with "&&".(—¢ä‰ÿÿÿÿÿ
+i	php:S1871¶"NThis branch's code block is the same as the block for the branch on line 1585.(ÒÌâ–øÿÿÿÿ
+O	php:S3801À"4Refactor this function to use "return" consistently.(Æ…È³ûÿÿÿÿ
+d	php:S1192¾"IDefine a constant instead of duplicating this literal "position" 7 times.(ŠÔ¦•ùÿÿÿÿ
+t	php:S1488“"^Immediately return this expression instead of assigning it to the temporary variable "$Block".(ùİâ—
+g	php:S1192À"LDefine a constant instead of duplicating this literal "attributes" 26 times.(Ä³üúûÿÿÿÿ
+-	php:S2010ı
+"Replace "or" with "||".(âíÆ˜
+J	php:S3801‘"4Refactor this function to use "return" consistently.(ÙÖÅŸ
+c	php:S1192©"HDefine a constant instead of duplicating this literal "markup" 15 times.(ùË‘œùÿÿÿÿ
+d	php:S1192Î"IDefine a constant instead of duplicating this literal "handler" 20 times.(Æ›È›üÿÿÿÿ
+,	php:S2010´
+"Replace "or" with "||".(Ó°‚y
+3	php:S2010Ä"Replace "and" with "&&".(®¼Ø´ıÿÿÿÿ
+3	php:S2010‚"Replace "and" with "&&".(•“ã¾ÿÿÿÿÿ
+3	php:S2010¾"Replace "and" with "&&".(ŠÔ¦•ùÿÿÿÿ
+a	php:S1192î"KDefine a constant instead of duplicating this literal "identified" 4 times.(Í•ƒÿ
+x	php:S4144î"bUpdate this method so that its implementation is not identical to "blockCodeComplete" on line 367.(ğô“„
+u	php:S1488¬"_Immediately return this expression instead of assigning it to the temporary variable "$markup".(Ó¶ÚÕ
+-	php:S2010ı"Replace "or" with "||".(àÖ¦×
+J	php:S3801È	"4Refactor this function to use "return" consistently.(éÌß
+_	php:S1192¦"IDefine a constant instead of duplicating this literal "elements" 6 times.(“—İª
+t	php:S1488Ë"^Immediately return this expression instead of assigning it to the temporary variable "$Block".(ùİâ—
+,	php:S2010´
+"Replace "or" with "||".(Ó°‚y
+3	php:S2010Ô
+"Replace "and" with "&&".(“¥éËıÿÿÿÿ
+a	php:S1192£"KDefine a constant instead of duplicating this literal "alignments" 3 times.(Ïà¾’
+j	php:S1142Â"OReduce the number of returns of this function 4, down to the maximum allowed 3.(ÁíÒ±ûÿÿÿÿ
+3	php:S2010˜"Replace "and" with "&&".(øŞñûşÿÿÿÿ
+O	php:S3801İ"4Refactor this function to use "return" consistently.(óóÏÓÿÿÿÿÿ
+t	php:S1488Œ"^Immediately return this expression instead of assigning it to the temporary variable "$Block".(ùİâ—
+3	php:S2010î
+"Replace "and" with "&&".(ÕµÎÕúÿÿÿÿ
+O	php:S3801Ò"4Refactor this function to use "return" consistently.(ğ²„ûÿÿÿÿ
+2	php:S2010×"Replace "or" with "||".(âƒ¸õøÿÿÿÿ
+t	php:S1488Å"^Immediately return this expression instead of assigning it to the temporary variable "$Block".(ùİâ—
+2	php:S2010×"Replace "or" with "||".(âƒ¸õøÿÿÿÿ
+u	php:S1488ù"_Immediately return this expression instead of assigning it to the temporary variable "$markup".(Ó¶ÚÕ
+j	php:S3776"TRefactor this function to reduce its Cognitive Complexity from 53 to the 15 allowed.(ÏÉ«™
+.	php:S2010‚"Replace "and" with "&&".(ÜáØ†
+.	php:S2010†"Replace "and" with "&&".(„ºèÔ
+3	php:S2010¦	"Replace "and" with "&&".(¼ÂÂııÿÿÿÿ
+3	php:S2010Ü"Replace "and" with "&&".(Ùéèşúÿÿÿÿ
+o	php:S3776"TRefactor this function to reduce its Cognitive Complexity from 22 to the 15 allowed.(‹Ñ£úÿÿÿÿ
+3	php:S2010³"Replace "and" with "&&".(ÂãÑóüÿÿÿÿ
+2	php:S2010ù"Replace "or" with "||".(¸Òıÿÿÿÿ
+qphp:S115"]Rename this constant "version" to match the regular expression ^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$.(Ø“³í
+3	php:S2010¡"Replace "and" with "&&".(™¯ß‹øÿÿÿÿ
+J	php:S3801û
+"4Refactor this function to use "return" consistently.(Î‡ú
+I	php:S3801ç
+"4Refactor this function to use "return" consistently.(‘—=
+.	php:S2010Á
+"Replace "and" with "&&".(ÓÖá×
+_	php:S1192Î"IDefine a constant instead of duplicating this literal "Complete" 3 times.(Œ³œÍ
+.	php:S2010à"Replace "and" with "&&".(ÛºÊÿ
