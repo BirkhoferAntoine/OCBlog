@@ -1,5 +1,6 @@
 <?php
 
+    // Classe de gestion des utilisateurs
 
 class UsersManager extends MainModel
 {
@@ -7,24 +8,36 @@ class UsersManager extends MainModel
     private $_message = '';
     private $_userData;
 
+    /**
+     * UsersManager constructor.
+     */
     public function __construct()
     {
         $this->_setUserData();
     }
 
+    /**
+     * @return string
+     */
     public function getMessageText() {
         return $this->_message;
     }
 
+    /**
+     * @return void
+     */
     public function submit() {
-        $this->_submitUserData();
+        return $this->_submitUserData();
     }
 
+    /**
+     * @return void
+     */
     private function _submitUserData() {
         if (isset(
             $this->_userData['login_identifier'],
             $this->_userData['login_password'])) {
-                $this->_login();
+                return $this->_login();
             } elseif (isset(
             $this->_userData['register_user_name'],
             $this->_userData['register_user_email'],
@@ -35,12 +48,21 @@ class UsersManager extends MainModel
     }
 
     // Set données $_POST filtrées
+
+    /**
+     * @return void
+     */
     private function _setUserData() {
         global $security;
         $this->_userData = $security->getFilteredPost();
     }
 
     // Filtre et vérifie les données envoyées par l'utilisateur
+
+    /**
+     * @param $input
+     * @return string|null
+     */
     private function _testInput($input)
     {
         $inputFilter1 = trim($input);
@@ -53,7 +75,10 @@ class UsersManager extends MainModel
         }
     }
 
-    // Vérifie les données envoyées lors du formulaire de connexion
+    // Vérifie les données envoyées lors du formulaire de connexion et effectue une connexion et redirection si elles sont justes
+    /**
+     * @return void
+     */
     private function _login() {
 
         $userIdentifier = $this->_testInput($this->_userData['login_identifier']);
@@ -71,6 +96,9 @@ class UsersManager extends MainModel
     }
 
     // Vérifie les données envoyées lors du formulaire inscription
+    /**
+     * @return string
+     */
     private function _checkUserRegister (){
 
         $userName = $this->_testInput($this->_userData['register_user_name']);
@@ -99,8 +127,14 @@ class UsersManager extends MainModel
     }
 
     // Set nouvel utilisateur
+    /**
+     * @param $userName
+     * @param $userEmail
+     * @param $userPassword
+     * @return void
+     */
     private function registerUser($userName, $userEmail, $userPassword) {
-        $this->newUser($userName, $userEmail, $userPassword);
+        return $this->newUser($userName, $userEmail, $userPassword);
     }
 
 }

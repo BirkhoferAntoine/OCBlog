@@ -9,6 +9,11 @@ class ControllerUser
     private $_safeUri;
     private $_safeGet;
 
+    /**
+     * ControllerUser constructor.
+     * @param $url
+     * @throws Exception
+     */
     public function __construct($url)
     {
         if (empty($url) || count($url) > 1) {
@@ -29,6 +34,10 @@ class ControllerUser
         }
     }
 
+    /**
+     * Génère le formulaire demandé
+     * @return void
+     */
     private function _buildForm() {
         $this->_usersManager = new UsersManager();
 
@@ -41,6 +50,10 @@ class ControllerUser
         $this->_view->generate($this->_safeUri, $message);
     }
 
+    /**
+     *  Appel de la global $security et récupération des données filtrées
+     *  @return void
+     */
     private function _setSecurity() {
         global $security;
         $this->_safeUri = explode('?', $security->getFilteredUri(2))[0];

@@ -2,7 +2,9 @@
     //Classe abstraite car sert uniquement à accèder a la BDD
 abstract class MainModel {
 
+    // Variable contenant la base de données
     private static $_dbConnection;
+    // Constantes pour construire la requête pour accèder à la base de données
     private const HOST_NAME = 'db5000177647.hosting-data.io';
     private const DATABASE = 'dbs172441';
     private const USER_NAME = 'dbu35984';
@@ -14,10 +16,14 @@ abstract class MainModel {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ];
 
-
+    // Utilisation du trait de gestion des mots de passe
     use PasswordManager;
 
     // Connection à la BDD suivant les directives du server
+
+    /**
+     *
+     */
     private static function setDbConnection() {
         try {
             self::$_dbConnection = new PDO(self::DSN, self::USER_NAME, self::PASSWORD, self::DBOPTIONS);
@@ -29,6 +35,10 @@ abstract class MainModel {
     }
 
     // Vérifie si la connection est établie, se connecte si null et renvoie le resultat
+
+    /**
+     * @return mixed
+     */
     protected function getDbConnection() {
         if (self::$_dbConnection === null) {
             self::setDbConnection();
@@ -37,6 +47,14 @@ abstract class MainModel {
     }
 
     // Vérifie et effectue connection à la BDD, récupère les données de la table et les intègre dans de nouveaux objets
+
+    /**
+     * @param $table
+     * @param $object
+     * @param $order
+     * @param $where
+     * @return array
+     */
     protected function getTableContent($table, $object, $order, $where) {
 
         $this->getDbConnection();
@@ -71,6 +89,11 @@ abstract class MainModel {
         return $tableContent;
     }
 
+    /**
+     * Fonctions du CRUD
+     *
+     * @param $id
+     */
     protected function dropPost($id) {
         $this->getDbConnection();
 
@@ -86,6 +109,11 @@ abstract class MainModel {
         $deletePost->closeCursor();
     }
 
+    /**
+     * @param $title
+     * @param $content
+     * @param $urlImage
+     */
     protected function newPost($title, $content, $urlImage) {
         $this->getDbConnection();
 
@@ -103,6 +131,12 @@ abstract class MainModel {
         $insertPost->closeCursor();
     }
 
+    /**
+     * @param $title
+     * @param $content
+     * @param $urlImage
+     * @param $id
+     */
     protected function updatePost($title, $content, $urlImage, $id) {
         $this->getDbConnection();
 
@@ -123,6 +157,11 @@ abstract class MainModel {
         $updatePost->closeCursor();
     }
 
+    /**
+     * @param $comment
+     * @param $user
+     * @param $postId
+     */
     protected function newComment($comment, $user, $postId) {
         $this->getDbConnection();
 
@@ -141,6 +180,12 @@ abstract class MainModel {
         $insertComment->closeCursor();
     }
 
+    /**
+     * Change le niveau d'acceptation du commentaire
+     *
+     * @param $id
+     * @param $level
+     */
     protected function levelComment($id, $level) {
         $this->getDbConnection();
 
@@ -159,6 +204,9 @@ abstract class MainModel {
         $updateLevel->closeCursor();
     }
 
+    /**
+     * @param $id
+     */
     protected function dropComment($id) {
         $this->getDbConnection();
 
@@ -174,6 +222,42 @@ abstract class MainModel {
         $deleteComment->closeCursor();
     }
 
+
+    /**
+     * @param $username
+     * @param $email
+     * @param $password
+     */
+    protected function newUser($username, $email, $password) {
+        $this->getDbConnection();
+
+        $insertUser = self::$_dbConnection->prepare('
+            INSERT INTO 
+                `Users` 
+                (`id`, `user_name`, `user_email`, `iteration`, `salt`, `password`, `creation_date`, `user_level`) 
+            VALUES 
+                (NULL, :user_name, :user_email, :iteration, :salt, :password, UTC_TIMESTAMP(), 0)
+        ');
+
+        $cryptedPassword = $this->passwordBuilder($password, null, null);
+
+        $insertUser->bindParam(':user_name', $username);
+        $insertUser->bindParam(':user_email', $email);
+        $insertUser->bindParam(':iteration', $cryptedPassword['iteration']);
+        $insertUser->bindParam(':salt', $cryptedPassword['salt']);
+        $insertUser->bindParam(':password', $cryptedPassword['password']);
+
+        $insertUser->execute();
+        $insertUser->closeCursor();
+    }
+
+    /**
+     * Vérification de l'existence d'un utilisateur
+     *
+     * @param $userName
+     * @param $userEmail
+     * @return string
+     */
     protected function checkUserExists($userName, $userEmail) {
         $this->getDbConnection();
 
@@ -189,11 +273,9 @@ abstract class MainModel {
 				`user_email` = :user_email)
 				');
 
-        // execute sql with actual values
         $userCheck->bindParam(':user_name', $userName);
         $userCheck->bindParam(':user_email', $userEmail);
 
-        // get and return user
         $userCheck->execute();
 
         $userFetch = $userCheck->fetch();
@@ -209,6 +291,13 @@ abstract class MainModel {
         return $message;
     }
 
+    /**
+     * Vérification des données de l'utilisateur pour permettre la connexion
+     *
+     * @param $username
+     * @param $password
+     * @return mixed
+     */
     protected function checkUserLogin($username, $password) {
         $this->getDbConnection();
         $userCheck = self::$_dbConnection->prepare('
@@ -235,29 +324,13 @@ abstract class MainModel {
         }
     }
 
-    protected function newUser($username, $email, $password) {
-        $this->getDbConnection();
-
-        $insertUser = self::$_dbConnection->prepare('
-            INSERT INTO 
-                `Users` 
-                (`id`, `user_name`, `user_email`, `iteration`, `salt`, `password`, `creation_date`, `user_level`) 
-            VALUES 
-                (NULL, :user_name, :user_email, :iteration, :salt, :password, UTC_TIMESTAMP(), 0)
-        ');
-
-        $cryptedPassword = $this->passwordBuilder($password, null, null);
-
-        $insertUser->bindParam(':user_name', $username);
-        $insertUser->bindParam(':user_email', $email);
-        $insertUser->bindParam(':iteration', $cryptedPassword['iteration']);
-        $insertUser->bindParam(':salt', $cryptedPassword['salt']);
-        $insertUser->bindParam(':password', $cryptedPassword['password']);
-
-        $insertUser->execute();
-        $insertUser->closeCursor();
-    }
-
+    /**
+     * Vérification du mot de passe
+     *
+     * @param $username
+     * @param $password
+     * @return mixed
+     */
     private function _passwordCheck($username, $password) {
 
         $passCheck = self::$_dbConnection->prepare('
@@ -282,4 +355,4 @@ abstract class MainModel {
 
         return $passCheckFetch;
     }
-};
+}
