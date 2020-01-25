@@ -105,11 +105,11 @@ class ListedPostTemplate
 
             if($this->_safeGet['post'] === 'list') {
                 if ($this->_safeGet['editor'] === 'edit') {
-                    $postUrl = 'Panel?editor=edit&post=' . $postTitle;
+                    $postUrl = 'Panel?editor=edit&post=' . urlencode($postTitle);
                 } elseif ($this->_safeGet['editor'] === 'delete') {
                     $postUrl = 'Panel?editor=delete&post=list&submit=' . $postId;
                 } elseif (isset($this->_safeGet['comments'])) {
-                    $postUrl = 'Panel?comments=' . $this->_safeGet['comments'] . '&post=' . $postTitle;
+                    $postUrl = 'Panel?comments=' . $this->_safeGet['comments'] . '&post=' . urlencode($postTitle);
                 }
             } else {
                 $postUrl = 'Post/' . $postTitle;

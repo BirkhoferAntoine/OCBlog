@@ -8,6 +8,7 @@ class ControllerPost
     private $_post;
     private $_safeGet;
     private $_safePost;
+    private $_safeUri;
 
     public function __construct($urlPost)
     {
@@ -26,9 +27,11 @@ class ControllerPost
         $this->_postsManager = new PostsManager();
         $this->_commentsManager = new PostCommentsManager();
 
-        $urlPost = $this->_safeGet[''];
+        isset($this->_safeGet['post']) ?
+            $urlPost = $this->_safeGet['post'] : $urlPost = explode('?', $this->_safeUri)[0];
         $this->_post = $this->_postsManager->getPosts(null, '`title` = \'' . $urlPost . '\'');
         $postCheck = $this->_post[0];
+
 
         if (!empty($postCheck)) {
             $postId = $postCheck->id();
@@ -80,7 +83,7 @@ class ControllerPost
         global $security;
         $this->_safeGet = $security->getFilteredGet();
         $this->_safePost = $security->getFilteredPost();
-
+        $this->_safeUri = $security->getFilteredUri(2);
     }
 
     public function getPost() {

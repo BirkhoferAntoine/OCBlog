@@ -1,6 +1,9 @@
 <?php
 
 
+/**
+ * Class ControllerAdminPanel
+ */
 class ControllerAdminPanel
 {
     private $_view;
@@ -14,12 +17,19 @@ class ControllerAdminPanel
     private $_safeGet;
     private $_safePost;
 
+    /**
+     * ControllerAdminPanel constructor.
+     */
     public function __construct()
     {
         $this->_setSecurity();
         $this->_securityCheck();
     }
 
+    /**
+     *  Appel de la global $security et récupération des données filtrées
+     *  @return void
+     */
     private function _setSecurity() {
         global $security;
         $this->_safeUri = $security->getFilteredUri(2);
@@ -27,6 +37,9 @@ class ControllerAdminPanel
         $this->_safePost = $security->getFilteredPost();
     }
 
+    /**
+     *  Vérification du token administrateur
+     */
     private function _securityCheck() {
         if ($_SESSION['level'] === '1') {
 
@@ -36,6 +49,9 @@ class ControllerAdminPanel
         }
     }
 
+    /**
+     * @return mixed
+     */
     private function _panelBuild() {
 
         if ($this->_safeGet['editor']) {
@@ -49,6 +65,9 @@ class ControllerAdminPanel
         return $this->_view->mainBuild($panelContent);
     }
 
+    /**
+     * @return mixed
+     */
     private function _editorPanel() {
 
         $this->_postsManager = new PostsManager();
@@ -69,6 +88,10 @@ class ControllerAdminPanel
         }
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     private function _commentsPanel() {
 
         $this->_commentsManager = new PostCommentsManager();
@@ -93,10 +116,17 @@ class ControllerAdminPanel
         return $panelContent;
     }
 
+    /**
+     * @return mixed
+     */
     private function _listBuild() {
        return $this->_view->listBuild();
     }
 
+    /**
+     * @param $type
+     * @return mixed
+     */
     private function _commentsListBuild($type) {
 
         $commentsList = $this->_commentsManager->getComments('`billet_id`', '`accepted` = ' . $type);
@@ -104,6 +134,11 @@ class ControllerAdminPanel
 
     }
 
+    /**
+     * @param null $postPreview
+     * @return mixed
+     * @throws Exception
+     */
     private function _setPost($postPreview=null) {
 
         if (isset($this->_safeGet['post']) && $this->_safeGet['post'] !== 'list') {
@@ -129,6 +164,11 @@ class ControllerAdminPanel
         }
     }
 
+    /**
+     * @param $type
+     * @return mixed
+     * @throws Exception
+     */
     private function _tinyMCEBuild($type)
     {
         if ($type === 'new') {
@@ -179,6 +219,10 @@ class ControllerAdminPanel
         }
 
     }
+
+    /**
+     * @return mixed
+     */
     private function _markdownBuild()
     {
 
@@ -189,6 +233,9 @@ class ControllerAdminPanel
         return $this->_view->markdownBuild();
     }
 
+    /**
+     *
+     */
     private function _newPost() {
 
         $postTitle = $this->_safePost['postTitle'];
@@ -198,6 +245,9 @@ class ControllerAdminPanel
         $this->_postsManager->insertNewPost($postTitle, $postContent, $postUrlImage);
     }
 
+    /**
+     *
+     */
     private function _editPost() {
 
         $postTitle = $this->_safePost['postTitle'];
@@ -209,11 +259,17 @@ class ControllerAdminPanel
 
     }
 
+    /**
+     * @param $id
+     */
     private function _deletePost($id)
     {
         $this->_postsManager->deletePost($id);
     }
 
+    /**
+     *
+     */
     private function _submitPostOrder()
     {
         if ($this->_safeGet['editor'] === 'delete' && isset($this->_safeGet['submit'])) {
@@ -232,6 +288,9 @@ class ControllerAdminPanel
         $this->_redirect();
     }
 
+    /**
+     *
+     */
     private function _submitCommentOrder() {
 
         if ($this->_safePost['accept']) {
@@ -246,6 +305,9 @@ class ControllerAdminPanel
         $this->_redirect();
     }
 
+    /**
+     *
+     */
     private function _redirect() {
 
         if ($this->_safeGet['editor'] === 'edit' && $this->_safeGet['post'] !== 'list' && $this->_safeGet['submit'] === 'true') {

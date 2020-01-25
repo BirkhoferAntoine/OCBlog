@@ -1,10 +1,20 @@
 <?php
 session_start();
-// u95785354
+// u95785354 access764386720.webspace-data.io
+
+// Préparation des constantes contenant les addresses du fichier principal et de l'url de l'index
 define('ROOT_FOLDER', __DIR__);
 define('URL', str_replace('index.php', '', (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . filter_var($_SERVER['HTTP_HOST'], FILTER_SANITIZE_URL) . filter_var($_SERVER['SCRIPT_NAME'], FILTER_SANITIZE_URL)));
 
+
 require_once(ROOT_FOLDER . '/Controllers/ControllerSecurity.php');
+// Instantiation de la global $security et insértions des arguments contenant les filtres des globals $_GET et $_POST
+
+/**
+ * @global $security
+ * @param array $argsGet
+ * @param array $argsPost
+ */
 $security = new ControllerSecurity(
     array(
         'url'           =>    FILTER_SANITIZE_URL,
@@ -43,6 +53,9 @@ $security = new ControllerSecurity(
     )
 );
 
+/**
+ * Class Router
+ */
 class Router
 {
     private        $_controller;
@@ -50,26 +63,35 @@ class Router
     private        $_safeGet;
     private        $_safeUri;
 
+    /**
+     * Router constructor.
+     *
+     */
     public function __construct()
     {
         $this->_setSecurity();
         $this->_routerQuery();
     }
 
+    /**
+     *  Appel de la global $security
+     *  @return void
+     */
     private function _setSecurity() {
         global $security;
         $this->_safeGet = $security->getFilteredGet();
         $this->_safeUri = $security->getFilteredUri();
-        //TODO REMOVE
-       /* print_r($this->_safeUri);
-        print_r($this->_safeGet);*/
     }
 
+    /**
+     *  Lancement du routeur
+     *
+     */
     private function _routerQuery()
     {
 
         try {
-            // Chargement automatique des models/classes
+            // Chargement automatique des classes et fichiers correspondants
             spl_autoload_register(static function($className) {
 
                 $classTest1 = 'Model';
@@ -119,6 +141,5 @@ class Router
 
 $main = new Router();
 
-//TODO DEL ERRORLOG, DEL OLD FILES
 
 
