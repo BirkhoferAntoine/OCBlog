@@ -4,6 +4,11 @@
 class RegisterFormTemplate extends ViewUser
 {
     private $_message;
+
+    /**
+     * RegisterFormTemplate constructor.
+     * @param $message
+     */
     public function __construct($message)
     {
         parent::__construct();
@@ -12,6 +17,9 @@ class RegisterFormTemplate extends ViewUser
         echo $this->_formBuilder();
     }
 
+    /**
+     * @return false|string
+     */
     private function _formBuilder() {
         ob_start();
         ?>

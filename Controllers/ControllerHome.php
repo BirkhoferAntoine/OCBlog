@@ -7,6 +7,12 @@ class ControllerHome
     private $_safeGet;
 
 
+    /**
+     * ControllerHome constructor.
+     * @param null $url
+     * @throws Exception
+     * @return void
+     */
     public function __construct($url=null)
     {
         if (!empty($url)) {
@@ -22,6 +28,10 @@ class ControllerHome
     }
 
     // Récupère les Posts du Postmanager, intègre les éléments de la page d'accueil
+
+    /**
+     * @return void
+     */
     private function _posts() {
         $this->_postsManager = new PostsManager();
         $postsRange = $this->_postsRange();
@@ -35,6 +45,9 @@ class ControllerHome
         }
     }
 
+    /**
+     * @return string
+     */
     private function _postsRange()
     {
         if (isset($this->_safeGet['listrange'])) {
@@ -47,6 +60,9 @@ class ControllerHome
         }
     }
 
+    /**
+     * @return void
+     */
     private function _setSecurity() {
         global $security;
         $this->_safeGet = $security->getFilteredGet();

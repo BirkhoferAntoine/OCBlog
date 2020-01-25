@@ -9,6 +9,12 @@ class ViewAdminPanel
     }
 
 
+    /**
+     * Création du contenu du Admin Panel
+     *
+     * @param $insert
+     * @return false|string
+     */
     private function _mainBuild($insert)
     {
         $prePanel_panelContent = $insert;
@@ -23,6 +29,10 @@ class ViewAdminPanel
     }
 
 
+    /**
+     * @return false|string
+     * @throws Exception
+     */
     private function _listBuild() {
 
         ob_start();
@@ -42,6 +52,11 @@ class ViewAdminPanel
         return ob_get_clean();
     }
 
+    /**
+     * @param $type
+     * @param $commentsList
+     * @return false|string
+     */
     private function _commentsListBuild($type, $commentsList) {
 
         ob_start();
@@ -61,6 +76,14 @@ class ViewAdminPanel
         return ob_get_clean();
 
     }
+
+    /**
+     * @param $preview
+     * @param $post
+     * @param $uri
+     * @param $token
+     * @return false|string
+     */
     private function _tinyMCEBuild($preview, $post, $uri, $token) {
 
         $uri === 'new' ? $cardHeader = 'Nouveau Billet' : $cardHeader = 'Editer Billet';
@@ -135,6 +158,12 @@ class ViewAdminPanel
         <?php
         return ob_get_clean();
     }
+
+    /**
+     * Génère la page optionnelle pour que l'admin puisse coder du markdown, non intégrée actuellement
+     *
+     * @return false|string
+     */
     private function _markdownBuild() {
 
         ob_start();
@@ -169,6 +198,9 @@ class ViewAdminPanel
         return ob_get_clean();
     }
 
+    /**
+     * @return false|string
+     */
     private function _dashboard() {
 
         ob_start();
@@ -418,22 +450,45 @@ class ViewAdminPanel
 
     }
 
+    /**
+     * @param $insert
+     * @return false|string
+     */
     public function mainBuild($insert) {
         return $this->_mainBuild($insert);
     }
 
+    /**
+     * @return false|string
+     */
     public function dashboard() {
         return $this->_dashboard();
     }
 
+    /**
+     * @param $preview
+     * @param $post
+     * @param $uri
+     * @param $token
+     * @return false|string
+     */
     public function tinyMCEBuild($preview, $post, $uri, $token) {
         return $this->_tinyMCEBuild($preview, $post, $uri, $token);
     }
 
+    /**
+     * @return false|string
+     * @throws Exception
+     */
     public function listBuild() {
         return $this->_listBuild();
     }
 
+    /**
+     * @param $type
+     * @param $commentsList
+     * @return false|string
+     */
     public function commentsListBuild($type, $commentsList) {
         return $this->_commentsListBuild($type, $commentsList);
     }

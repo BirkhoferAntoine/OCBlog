@@ -5,8 +5,7 @@
       <paths name="1&amp;1">
         <serverdata>
           <mappings>
-            <mapping deploy="/OCBlog" local="$PROJECT_DIR$" web="/https://github.com/BirkhoferAntoine/OCBlog" />
-            <mapping deploy="/OCBlog" local="$PROJECT_DIR$" web="/OCBlog/" />
+            <mapping deploy="/OCBlog" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
