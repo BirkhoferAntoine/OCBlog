@@ -11,16 +11,28 @@ class ViewPost extends View
     private $_postImage;
 
 
+    /**
+     * @param $injectContent
+     * @throws Exception
+     * @return void
+     */
     public function generate($injectContent)
     {
         parent::generate($injectContent);
     }
 
+    /**
+     * @param $comments
+     */
     public function setComments($comments) {
-        $this->_postComments = $comments;
+        return $this->_postComments = $comments;
     }
 
     // Génère les cartes pour les billets si un texte est trouvé dans le fichier
+
+    /**
+     * @return false|string|null
+     */
     protected function generateCard() {
         if ($this->_cardTextContent !== null) {
             return $this->cardBuilder($this->_cardTextContent,
@@ -30,6 +42,10 @@ class ViewPost extends View
             return null;
         }
     }
+
+    /**
+     * @param $injectedPost
+     */
     protected function generateSelectedPost($injectedPost)
     {
         if (empty($injectedPost['preview'])) {
@@ -49,10 +65,17 @@ class ViewPost extends View
         }
     }
 
+    /**
+     * @return CommentsTemplate
+     */
     protected function generatePostComments() {
         return new CommentsTemplate($this->_postComments);
     }
 
+    /**
+     * @param $injectContent
+     * @return false|string
+     */
     protected function generateContent($injectContent) {
         $this->generateSelectedPost($injectContent);
 
@@ -67,6 +90,10 @@ class ViewPost extends View
         }
     }
 
+    /**
+     * @param $injectContent
+     * @return false|string
+     */
     public function generatePost($injectContent) {
         return $this->generateContent($injectContent);
     }

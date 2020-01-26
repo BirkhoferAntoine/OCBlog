@@ -87,6 +87,10 @@ legend {
     display: none;
 }
 
+.postCol div {
+    max-width:75%;
+}
+
 .commCardTitle {
     word-break: normal;
     word-wrap: normal;

@@ -1,5 +1,6 @@
 <?php
 
+    // Classe de template pour l'affichage des commentaires de billets
 
 class CommentsTemplate extends ViewPost
 {
@@ -8,6 +9,10 @@ class CommentsTemplate extends ViewPost
     private $_safeUri;
     private $_submitUri;
 
+    /**
+     * CommentsTemplate constructor.
+     * @param $commentsInjection
+     */
     public function __construct($commentsInjection)
     {
 
@@ -18,6 +23,11 @@ class CommentsTemplate extends ViewPost
         }
     }
 
+    /**
+     * Appel de la global $security et récupération des données filtrées
+     *
+     * @return void
+     */
     private function _setSecurity() {
         global $security;
         $this->_safeGet = $security->getFilteredGet();
@@ -25,6 +35,10 @@ class CommentsTemplate extends ViewPost
         $this->_safeGet['submit'] === 'true' ? $this->_submitUri = $this->_safeUri : $this->_submitUri = $this->_safeUri . '&submit=true';
         }
 
+    /**
+     * @param $commentsInjection
+     * @return false|string
+     */
     private function _postCommentsBuilder($commentsInjection) {
         ob_start();
         ?>
@@ -52,6 +66,10 @@ class CommentsTemplate extends ViewPost
         return ob_get_clean();
     }
 
+    /**
+     * @param $comment
+     * @return false|string
+     */
     private function _rowBuilder($comment) {
         ob_start();
         ?>
@@ -64,6 +82,10 @@ class CommentsTemplate extends ViewPost
         return ob_get_clean();
     }
 
+    /**
+     * @param $comment
+     * @return false|string
+     */
     private function _commentBuilder($comment) {
         $commentId = $comment->id();
         $commentUser = $comment->user();
@@ -102,6 +124,11 @@ class CommentsTemplate extends ViewPost
         return ob_get_clean();
     }
 
+    /**
+     * @param $type
+     * @param $id
+     * @return false|string
+     */
     private function _commandBox($type, $id) {
         if ($type === 'admin') {
 
@@ -135,6 +162,9 @@ class CommentsTemplate extends ViewPost
         }
     }
 
+    /**
+     * @return false|string
+     */
     private function _commentForm() {
 
         if ($this->_safeGet['comments'] !== 'list') {

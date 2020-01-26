@@ -1,5 +1,6 @@
 <?php
 
+    // Trait de gestion des mots de passe
 
 trait PasswordManager
 {
@@ -7,6 +8,12 @@ trait PasswordManager
     private $_algorithm = 'sha3-512';
     private $_iteration = 10000;
 
+    /**
+     * Génère un salt "aléatoire"
+     *
+     * @return string
+     * @throws Exception
+     */
     private function _salter() {
         try {
             return bin2hex(random_bytes($this->_saltBytes));
@@ -16,6 +23,15 @@ trait PasswordManager
         }
     }
 
+    /**
+     * Construit le mot de passe et utilise les arguments de l'utilisateur et de la BDD si c'est une connexion
+     *
+     * @param $password
+     * @param $salt
+     * @param $iteration
+     * @return array
+     * @throws Exception
+     */
     protected function passwordBuilder($password, $salt, $iteration) {
 
         $hashSalt = $salt ?? $this->_salter();

@@ -1,7 +1,15 @@
 <?php
 
+    // Trait de génération de cartes de présentation des billets
+
 trait CardTemplate
 {
+    /**
+     * Intègre l'image demandée par l'admin, sinon utilise le background par défaut
+     *
+     * @param $bgImage
+     * @return string
+     */
     private function _setBgImage($bgImage) {
         if ($bgImage !== null) {
             return 'background-image: url(' . $bgImage . ')';
@@ -10,6 +18,12 @@ trait CardTemplate
         }
     }
     // Créé la carte en fonction du texte inséré dans l'argument
+    /**
+     * @param $cardTextContent
+     * @param $cardDate
+     * @param $bgImage
+     * @return false|string
+     */
     protected function cardBuilder($cardTextContent, $cardDate, $bgImage) {
         ob_start()
             ?>

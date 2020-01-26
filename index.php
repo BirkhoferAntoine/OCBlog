@@ -1,6 +1,6 @@
 <?php
 session_start();
-// u95785354 access764386720.webspace-data.io
+// u95785354
 
 // Préparation des constantes contenant les addresses du fichier principal et de l'url de l'index
 define('ROOT_FOLDER', __DIR__);
@@ -8,7 +8,7 @@ define('URL', str_replace('index.php', '', (isset($_SERVER['HTTPS']) ? 'https' :
 
 
 require_once(ROOT_FOLDER . '/Controllers/ControllerSecurity.php');
-// Instantiation de la global $security et insértions des arguments contenant les filtres des globals $_GET et $_POST
+// Instantiation de la global $security et insertions des arguments contenant les filtres des globals $_GET et $_POST
 
 /**
  * @global $security
@@ -138,7 +138,7 @@ class Router
     }
 }
 
-
+// Instantiation du Router
 $main = new Router();
 
 

@@ -8,6 +8,10 @@ class ListedPostTemplate
     private $_postEnd;
     private $_safeGet;
 
+    /**
+     * ListedPostTemplate constructor.
+    * @param $postsInjection
+    */
     public function __construct($postsInjection)
     {
 
@@ -24,11 +28,20 @@ class ListedPostTemplate
 
     }
 
+    /**
+     * Appel de la global $security et récupération des données filtrées
+     *
+     * @return void
+     */
     private function _setSecurity() {
         global $security;
         $this->_safeGet = $security->getFilteredGet();
     }
 
+    /**
+    * @param $postsInjection
+    * @return false|string
+    */
     private function _postListBuilder($postsInjection) {
         ob_start();
         ?>
@@ -64,6 +77,10 @@ class ListedPostTemplate
         return ob_get_clean();
     }
 
+    /**
+    * @param $randNumber
+    * @return string
+    */
     private function _setColor($randNumber) {
         switch ($randNumber) {
             case ($randNumber === 3):
@@ -81,6 +98,11 @@ class ListedPostTemplate
         }
     }
 
+    /**
+    * @param $postOdd
+    * @param $postEven
+    * @return false|string
+    */
     private function _rowBuilder($postOdd, $postEven) {
         ob_start();
         ?>
@@ -94,6 +116,11 @@ class ListedPostTemplate
         return ob_get_clean();
     }
 
+    /**
+    * @param $post
+    * @return false|string|null
+    * @throws Exception
+    */
     private function _postBuilder($post)
     {
         if ($post !== null) {
@@ -145,6 +172,9 @@ class ListedPostTemplate
         }
     }
 
+    /**
+     * @return false|string
+     */
     private function _listIndex() {
 
         $this->_safeGet['post'] === 'list' ? $urlRange = 'Panel?editor=' . $this->_safeGet['editor'] . '&post=list&listrange='

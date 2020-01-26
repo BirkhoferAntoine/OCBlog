@@ -10,6 +10,11 @@ class ControllerPost
     private $_safePost;
     private $_safeUri;
 
+    /**
+     * ControllerPost constructor.
+     * @param $urlPost
+     * @throws Exception
+     */
     public function __construct($urlPost)
     {
         if (empty($urlPost)) {
@@ -23,6 +28,10 @@ class ControllerPost
     }
 
     // Récupère le Post du Postmanager, intègre les éléments du template
+
+    /**
+     * @throws Exception
+     */
     private function _selectedPost() {
         $this->_postsManager = new PostsManager();
         $this->_commentsManager = new PostCommentsManager();
@@ -75,10 +84,18 @@ class ControllerPost
         }
     }
 
+    /**
+     * @param $idPost
+     * @return mixed
+     */
     private function _selectedPostComments($idPost) {
         return $this->_commentsManager->getComments('`id`', '`billet_id` = ' . $idPost . ' AND `accepted` >= 1 ');
     }
 
+    /**
+     *  Appel de la global $security et récupération des données filtrées
+     *  @return void
+     */
     private function _setSecurity() {
         global $security;
         $this->_safeGet = $security->getFilteredGet();
@@ -86,9 +103,16 @@ class ControllerPost
         $this->_safeUri = $security->getFilteredUri(2);
     }
 
+    /**
+     * @return mixed
+     */
     public function getPost() {
         return $this->_post;
     }
+
+    /**
+     * @return mixed
+     */
     public function getView() {
         return $this->_view;
     }

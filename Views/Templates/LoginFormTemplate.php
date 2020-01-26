@@ -4,6 +4,11 @@
 class LoginFormTemplate extends ViewUser
 {
     private $_message;
+
+    /**
+     * LoginFormTemplate constructor.
+     * @param $message
+     */
     public function __construct($message)
     {
         parent::__construct();
@@ -11,6 +16,9 @@ class LoginFormTemplate extends ViewUser
         echo $this->_formBuilder();
     }
 
+    /**
+     * @return false|string
+     */
     private function _formBuilder() {
         ob_start();
         ?>

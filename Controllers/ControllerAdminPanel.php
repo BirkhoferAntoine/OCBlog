@@ -50,6 +50,7 @@ class ControllerAdminPanel
     }
 
     /**
+     * Construction de du contenu de la page
      * @return mixed
      */
     private function _panelBuild() {
@@ -117,6 +118,7 @@ class ControllerAdminPanel
     }
 
     /**
+     * Construction de la liste des billets
      * @return mixed
      */
     private function _listBuild() {
@@ -124,6 +126,7 @@ class ControllerAdminPanel
     }
 
     /**
+     * Construction de la liste des commentaires en fonction de leur niveau d'acceptation
      * @param $type
      * @return mixed
      */
@@ -135,6 +138,7 @@ class ControllerAdminPanel
     }
 
     /**
+     * Intégration du billet
      * @param null $postPreview
      * @return mixed
      * @throws Exception
@@ -165,6 +169,7 @@ class ControllerAdminPanel
     }
 
     /**
+     * Intégration de TinyMCE
      * @param $type
      * @return mixed
      * @throws Exception
@@ -221,20 +226,8 @@ class ControllerAdminPanel
     }
 
     /**
-     * @return mixed
-     */
-    private function _markdownBuild()
-    {
-
-        include(ROOT_FOLDER . '/Vendor/assets/Markdown/Parsedown.php');
-        $Parsedown = new Parsedown();
-        $this->_parsedownText = $this->_safePost['markdown'];
-
-        return $this->_view->markdownBuild();
-    }
-
-    /**
-     *
+     * Fonctions liées au CRUD de la base de données
+     * @return void
      */
     private function _newPost() {
 
@@ -246,7 +239,7 @@ class ControllerAdminPanel
     }
 
     /**
-     *
+     * @return void
      */
     private function _editPost() {
 
@@ -261,6 +254,7 @@ class ControllerAdminPanel
 
     /**
      * @param $id
+     * @return void
      */
     private function _deletePost($id)
     {
@@ -268,7 +262,8 @@ class ControllerAdminPanel
     }
 
     /**
-     *
+     * Fonctions liées à l'execution des ordres avec redirection
+     *  @return void
      */
     private function _submitPostOrder()
     {
@@ -289,7 +284,7 @@ class ControllerAdminPanel
     }
 
     /**
-     *
+     * @return void
      */
     private function _submitCommentOrder() {
 
@@ -306,7 +301,8 @@ class ControllerAdminPanel
     }
 
     /**
-     *
+     * Redirection avec adaptation de l'uri par rapport à la page initiale
+     * @return void
      */
     private function _redirect() {
 
