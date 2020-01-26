@@ -9,10 +9,12 @@ class ListedPostTemplate
     private $_postEnd;
     private $_safeGet;
 
-    /**
- * ListedPostTemplate constructor.
+
+/** ListedPostTemplate constructor.
 * @param $postsInjection
-*/public function __construct($postsInjection)
+*/
+   public function __construct($postsInjection)
+
     {
 
         $this->_setSecurity();
@@ -28,10 +30,10 @@ class ListedPostTemplate
     }
 
     /**
-     * Appel de la global $security et récupération des données filtrées
-     *
-     * @return void
-     */
+    * Appel de la global $security et récupération des données filtrées
+    *
+    * @return void
+    */
     private function _setSecurity() {
         global $security;
         $this->_safeGet = $security->getFilteredGet();
