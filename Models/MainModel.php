@@ -5,10 +5,10 @@ abstract class MainModel {
     // Variable contenant la base de données
     private static $_dbConnection;
     // Constantes pour construire la requête pour accèder à la base de données
-    private const HOST_NAME = 'db5000177647.hosting-data.io';
+    private const HOST_NAME = 'localhost';
     private const DATABASE = 'dbs172441';
-    private const USER_NAME = 'dbu35984';
-    private const PASSWORD = '$2y$10$e.cqZR4c2/uL6nQ3HEAgg.nO8yy/loeDef/';
+    private const USER_NAME = 'root';
+    private const PASSWORD = '';
     private const CHARSET = 'utf8mb4';
     private const DSN = "mysql:host=" . self::HOST_NAME . "; dbname=" . self::DATABASE . "; charset=" . self::CHARSET . ";";
     private const DBOPTIONS = [
